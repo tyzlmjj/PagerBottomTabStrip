@@ -16,6 +16,7 @@
 
 2.在Activity的onCreate方法或Fragement的onCreateView方法，绑定控件到ViewPager。
 	需要注意的：
+	
 	- ViewPager需要在此之前就初始化
 	- ViewPager的适配器中的 getPageTitle()方法需要重写，以便获取标题文字
 ```
@@ -56,14 +57,17 @@ mPagerBottomTabStrip.addOnPageChangeListener(Listener);
 
 其他方法
 - `setMessageNumber(int postion,int messageNumber)` 
+
 设置按钮显示的消息数量
 postion 第几个按钮,从0开始。
 messageNumber 需要显示的消息数量
 - `addMessageNumber(int postion,int messageNumber)`
+
 增减按钮显示的消息数量
 postion 第几个按钮,从0开始。
 messageNumber 需要增减的消息数量
 - `setNews(int postion,Boolean news)`
+
 控制无数字小圆点的显示与消失
 news false消失,true显示。
 postion 第几个按钮,从0开始。
