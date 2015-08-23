@@ -16,10 +16,10 @@
 
 2.在Activity的onCreate方法或Fragement的onCreateView方法，绑定控件到ViewPager。
 
-	需要注意的：
+需要注意的：
 	
-	- ViewPager需要在此之前就初始化
-	- ViewPager的适配器中的 getPageTitle()方法需要重写，以便获取标题文字
+- ViewPager需要在此之前就初始化
+- ViewPager的适配器中的 getPageTitle()方法需要重写，以便获取标题文字
 
 ```
 PagerBottomTabStrip pagerBottomTabStrip = (PagerBottomTabStrip) findViewById(R.id.tab);	
