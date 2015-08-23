@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/text"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:hint="1"/>
+    <Button 
+        android:id="@+id/btn_message"
+        android:onClick="message"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="设置消息数为90"/>
+    <Button 
+        android:id="@+id/btn_add"
+        android:onClick="add"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="消息数量+1"/>
+    <Button 
+        android:id="@+id/btn_remove"
+        android:onClick="remove"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="消息数量-1"/>
+    
+    <Button 
+        android:id="@+id/btn_news"
+        android:onClick="news"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="显示小圆点"/>
+
+</LinearLayout>

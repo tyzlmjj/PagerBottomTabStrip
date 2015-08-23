@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.testpagerbottomtabstrip.MainActivity" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/tab"
+        />
+    <com.mjj.PagerBottomTabStrip
+        android:id="@+id/tab"
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>
