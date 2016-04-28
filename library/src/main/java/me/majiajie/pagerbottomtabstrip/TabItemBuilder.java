@@ -9,9 +9,8 @@ import android.support.annotation.NonNull;
 /**
  * 构建底部导航栏的一项按钮
  */
-public interface TabItemBuilder
+interface TabItemBuilder
 {
-
     /**
      * 完成构建
      * @return  {@link TabItem TabItem}

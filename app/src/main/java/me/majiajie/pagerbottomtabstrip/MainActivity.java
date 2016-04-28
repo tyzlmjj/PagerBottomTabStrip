@@ -3,15 +3,9 @@ package me.majiajie.pagerbottomtabstrip;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-
 
 public class MainActivity extends AppCompatActivity
 {
@@ -20,24 +14,25 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.layout);
-        TabItem tabItem =  new TabItem(this).builder()
-                .setText("看什么看")
-                .setDefaultIcon(android.R.drawable.ic_menu_save)
-                .build();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        Log.i("asd","width:"+Utils.px2dp(this,displayMetrics.widthPixels));
-        linearLayout.addView(tabItem);
-
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "看什么看"))
                 .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "图书"))
                 .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "音乐"))
-//                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "Movies & TV"))
-//                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "Games"))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "通知"))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "个人"))
                 .initialise();
+
+        PagerBottomTabStrip pagerBottomTabStrip = (PagerBottomTabStrip) findViewById(R.id.tab);
+
+        pagerBottomTabStrip.builder()
+                .addTabItem(android.R.drawable.ic_menu_save, "看什么看")
+                .addTabItem(android.R.drawable.ic_menu_save, "图书")
+                .addTabItem(android.R.drawable.ic_menu_save, "音乐")
+                .addTabItem(android.R.drawable.ic_menu_save, "通知")
+                .addTabItem(android.R.drawable.ic_menu_save, "个人")
+                .setMode(TabStripMode.HIDE_TEXT)
+                .build();
     }
 
 }

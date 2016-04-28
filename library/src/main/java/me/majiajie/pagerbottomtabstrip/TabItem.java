@@ -25,7 +25,7 @@ import me.majiajie.library.R;
 /**
  * 底部导航的按钮项
  */
-public final class TabItem extends View
+final class TabItem extends View
 {
 
     /**
@@ -134,13 +134,13 @@ public final class TabItem extends View
         context.getTheme().resolveAttribute(R.attr.selectableItemBackgroundBorderless, typedValue, true);
         setBackgroundResource(typedValue.resourceId);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mScale = mScale == DEFAULT? SELECTED:DEFAULT;
-                invalidateView();
-            }
-        });
+//        setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mScale = mScale == DEFAULT? SELECTED:DEFAULT;
+//                invalidateView();
+//            }
+//        });
     }
 
 
@@ -150,7 +150,7 @@ public final class TabItem extends View
      * 设置模式
      * @param mode {@link TabStripMode TabStripMode}
      */
-    protected void setMode(int mode)
+    public void setMode(int mode)
     {
         mMode = mode;
     }
@@ -159,7 +159,7 @@ public final class TabItem extends View
      * 设置是否显示无数字的消息小圆点
      * @param display   true显示
      */
-    protected void setDisplayOval(boolean display)
+    public void setDisplayOval(boolean display)
     {
         hasMessages = display;
         invalidateView();
@@ -169,7 +169,7 @@ public final class TabItem extends View
      * 设置是否选中
      * @param isSelected true选中
      */
-    protected void setSelect(boolean isSelected)
+    public void setSelect(boolean isSelected)
     {
         if(isSelected)
         {
@@ -217,8 +217,7 @@ public final class TabItem extends View
     {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMeasuredDimension((int)Utils.dp2px(mContext,96),(int)Utils.dp2px(mContext,56));
-        setMinimumWidth((int)Utils.dp2px(mContext,96));
+        setMeasuredDimension(getMeasuredWidth(),(int)Utils.dp2px(mContext,56));
 
     }
 
@@ -424,10 +423,6 @@ public final class TabItem extends View
         @Override
         public TabItem build()
         {
-            if(mIconSelected == null)
-            {
-                mIconSelected = mIconDefault;
-            }
             return TabItem.this;
         }
 

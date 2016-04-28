@@ -7,7 +7,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
 
-public class Utils {
+class Utils {
 
 	public static Bitmap drawableToBitmap(Drawable drawable)
 	{
