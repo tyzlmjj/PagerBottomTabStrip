@@ -25,20 +25,6 @@ public interface TabItemBuilder
     TabItemBuilder setText(@NonNull String text);
 
     /**
-     * 设置圆形消息的背景颜色
-     * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
-     * @return {@link TabItemBuilder TabItemBuilder}
-     */
-    TabItemBuilder setMessageBackgroundColor(@ColorInt int color);
-
-    /**
-     * 设置圆形消息的数字颜色
-     * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
-     * @return {@link TabItemBuilder TabItemBuilder}
-     */
-    TabItemBuilder setMessageTextColor(@ColorInt int color);
-
-    /**
      * 设置被选中后的图标，如果不设置默认使用跟未选中时一样的图标
      * @param drawable  Drawable资源
      * @return {@link TabItemBuilder TabItemBuilder}
@@ -79,13 +65,5 @@ public interface TabItemBuilder
      * @return {@link TabItemBuilder TabItemBuilder}
      */
     TabItemBuilder setDefaultColor(@ColorInt int color);
-
-    /**
-     * 设置被选中之后的导航栏背景颜色。
-     * 注意：只有设置了模式{@code TabStripMode.MULTIPLE_COLOR}之后生效
-     * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
-     * @return {@link TabItemBuilder TabItemBuilder}
-     */
-    TabItemBuilder setSelectedBackgroundColor(@ColorInt int color);
 
 }

@@ -3,6 +3,7 @@ package me.majiajie.pagerbottomtabstrip;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity
                 .setText("看什么看")
                 .setDefaultIcon(android.R.drawable.ic_menu_save)
                 .build();
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Log.i("asd","width:"+Utils.px2dp(this,displayMetrics.widthPixels));
         linearLayout.addView(tabItem);
 
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);

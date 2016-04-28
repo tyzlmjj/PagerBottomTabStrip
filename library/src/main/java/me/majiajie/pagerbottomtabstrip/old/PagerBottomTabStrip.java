@@ -59,7 +59,8 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * @param viewPager
 	 * @return
 	 */
-	public IMode builder(ViewPager viewPager){
+	public IMode builder(ViewPager viewPager)
+	{
 		mViewPager = viewPager;
 		viewPager.addOnPageChangeListener(this);
 
@@ -85,7 +86,8 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * @param postion 第几个按钮,从0开始。
 	 * @param messageNumber 需要显示的消息数量
 	 */
-	public void setMessageNumber(int postion,int messageNumber){
+	public void setMessageNumber(int postion,int messageNumber)
+	{
 		mTabstrips.get(postion).setMessageNumber(messageNumber);
 	}
 
@@ -94,7 +96,8 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * @param postion 第几个按钮,从0开始。
 	 * @param messageNumber 需要增减的消息数量
 	 */
-	public void addMessageNumber(int postion,int messageNumber){
+	public void addMessageNumber(int postion,int messageNumber)
+	{
 		mTabstrips.get(postion).addMessageNumber(messageNumber);
 	}
 
@@ -103,7 +106,8 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * @param postion 第几个按钮,从0开始。
 	 * @param news false消失,true显示。
 	 */
-	public void setNews(int postion,Boolean news){
+	public void setNews(int postion,Boolean news)
+	{
 		mTabstrips.get(postion).setNews(news);
 	}
 
@@ -111,9 +115,12 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * 设置选中的Tab项，从0开始
 	 * @param number
 	 */
-	public void setFocus(int number){
-		if (number < mTabstrips.size()) {
-			for (Tabstrip btn:mTabstrips){
+	public void setFocus(int number)
+	{
+		if (number < mTabstrips.size())
+		{
+			for (Tabstrip btn:mTabstrips)
+			{
 				btn.setBitmapAlpha(0f);
 			}
 			mTabstrips.get(number).setBitmapAlpha(1.0f);
@@ -124,12 +131,14 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	 * 增加ViewPager滑动监听
 	 * @param listener
 	 */
-	public void addOnPageChangeListener(OnPageChangeListener listener){
+	public void addOnPageChangeListener(OnPageChangeListener listener)
+	{
 		mOnPageChangeListener = listener;
 	}
 
 	@Override
-	public IBuilderDefault DefaultMode() {
+	public IBuilderDefault DefaultMode()
+	{
 		mDefaultModeBuilder = new DefaultModeBuilder(this, mTabstrips, mContext);
 		return mDefaultModeBuilder;
 	}
@@ -141,21 +150,25 @@ public class PagerBottomTabStrip extends LinearLayout implements OnClickListener
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		int n = (Integer) v.getTag();
 		mViewPager.setCurrentItem(n,false);
 		setFocus(n);
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
-		if (mOnPageChangeListener != null) {
+	public void onPageScrollStateChanged(int arg0)
+	{
+		if (mOnPageChangeListener != null)
+		{
 			mOnPageChangeListener.onPageScrollStateChanged(arg0);
 		}
 	}
 
 	@Override
-	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+	{
 		if (positionOffsetPixels != 0){
 			mTabstrips.get(position).setBitmapAlpha(1 - positionOffset);
 			mTabstrips.get(position+1).setBitmapAlpha(positionOffset);
