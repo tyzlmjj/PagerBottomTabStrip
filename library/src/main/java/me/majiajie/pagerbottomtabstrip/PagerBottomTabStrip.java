@@ -11,7 +11,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,22 +22,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.majiajie.library.R;
+import me.majiajie.pagerbottomtabstrip.i.TabStripLinstener;
 
 /**
- * 底部导航栏
+ * 底部导航栏按钮存放
  */
-public final class PagerBottomTabStrip extends LinearLayout
+class PagerBottomTabStrip extends LinearLayout
 {
-    private List<TabItem> mTabItems = new ArrayList<>();
+    public List<TabItem> mTabItems = new ArrayList<>();
+
+    public int mMode;
 
     private Context mContext;
 
-    private int mMode;
+    private TabStripLinstener mTabStripLinstener;
 
     /**
      * 记录当前选中项
      */
-    private int mIndex = 0;
+    public int mIndex = 0;
 
     /**
      * 记录之前选中的项
@@ -53,15 +56,6 @@ public final class PagerBottomTabStrip extends LinearLayout
      * 用于记录未选中项按钮的宽度
      */
     private int mDefultWidth = 0;
-
-    //记录触摸坐标
-    private float mTouch_x;
-
-    private float mTouch_y;
-
-    //记录背景值,只在特定模式时使用
-    private int mBackgroundColor;
-
 
     private boolean isCreated = false;
 
@@ -102,14 +96,16 @@ public final class PagerBottomTabStrip extends LinearLayout
     {
         mContext = context;
         this.setOrientation(HORIZONTAL);
+        this.setBackgroundColor(Color.TRANSPARENT);
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), (int) Utils.dp2px(mContext,56));
 
+        Log.i("asd","onMeasure");
         if(isCreated)
         {
             return;
@@ -174,29 +170,16 @@ public final class PagerBottomTabStrip extends LinearLayout
         //设置默认选中项
         mTabItems.get(mIndex).setSelect(true);
 
-        if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
-        {
-            mBackgroundColor = mTabItems.get(mIndex).getSelectedColor();
-            setBackgroundColor(mBackgroundColor);
-        }
-        else
-        {
-            setBackgroundColor(Color.WHITE);
-        }
     }
-
-    //圆半径的临时记录
-    private int Tem_R;
-
-    private int Tem_x;
-
-    private int Tem_Y;
 
     @Override
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
+
+        Log.i("asd","onDraw");
         isCreated = true;
+
         if((mMode & TabStripMode.HIDE_TEXT) > 0 && mIndex != mOldIndex)
         {
             TabItem newView = mTabItems.get(mIndex);
@@ -204,7 +187,7 @@ public final class PagerBottomTabStrip extends LinearLayout
 
             int new_width  = newView.getWidth();
             int old_width  = oldView.getWidth();
-
+            Log.i("asd","mIndex != mOldIndex");
             if(old_width  != mDefultWidth || new_width != mSelectedWidth)
             {
                 int n = mSelectedWidth - mDefultWidth;
@@ -225,28 +208,7 @@ public final class PagerBottomTabStrip extends LinearLayout
                 invalidateView();
             }
         }
-
-        if((mMode & TabStripMode.MULTIPLE_COLOR) > 0  && mIndex != mOldIndex )
-        {
-            int newColor = mTabItems.get(mIndex).getSelectedColor();
-
-//            if(mBackgroundColor != newColor)
-//            {
-//                RectF rectF = new RectF()
-//               canvas.drawOval();
-//            }
-        }
-
     }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event)
-    {
-        mTouch_x = event.getX();
-        mTouch_y = event.getY();
-        return super.onInterceptTouchEvent(event);
-    }
-
 
     /**
      * 刷新视图
@@ -255,6 +217,7 @@ public final class PagerBottomTabStrip extends LinearLayout
     {
         if (Looper.getMainLooper() == Looper.myLooper())
         {
+            Log.i("asd","invalidate();");
             invalidate();
         }
         else
@@ -276,6 +239,8 @@ public final class PagerBottomTabStrip extends LinearLayout
 
         mOldIndex = mIndex;
         mIndex = index;
+
+        mTabStripLinstener.onSelect();
 
         for(int i = 0; i < mTabItems.size(); i++)
         {
@@ -300,8 +265,9 @@ public final class PagerBottomTabStrip extends LinearLayout
         }
     }
 
-    public TabStripBuild builder()
+    protected TabStripBuild builder(TabStripLinstener onFinishBuild)
     {
+        this.mTabStripLinstener = onFinishBuild;
         return new builder();
     }
 
@@ -312,7 +278,7 @@ public final class PagerBottomTabStrip extends LinearLayout
         private int messageBackgroundColor;
 
         @Override
-        public PagerBottomTabStrip build()
+        public Controller build()
         {
             for(int i = 0; i < mTabItems.size(); i++)
             {
@@ -339,7 +305,11 @@ public final class PagerBottomTabStrip extends LinearLayout
                     }
                 });
             }
-            return PagerBottomTabStrip.this;
+
+            //回调
+            mTabStripLinstener.onFinishBuild();
+
+            return null;
         }
 
         @Override
