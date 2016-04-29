@@ -10,7 +10,7 @@
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"/>
-    <me.majiajie.pagerbottomtabstrip.PagerBottomTabStrip
+    <me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

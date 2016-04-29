@@ -4,6 +4,7 @@ package me.majiajie.pagerbottomtabstrip;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -87,8 +88,6 @@ class TabItem extends View
 
 
 
-
-
     private Context mContext;
 
     /**
@@ -148,10 +147,7 @@ class TabItem extends View
     private void init(Context context)
     {
         mContext = context;
-        //设置点击效果
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.selectableItemBackgroundBorderless, typedValue, true);
-        setBackgroundResource(typedValue.resourceId);
+
     }
 
 
@@ -165,10 +161,7 @@ class TabItem extends View
     {
         mMode = mode;
 
-        if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
-        {
-            mColorSelected = SELECTED_COLOR_ON_MULTIPLE_BACKGROUND;
-        }
+
     }
 
     /**
@@ -251,8 +244,6 @@ class TabItem extends View
     {
         super.onDraw(canvas);
 
-//        Bitmap bitmap = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(),Bitmap.Config.ARGB_8888);
-//        Canvas canvasBitmap = new Canvas(bitmap);
         if(mScale != mScaleTem)
         {
             float scale = getTemScale();
@@ -306,7 +297,21 @@ class TabItem extends View
         textPaint.setTextAlign(Paint.Align.CENTER);
 
         //判断是否选中再设置颜色
-        textPaint.setColor(mScale == DEFAULT?mColorDefault:mColorSelected);
+        if(mScale == DEFAULT)
+        {
+            textPaint.setColor(mColorDefault);
+        }
+        else
+        {
+            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+            {
+                textPaint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
+            }
+            else
+            {
+                textPaint.setColor(mColorSelected);
+            }
+        }
 
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 
@@ -329,7 +334,21 @@ class TabItem extends View
         Canvas canvasTem = new Canvas(bitmap);
         Paint paint = new Paint();
         //判断是否选中再设置颜色
-        paint.setColor(mScale == DEFAULT?mColorDefault:mColorSelected);
+        if(mScale == DEFAULT)
+        {
+            paint.setColor(mColorDefault);
+        }
+        else
+        {
+            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+            {
+                paint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
+            }
+            else
+            {
+                paint.setColor(mColorSelected);
+            }
+        }
         paint.setAntiAlias(true);
         canvasTem.drawRect(0,0,width,width,paint);
 
@@ -451,7 +470,6 @@ class TabItem extends View
         }
     }
 
-
     class builder implements TabItemBuild
     {
         @Override
@@ -465,6 +483,16 @@ class TabItem extends View
             if(mColorSelected == 0)
             {
                 mColorSelected = Utils.getAttrColor(mContext,R.attr.colorAccent);
+            }
+
+            //设置点击效果
+            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+            {
+                TabItem.this.setBackgroundColor(Color.TRANSPARENT);
+            }
+            else
+            {
+                TabItem.this.setBackgroundResource(Utils.getResourceId(mContext,R.attr.selectableItemBackgroundBorderless));
             }
 
             return TabItem.this;

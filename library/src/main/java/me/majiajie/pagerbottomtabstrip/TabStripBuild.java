@@ -13,9 +13,9 @@ public interface TabStripBuild
 {
     /**
      * 完成构建
-     * @return {@link PagerBottomTabStrip}
+     * @return {@link Controller}
      */
-    PagerBottomTabStrip build();
+    Controller build();
 
     /**
      * 添加一项导航按钮,使用{@link TabItemBuilder}创建

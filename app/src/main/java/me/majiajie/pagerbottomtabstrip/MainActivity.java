@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
+import me.majiajie.pagerbottomtabstrip.i.TabStripLinstener;
+
 public class MainActivity extends AppCompatActivity
 {
+    private int[] testColors = {0xFF00796B,0xFF8D6E63,0xFF2196F3,0xFF607D8B,0xFFF57C00};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,15 +26,15 @@ public class MainActivity extends AppCompatActivity
                 .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "个人").setActiveColor(0xFF00FF00))
                 .initialise();
 
-        PagerBottomTabStrip pagerBottomTabStrip = (PagerBottomTabStrip) findViewById(R.id.tab);
+        PagerBottomTabLayout pagerBottomTabLayout = (PagerBottomTabLayout) findViewById(R.id.tab);
 
-        pagerBottomTabStrip.builder()
-                .addTabItem(android.R.drawable.ic_menu_save, "看什么看")
-                .addTabItem(android.R.drawable.ic_menu_save, "图书")
-                .addTabItem(android.R.drawable.ic_menu_save, "音乐")
-                .addTabItem(android.R.drawable.ic_menu_save, "通知")
-                .addTabItem(android.R.drawable.ic_menu_save, "个人")
-                .setMode(TabStripMode.HIDE_TEXT)
+        pagerBottomTabLayout.builder()
+                .addTabItem(android.R.drawable.ic_menu_save, "看什么看",testColors[0])
+                .addTabItem(android.R.drawable.ic_menu_save, "图书",testColors[1])
+                .addTabItem(android.R.drawable.ic_menu_save, "音乐",testColors[2])
+                .addTabItem(android.R.drawable.ic_menu_save, "通知",testColors[3])
+                .addTabItem(android.R.drawable.ic_menu_save, "个人",testColors[4])
+                .setMode(TabStripMode.HIDE_TEXT|TabStripMode.MULTIPLE_COLOR)
                 .build();
     }
 

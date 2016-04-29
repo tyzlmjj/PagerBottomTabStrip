@@ -118,8 +118,9 @@ class ChangeColorsView extends View
 
 
 
-    //测试
+//    //测试
 //    private int[] testColors = {0xFF00796B,0xFF8D6E63,0xFF2196F3,0xFF607D8B,0xFFF57C00};
+//
 //    @Override
 //    public boolean dispatchTouchEvent(MotionEvent event)
 //    {
