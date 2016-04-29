@@ -20,12 +20,14 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import org.jetbrains.annotations.NotNull;
+
 import me.majiajie.library.R;
 
 /**
  * 底部导航的按钮项
  */
-final class TabItem extends View
+class TabItem extends View
 {
 
     /**
@@ -42,6 +44,11 @@ final class TabItem extends View
      * 图标的宽度（正方形）
      */
     private final float WIDTH_ICON = 24;
+
+    /**
+     * 在背景颜色切换时的图标和文字颜色
+     */
+    private final int SELECTED_COLOR_ON_MULTIPLE_BACKGROUND = 0xFFFFFFFF;
 
     /**
      * 显示的文字
@@ -66,7 +73,7 @@ final class TabItem extends View
     /**
      * 选中状态下的图标和文字颜色
      */
-    private int mColorSelected = 0xFFFF0000;
+    private int mColorSelected = 0;
 
     /**
      * 圆形消息图案的背景色
@@ -79,12 +86,24 @@ final class TabItem extends View
     private int mColorMessageText = 0xFFFFFFFF;
 
 
+
+
+
     private Context mContext;
 
+    /**
+     * 模式记录
+     */
     private int mMode = 0;
 
+    /**
+     * 选中的缩放值
+     */
     private final float SELECTED = 1f;
 
+    /**
+     * 未选中的缩放值
+     */
     private final float DEFAULT = 0f;
 
     /**
@@ -133,14 +152,6 @@ final class TabItem extends View
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.selectableItemBackgroundBorderless, typedValue, true);
         setBackgroundResource(typedValue.resourceId);
-
-//        setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mScale = mScale == DEFAULT? SELECTED:DEFAULT;
-//                invalidateView();
-//            }
-//        });
     }
 
 
@@ -153,6 +164,11 @@ final class TabItem extends View
     public void setMode(int mode)
     {
         mMode = mode;
+
+        if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+        {
+            mColorSelected = SELECTED_COLOR_ON_MULTIPLE_BACKGROUND;
+        }
     }
 
     /**
@@ -201,10 +217,19 @@ final class TabItem extends View
     }
 
     /**
+     * 获取选中后的颜色
+     * @return 16进制整形表示的颜色，例如红色：0xFFFF0000
+     */
+    public int getSelectedColor()
+    {
+        return mColorSelected;
+    }
+
+    /**
      * 构建导航按钮
      * @return
      */
-    public TabItemBuilder builder()
+    public TabItemBuild builder()
     {
         return new builder();
     }
@@ -226,6 +251,8 @@ final class TabItem extends View
     {
         super.onDraw(canvas);
 
+//        Bitmap bitmap = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(),Bitmap.Config.ARGB_8888);
+//        Canvas canvasBitmap = new Canvas(bitmap);
         if(mScale != mScaleTem)
         {
             float scale = getTemScale();
@@ -277,6 +304,7 @@ final class TabItem extends View
         textPaint.getTextBounds(mText, 0, mText.length(), textBound);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
+
         //判断是否选中再设置颜色
         textPaint.setColor(mScale == DEFAULT?mColorDefault:mColorSelected);
 
@@ -322,6 +350,9 @@ final class TabItem extends View
         }
 
         canvas.drawBitmap(bitmap,left,top,null);
+
+        //回收
+        bitmap.recycle();
     }
 
     /**
@@ -381,6 +412,9 @@ final class TabItem extends View
 //                top = Utils.dp2px(mContext,8-2*n);
 //            }
             canvas.drawBitmap(bitmap,left,top,null);
+
+            //回收
+            bitmap.recycle();
         }
     }
 
@@ -418,58 +452,75 @@ final class TabItem extends View
     }
 
 
-    class builder implements TabItemBuilder
+    class builder implements TabItemBuild
     {
         @Override
         public TabItem build()
         {
+            if(mIconSelected == null)
+            {
+                mIconSelected = mIconDefault;
+            }
+
+            if(mColorSelected == 0)
+            {
+                mColorSelected = Utils.getAttrColor(mContext,R.attr.colorAccent);
+            }
+
             return TabItem.this;
         }
 
         @Override
-        public TabItemBuilder setText(@NonNull String text)
+        public TabItemBuild setText(@NonNull String text)
         {
             mText = text;
             return builder.this;
         }
 
         @Override
-        public TabItemBuilder setSelectedIcon(@DrawableRes int drawable)
+        public TabItemBuild setSelectedIcon(@DrawableRes int drawable)
         {
             return setSelectedIcon(ContextCompat.getDrawable(mContext,drawable));
         }
 
         @Override
-        public TabItemBuilder setSelectedIcon(@NonNull Drawable drawable)
+        public TabItemBuild setSelectedIcon(@NonNull Drawable drawable)
         {
             mIconSelected = getICON(drawable);
             return builder.this;
         }
 
         @Override
-        public TabItemBuilder setDefaultIcon(@DrawableRes int drawable)
+        public TabItemBuild setDefaultIcon(@DrawableRes int drawable)
         {
             return setDefaultIcon(ContextCompat.getDrawable(mContext,drawable));
         }
 
         @Override
-        public TabItemBuilder setDefaultIcon(@NonNull Drawable drawable)
+        public TabItemBuild setDefaultIcon(@NonNull Drawable drawable)
         {
             mIconDefault = getICON(drawable);
             return builder.this;
         }
 
         @Override
-        public TabItemBuilder setSelectedColor(@ColorInt int color)
+        public TabItemBuild setSelectedColor(@ColorInt int color)
         {
             mColorSelected = color;
             return builder.this;
         }
 
         @Override
-        public TabItemBuilder setDefaultColor(@ColorInt int color)
+        public TabItemBuild setDefaultColor(@ColorInt int color)
         {
             mColorDefault = color;
+            return builder.this;
+        }
+
+        @Override
+        public TabItemBuild setTag(@NotNull Object object)
+        {
+            TabItem.this.setTag(object);
             return builder.this;
         }
 
@@ -484,6 +535,8 @@ final class TabItem extends View
             float scaleHeight = (Utils.dp2px(mContext,24)/ height);
             matrix.postScale(scaleWidth, scaleHeight);
             Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);
+
+            oldbmp.recycle();
 
             return newbmp;
         }

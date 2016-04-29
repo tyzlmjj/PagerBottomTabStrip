@@ -1,7 +1,7 @@
 package me.majiajie.pagerbottomtabstrip;
 
 
-import me.majiajie.pagerbottomtabstrip.I.OnTabItemClickListener;
+import me.majiajie.pagerbottomtabstrip.i.OnTabItemClickListener;
 
 /**
  * 导航栏控制

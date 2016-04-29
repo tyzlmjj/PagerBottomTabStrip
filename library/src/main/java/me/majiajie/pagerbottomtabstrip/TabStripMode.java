@@ -13,9 +13,8 @@ public final class TabStripMode
      */
     public static final int HIDE_TEXT = 0XF;
 
-
     /**
-     * 开启多种颜色。点击不同项切换不同颜色
+     * 开启导航栏背景变换。点击不同项切换不同颜色
      */
     public static final int MULTIPLE_COLOR = 0XF0;
 

@@ -16,11 +16,11 @@ public class MainActivity extends AppCompatActivity
 
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "看什么看"))
-                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "图书"))
-                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "音乐"))
-                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "通知"))
-                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "个人"))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "看什么看").setActiveColor(0xFFFF0000))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "图书").setActiveColor(0xFF00FF00))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "音乐").setActiveColor(0xFF0000FF))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "通知").setActiveColor(0xFFFF0000))
+                .addItem(new BottomNavigationItem(android.R.drawable.ic_menu_save, "个人").setActiveColor(0xFF00FF00))
                 .initialise();
 
         PagerBottomTabStrip pagerBottomTabStrip = (PagerBottomTabStrip) findViewById(R.id.tab);

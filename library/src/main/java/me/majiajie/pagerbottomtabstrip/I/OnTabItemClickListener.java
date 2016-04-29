@@ -1,4 +1,4 @@
-package me.majiajie.pagerbottomtabstrip.I;
+package me.majiajie.pagerbottomtabstrip.i;
 
 /**
  * 导航栏按钮点击监听
