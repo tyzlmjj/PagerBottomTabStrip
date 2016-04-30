@@ -22,7 +22,6 @@ import java.util.List;
 
 import me.majiajie.library.R;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
-import me.majiajie.pagerbottomtabstrip.listener.TabStripLinstener;
 
 /**
  * 底部导航栏按钮存放
@@ -402,9 +401,9 @@ class PagerBottomTabStrip extends LinearLayout
         }
 
         @Override
-        public TabStripBuild addTabItem(@NotNull TabItem tabItem)
+        public TabStripBuild addTabItem(@NotNull TabItemBuilder tabItemBuilder)
         {
-            mTabItems.add(tabItem);
+            mTabItems.add(tabItemBuilder.getTabItem());
             return builder.this;
         }
 
@@ -506,12 +505,12 @@ class PagerBottomTabStrip extends LinearLayout
         {
             selectedDrawable = drawable;
         }
-        mTabItems.add(new TabItem(mContext).builder()
+        mTabItems.add(new TabItemBuilder(mContext).create()
                 .setDefaultIcon(drawable)
                 .setSelectedIcon(selectedDrawable)
                 .setText(text)
                 .setSelectedColor(selectedColor)
-                .build());
+                .build().getTabItem());
     }
 
 

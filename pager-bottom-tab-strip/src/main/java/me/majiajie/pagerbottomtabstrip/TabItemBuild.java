@@ -14,9 +14,9 @@ public interface TabItemBuild
 {
     /**
      * 完成构建
-     * @return  {@link TabItem TabItem}
+     * @return  {@link TabItemBuilder}
      */
-    TabItem build();
+    TabItemBuilder build();
 
     /**
      * 设置文字内容。尽量简短

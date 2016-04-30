@@ -28,7 +28,6 @@ import me.majiajie.library.R;
  */
 class TabItem extends View
 {
-
     /**
      * 文字未选中时的大小
      */
@@ -246,9 +245,9 @@ class TabItem extends View
      * 构建导航按钮
      * @return
      */
-    protected TabItemBuild builder()
+    protected TabItemBuild builder(TabItemBuilder tabItemBuilder)
     {
-        return new builder();
+        return new builder(tabItemBuilder);
     }
 
     //*******END***公共方法**************************************************************************
@@ -445,7 +444,6 @@ class TabItem extends View
             float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
 
             float top;
-//            top = Utils.dp2px(mContext,6);
             if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
             {
                 top = Utils.dp2px(mContext,12-6*n);
@@ -474,7 +472,6 @@ class TabItem extends View
             paint.setAntiAlias(true);
             float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
             float top;
-//            top = Utils.dp2px(mContext,6);
             if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
             {
                 top = Utils.dp2px(mContext,12-6*n);
@@ -505,8 +502,15 @@ class TabItem extends View
 
     class builder implements TabItemBuild
     {
+        private TabItemBuilder tabItemBuilder;
+
+        public builder(TabItemBuilder tabItemBuilder)
+        {
+            builder.this.tabItemBuilder = tabItemBuilder;
+        }
+
         @Override
-        public TabItem build()
+        public TabItemBuilder build()
         {
             if(mIconDefault == null)
             {
@@ -523,7 +527,7 @@ class TabItem extends View
                 mColorSelected = Utils.getAttrColor(mContext,R.attr.colorAccent);
             }
 
-            return TabItem.this;
+            return tabItemBuilder;
         }
 
         @Override

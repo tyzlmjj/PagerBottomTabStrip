@@ -19,10 +19,10 @@ public interface TabStripBuild
 
     /**
      * 添加一项导航按钮,使用{@link TabItemBuilder}创建
-     * @param tabItem {@link TabItem}
+     * @param tabItemBuilder {@link TabItemBuilder}
      * @return {@link TabStripBuild}
      */
-    TabStripBuild addTabItem(@NotNull TabItem tabItem);
+    TabStripBuild addTabItem(@NotNull TabItemBuilder tabItemBuilder);
 
     /**
      * 添加一项导航按钮

@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
-import me.majiajie.pagerbottomtabstrip.listener.TabStripLinstener;
 
 /**
  * 底部导航栏主布局

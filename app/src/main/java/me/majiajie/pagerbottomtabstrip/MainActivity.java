@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
         PagerBottomTabLayout pagerBottomTabLayout = (PagerBottomTabLayout) findViewById(R.id.tab);
 
         //用TabItemBuilder构建一个导航按钮
-        TabItem tabItem = TabItemBuilder.create(this)
+        TabItemBuilder tabItemBuilder = new TabItemBuilder(this).create()
                 .setDefaultIcon(android.R.drawable.ic_menu_send)
                 .setText("信息")
                 .setSelectedColor(testColors[0])
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
 
         //构建导航栏,得到Controller进行后续控制
         controller = pagerBottomTabLayout.builder()
-                .addTabItem(tabItem)
+                .addTabItem(tabItemBuilder)
                 .addTabItem(android.R.drawable.ic_menu_compass, "位置",testColors[1])
                 .addTabItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
                 .addTabItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])

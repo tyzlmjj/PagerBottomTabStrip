@@ -1,9 +1,8 @@
-package me.majiajie.pagerbottomtabstrip.listener;
+package me.majiajie.pagerbottomtabstrip;
 
 
-import me.majiajie.pagerbottomtabstrip.Controller;
 
-public interface TabStripLinstener
+interface TabStripLinstener
 {
 
     /**
