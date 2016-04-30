@@ -15,10 +15,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +52,7 @@ class TabItem extends View
     /**
      * 显示的文字
      */
-    private String mText;
+    private String mText = "文字";
 
     /**
      * 未选中状态下的图标
@@ -69,7 +67,7 @@ class TabItem extends View
     /**
      * 未选中状态下的图标和文字颜色
      */
-    private int mColorDefault = 0xFFAAAAAA;
+    private int mColorDefault = 0xFFBCBCBC;
 
     /**
      * 选中状态下的图标和文字颜色
@@ -155,12 +153,21 @@ class TabItem extends View
 
     /**
      * 设置模式
-     * @param mode {@link TabStripMode TabStripMode}
+     * @param mode {@link TabLayoutMode TabLayoutMode}
      */
-    public void setMode(int mode)
+    protected void setMode(int mode)
     {
         mMode = mode;
 
+        //设置点击效果
+        if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
+        {
+            TabItem.this.setBackgroundColor(Color.TRANSPARENT);
+        }
+        else
+        {
+            TabItem.this.setBackgroundResource(Utils.getResourceId(mContext,R.attr.selectableItemBackgroundBorderless));
+        }
 
     }
 
@@ -168,7 +175,7 @@ class TabItem extends View
      * 设置是否显示无数字的消息小圆点
      * @param display   true显示
      */
-    public void setDisplayOval(boolean display)
+    protected void setDisplayOval(boolean display)
     {
         hasMessages = display;
         invalidateView();
@@ -178,7 +185,7 @@ class TabItem extends View
      * 设置是否选中
      * @param isSelected true选中
      */
-    public void setSelect(boolean isSelected)
+    protected void setSelect(boolean isSelected)
     {
         if(isSelected)
         {
@@ -195,7 +202,7 @@ class TabItem extends View
      * 设置圆形消息的背景颜色
      * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    public void setMessageBackgroundColor(@ColorInt int color)
+    protected void setMessageBackgroundColor(@ColorInt int color)
     {
         mColorMessageBackground = color;
     }
@@ -204,25 +211,42 @@ class TabItem extends View
      * 设置圆形消息的数字颜色
      * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    public void setMessageTextColor(@ColorInt int color)
+    protected void setMessageTextColor(@ColorInt int color)
     {
         mColorMessageText = color;
+    }
+
+    /**
+     * 设置消息数量
+     * @param number  消息数量
+     */
+    protected void setMessageNumber(int number)
+    {
+        mMessageNumber = number;
+        invalidateView();
+    }
+
+    protected void setDefaultColor(@ColorInt int color)
+    {
+        mColorDefault = color;
     }
 
     /**
      * 获取选中后的颜色
      * @return 16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    public int getSelectedColor()
+    protected int getSelectedColor()
     {
         return mColorSelected;
     }
+
+
 
     /**
      * 构建导航按钮
      * @return
      */
-    public TabItemBuild builder()
+    protected TabItemBuild builder()
     {
         return new builder();
     }
@@ -284,7 +308,7 @@ class TabItem extends View
     private void drawText(Canvas canvas,float n)
     {
 
-        if((mMode & TabStripMode.HIDE_TEXT) > 0 && mScale == DEFAULT)
+        if((mMode & TabLayoutMode.HIDE_TEXT) > 0 && mScale == DEFAULT)
         {
             return;
         }
@@ -303,7 +327,7 @@ class TabItem extends View
         }
         else
         {
-            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+            if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
             {
                 textPaint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
             }
@@ -340,7 +364,7 @@ class TabItem extends View
         }
         else
         {
-            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
+            if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
             {
                 paint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
             }
@@ -359,7 +383,7 @@ class TabItem extends View
         float left = getMeasuredWidth()/2f-Utils.dp2px(mContext,12);
 
         float top;
-        if((mMode & TabStripMode.HIDE_TEXT) > 0)
+        if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
         {
             top = Utils.dp2px(mContext,16-10*n);
         }
@@ -418,18 +442,18 @@ class TabItem extends View
             canvasMessages.drawText(number,x,y,numberPaint);
 
 
-            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,6);
+            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
 
             float top;
-            top = Utils.dp2px(mContext,6);
-//            if((mMode & TabStripMode.HIDE_TEXT) > 0)
-//            {
-//                top = Utils.dp2px(mContext,16-10*n);
-//            }
-//            else
-//            {
-//                top = Utils.dp2px(mContext,8-2*n);
-//            }
+//            top = Utils.dp2px(mContext,6);
+            if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
+            {
+                top = Utils.dp2px(mContext,12-6*n);
+            }
+            else
+            {
+                top = Utils.dp2px(mContext,6);
+            }
             canvas.drawBitmap(bitmap,left,top,null);
 
             //回收
@@ -448,8 +472,17 @@ class TabItem extends View
             Paint paint = new Paint();
             paint.setColor(mColorMessageBackground);
             paint.setAntiAlias(true);
-            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,6);
-            float top = Utils.dp2px(mContext,6);
+            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
+            float top;
+//            top = Utils.dp2px(mContext,6);
+            if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
+            {
+                top = Utils.dp2px(mContext,12-6*n);
+            }
+            else
+            {
+                top = Utils.dp2px(mContext,6);
+            }
             float width = Utils.dp2px(getContext(),10);
             RectF messageRectF = new RectF(left,top,left+width,top+width);
             canvas.drawOval(messageRectF,paint);
@@ -475,6 +508,11 @@ class TabItem extends View
         @Override
         public TabItem build()
         {
+            if(mIconDefault == null)
+            {
+                mIconDefault = getICON(ContextCompat.getDrawable(mContext,android.R.drawable.ic_menu_help));
+            }
+
             if(mIconSelected == null)
             {
                 mIconSelected = mIconDefault;
@@ -485,23 +523,14 @@ class TabItem extends View
                 mColorSelected = Utils.getAttrColor(mContext,R.attr.colorAccent);
             }
 
-            //设置点击效果
-            if((mMode & TabStripMode.MULTIPLE_COLOR) > 0)
-            {
-                TabItem.this.setBackgroundColor(Color.TRANSPARENT);
-            }
-            else
-            {
-                TabItem.this.setBackgroundResource(Utils.getResourceId(mContext,R.attr.selectableItemBackgroundBorderless));
-            }
-
             return TabItem.this;
         }
 
         @Override
-        public TabItemBuild setText(@NonNull String text)
+        public TabItemBuild setText(@NotNull String text)
         {
             mText = text;
+            TabItem.this.setTag(text);
             return builder.this;
         }
 
@@ -512,7 +541,7 @@ class TabItem extends View
         }
 
         @Override
-        public TabItemBuild setSelectedIcon(@NonNull Drawable drawable)
+        public TabItemBuild setSelectedIcon(@NotNull Drawable drawable)
         {
             mIconSelected = getICON(drawable);
             return builder.this;
@@ -525,7 +554,7 @@ class TabItem extends View
         }
 
         @Override
-        public TabItemBuild setDefaultIcon(@NonNull Drawable drawable)
+        public TabItemBuild setDefaultIcon(@NotNull Drawable drawable)
         {
             mIconDefault = getICON(drawable);
             return builder.this;

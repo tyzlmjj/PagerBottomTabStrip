@@ -111,16 +111,23 @@ public interface TabStripBuild
     TabStripBuild setMessageNumberColor(@ColorInt int color);
 
     /**
+     * 设置导航按钮的默认（未选中状态）颜色
+     * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
+     * @return  {@link TabStripBuild}
+     */
+    TabStripBuild setDefaultColor(@ColorInt int color);
+
+    /**
      * 设置模式。默认文字一直显示，且背景色不变。
-     * 可以通过{@link TabStripMode}选择模式。
+     * 可以通过{@link TabLayoutMode}选择模式。
      *
      * <p>例如:</p>
-     * {@code TabStripMode.HIDE_TEXT}
+     * {@code TabLayoutMode.HIDE_TEXT}
      *
      * <p>或者多选:</p>
-     * {@code TabStripMode.HIDE_TEXT | TabStripMode.MULTIPLE_COLOR}
+     * {@code TabLayoutMode.HIDE_TEXT | TabLayoutMode.CHANGE_BACKGROUND_COLOR}
      *
-     * @param tabStripMode {@link TabStripMode}
+     * @param tabStripMode {@link TabLayoutMode}
      * @return {@link TabStripBuild}
      */
     TabStripBuild setMode(int tabStripMode);

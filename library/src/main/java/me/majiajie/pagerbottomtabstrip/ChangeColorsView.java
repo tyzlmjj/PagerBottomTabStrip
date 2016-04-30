@@ -50,6 +50,8 @@ class ChangeColorsView extends View
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+
+        setFitsSystemWindows(true);
     }
 
     @Override
@@ -71,7 +73,7 @@ class ChangeColorsView extends View
             mPaint.setColor(oval.color);
             if(oval.r < R)
             {
-                oval.r += R/20f;
+                oval.r += R/30f;
                 RectF rectF = new RectF(oval.x-oval.r,oval.y-oval.r,oval.x+oval.r,oval.y+oval.r);
                 canvas.drawOval(rectF, mPaint);
             }
@@ -96,7 +98,7 @@ class ChangeColorsView extends View
     {
         Oval oval = new Oval();
         oval.color = color;
-        oval.r = Utils.dp2px(mContext,3);
+        oval.r = Utils.dp2px(mContext,2);
         oval.x = x;
         oval.y = y;
 
