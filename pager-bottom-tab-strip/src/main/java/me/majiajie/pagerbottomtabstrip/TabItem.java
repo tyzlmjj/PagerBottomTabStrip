@@ -329,6 +329,7 @@ class TabItem extends View
             if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
             {
                 textPaint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
+
             }
             else
             {
