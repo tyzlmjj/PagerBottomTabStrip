@@ -226,33 +226,6 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
             }
             return null;
         }
-
-//        /**
-//         * 手动设置选中项，
-//         * @param index
-//         */
-//        private void setSetectManually (int index)
-//        {
-//            if(mPagerBottomTabStrip.mIndex == index){return;}
-//
-//            if(index >= mPagerBottomTabStrip.mTabItems.size()) {return;}
-//
-//            mPagerBottomTabStrip.mOldIndex = mPagerBottomTabStrip.mIndex;
-//            mPagerBottomTabStrip.mIndex = index;
-//
-//
-//
-//
-//            for(int i = 0; i < mPagerBottomTabStrip.mTabItems.size(); i++)
-//            {
-//                mPagerBottomTabStrip.mTabItems.get(i).setSelect(i == mPagerBottomTabStrip.mIndex);
-//            }
-//
-//            if((mPagerBottomTabStrip.mMode & TabLayoutMode.HIDE_TEXT) > 0)
-//            {
-//                mPagerBottomTabStrip.invalidateView();
-//            }
-//        }
     };
 
 
