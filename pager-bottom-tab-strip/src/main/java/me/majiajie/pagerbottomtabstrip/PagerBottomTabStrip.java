@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.majiajie.library.R;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
+
 
 /**
  * 底部导航栏按钮存放

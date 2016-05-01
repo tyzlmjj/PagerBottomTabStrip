@@ -17,5 +17,5 @@ public interface OnTabItemSelectListener
      * @param index 索引导航按钮，按添加顺序排序
      * @param tag   默认是导航按钮的文字内容
      */
-    void onRepeatClick(int index,Object tag);
+    void onRepeatClick(int index, Object tag);
 }

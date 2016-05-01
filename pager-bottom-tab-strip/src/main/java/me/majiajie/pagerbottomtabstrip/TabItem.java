@@ -21,8 +21,6 @@ import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
 
-import me.majiajie.library.R;
-
 /**
  * 底部导航的按钮项
  */
@@ -302,7 +300,7 @@ class TabItem extends View
 
     /**
      * 画文字
-     * @param canvas {@link android.graphics.Canvas Canvas}
+     * @param canvas {@link Canvas Canvas}
      */
     private void drawText(Canvas canvas,float n)
     {
@@ -348,7 +346,7 @@ class TabItem extends View
 
     /**
      * 画ICON
-     * @param canvas {@link android.graphics.Canvas Canvas}
+     * @param canvas {@link Canvas Canvas}
      */
     private void drawIcon(Canvas canvas,float n)
     {
@@ -400,7 +398,7 @@ class TabItem extends View
 
     /**
      * 画消息图标
-     * @param canvas {@link android.graphics.Canvas Canvas}
+     * @param canvas {@link Canvas Canvas}
      */
     private void drawMessages(Canvas canvas,float n)
     {
@@ -462,7 +460,7 @@ class TabItem extends View
 
     /**
      * 画无数字的消息红点
-     * @param canvas {@link android.graphics.Canvas Canvas}
+     * @param canvas {@link Canvas Canvas}
      */
     private void drawOval(Canvas canvas,float n)
     {

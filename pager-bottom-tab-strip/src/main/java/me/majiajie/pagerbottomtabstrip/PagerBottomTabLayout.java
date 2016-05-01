@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
 
+
 /**
  * 底部导航栏主布局
  */
@@ -60,8 +61,8 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
         mPagerBottomTabStrip = new PagerBottomTabStrip(mContext);
         PagerBottomTabLayout.this.addView(mPagerBottomTabStrip);
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams
-                (FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+        LayoutParams lp = new LayoutParams
+                (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mPagerBottomTabStrip.setLayoutParams(lp);
 
         return mPagerBottomTabStrip.builder(PagerBottomTabLayout.this);
@@ -79,8 +80,8 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
 
             PagerBottomTabLayout.this.addView(mChangeColorsView,0);
 
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams
-                    (FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+            LayoutParams lp = new LayoutParams
+                    (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mChangeColorsView.setLayoutParams(lp);
         }
 

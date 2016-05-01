@@ -25,28 +25,28 @@ public interface Controller
      * @param index     顺序索引
      * @param number    消息数字
      */
-    void setMessageNumber(int index ,int number);
+    void setMessageNumber(int index, int number);
 
     /**
      * 设置导航按钮上显示的圆形消息数字，通过TAG索引。
      * @param tag       TAG,默认是按钮的文字，可在构建时设置
      * @param number    消息数字
      */
-    void setMessageNumber(Object tag , int number);
+    void setMessageNumber(Object tag, int number);
 
     /**
      * 设置显示无数字的消息小原点
      * @param index     顺序索引
      * @param display   true显示
      */
-    void setDisplayOval(int index ,boolean display);
+    void setDisplayOval(int index, boolean display);
 
     /**
      * 设置显示无数字的消息小原点
      * @param tag       TAG,默认是按钮的文字，可在构建时设置
      * @param display   true显示
      */
-    void setDisplayOval(Object tag ,boolean display);
+    void setDisplayOval(Object tag, boolean display);
 
     /**
      * 设置选中项

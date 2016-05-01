@@ -1,4 +1,4 @@
-package me.majiajie.pagerbottomtabstrip;
+package me.majiajie.pagerbottomtabstriptest;
 
 import org.junit.Test;
 

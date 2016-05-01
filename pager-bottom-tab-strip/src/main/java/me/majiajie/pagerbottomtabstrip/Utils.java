@@ -11,9 +11,6 @@ import android.util.TypedValue;
 
 import org.jetbrains.annotations.NotNull;
 
-import me.majiajie.library.R;
-
-
 class Utils {
 
 	/**

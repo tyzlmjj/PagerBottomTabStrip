@@ -21,7 +21,7 @@ interface TabStripLinstener
      * @param x x坐标
      * @param y y坐标
      */
-    void onSelect(float x,float y);
+    void onSelect(float x, float y);
 
     /**
      * 当还未执行onMeasure（） 方法，并且外部调用了setSelect()方法设置选中项

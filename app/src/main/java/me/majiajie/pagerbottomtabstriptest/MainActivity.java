@@ -1,4 +1,4 @@
-package me.majiajie.pagerbottomtabstrip;
+package me.majiajie.pagerbottomtabstriptest;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,12 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.majiajie.pagerbottomtabstrip.Controller;
+import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.TabItemBuilder;
+import me.majiajie.pagerbottomtabstrip.TabLayoutMode;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
+
 
 public class MainActivity extends AppCompatActivity
 {
@@ -52,8 +57,6 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-
-
     private void BottomTabTest()
     {
         PagerBottomTabLayout pagerBottomTabLayout = (PagerBottomTabLayout) findViewById(R.id.tab);
@@ -74,12 +77,11 @@ public class MainActivity extends AppCompatActivity
                 .addTabItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])
 //                .setMode(TabLayoutMode.HIDE_TEXT)
 //                .setMode(TabLayoutMode.CHANGE_BACKGROUND_COLOR)
-//                .setMode(TabLayoutMode.HIDE_TEXT| TabLayoutMode.CHANGE_BACKGROUND_COLOR)
+                .setMode(TabLayoutMode.HIDE_TEXT| TabLayoutMode.CHANGE_BACKGROUND_COLOR)
                 .build();
 
-//        controller.setSelect(2);
-//        controller.setMessageNumber("A",1);
-//        controller.setDisplayOval(1,true);
+//        controller.setMessageNumber("A",2);
+//        controller.setDisplayOval(0,true);
 
         controller.addTabItemClickListener(listener);
     }
