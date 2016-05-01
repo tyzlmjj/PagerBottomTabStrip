@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //这里这样使用Fragment仅用于测试，请勿模仿！
         initFragment();
 
         BottomTabTest();
@@ -71,7 +72,9 @@ public class MainActivity extends AppCompatActivity
                 .addTabItem(android.R.drawable.ic_menu_compass, "位置",testColors[1])
                 .addTabItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
                 .addTabItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])
-                .setMode(TabLayoutMode.HIDE_TEXT| TabLayoutMode.CHANGE_BACKGROUND_COLOR)
+//                .setMode(TabLayoutMode.HIDE_TEXT)
+//                .setMode(TabLayoutMode.CHANGE_BACKGROUND_COLOR)
+//                .setMode(TabLayoutMode.HIDE_TEXT| TabLayoutMode.CHANGE_BACKGROUND_COLOR)
                 .build();
 
 //        controller.setSelect(2);
@@ -100,8 +103,6 @@ public class MainActivity extends AppCompatActivity
             Log.i("asd","onRepeatClick:"+index+"   TAG: "+tag.toString());
         }
     };
-
-
 
     private Fragment createFragment(String content)
     {

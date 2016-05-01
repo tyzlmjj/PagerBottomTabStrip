@@ -66,7 +66,7 @@ class TabItem extends View
     /**
      * 未选中状态下的图标和文字颜色
      */
-    private int mColorDefault = 0xFFBCBCBC;
+    private int mColorDefault = 0x89000000;
 
     /**
      * 选中状态下的图标和文字颜色

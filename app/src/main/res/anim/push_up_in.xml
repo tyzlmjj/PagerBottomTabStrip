@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android" android:interpolator="@android:interpolator/decelerate_quint">
-    <translate android:startOffset="200" android:fromYDelta="2%p" android:toYDelta="0" android:duration="200"/>
-    <alpha  android:startOffset="200" android:fromAlpha="0.0"  android:toAlpha="1.0" android:duration="200" />
+    <translate android:startOffset="150" android:fromYDelta="1%p" android:toYDelta="0" android:duration="150"/>
+    <alpha  android:startOffset="150" android:fromAlpha="0.0"  android:toAlpha="1.0" android:duration="150" />
 </set>
