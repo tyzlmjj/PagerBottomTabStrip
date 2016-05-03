@@ -11,15 +11,11 @@ PagerBottomTabStrip 是一个基本按谷歌Material Design规范完成的安卓
 
 ##实现效果图
 
-- ![PagerBottomTabStrip](/img/demo.gif "PagerBottomTabStrip")
+![PagerBottomTabStrip](/img/demo.gif "PagerBottomTabStrip")
 
-- ![PagerBottomTabStrip](/img/demo1.gif "PagerBottomTabStrip")
-
-- ![PagerBottomTabStrip](/img/demo2.gif "PagerBottomTabStrip")
-
-- ![PagerBottomTabStrip](/img/demo3.gif "PagerBottomTabStrip")
-
-- ![PagerBottomTabStrip](/img/demo4.gif "PagerBottomTabStrip")
+|![PagerBottomTabStrip](/img/demo1.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo2.gif "PagerBottomTabStrip")|
+|---|---|
+|![PagerBottomTabStrip](/img/demo3.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo4.gif "PagerBottomTabStrip")|
 
 
 ##引入库
