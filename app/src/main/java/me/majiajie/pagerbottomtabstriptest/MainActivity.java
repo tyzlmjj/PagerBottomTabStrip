@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         mFragments.add(createFragment("E"));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);
+        // transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);
         transaction.add(R.id.frameLayout,mFragments.get(0));
         transaction.commit();
     }
