@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             Log.i("asd","onSelected:"+index+"   TAG: "+tag.toString());
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);
+            //transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);
             transaction.replace(R.id.frameLayout,mFragments.get(index));
             transaction.commit();
         }
