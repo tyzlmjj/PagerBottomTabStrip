@@ -225,6 +225,24 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
             }
         }
 
+        @Override
+        public void setSelectedTabColor(String tag, int color) {
+            TabItem tabItem = selectTag(tag);
+            if(tabItem != null)
+            {
+                tabItem.setNewSelectedColor(color);
+            }
+        }
+
+        @Override
+        public void setDefaultTabColor(String tag, int color) {
+            TabItem tabItem = selectTag(tag);
+            if(tabItem != null)
+            {
+                tabItem.setNewDefaultColor(color);
+            }
+        }
+
         private TabItem selectTag(Object tag)
         {
             for(TabItem tabItem:mPagerBottomTabStrip.mTabItems)

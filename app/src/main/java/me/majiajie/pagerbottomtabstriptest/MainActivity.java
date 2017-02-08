@@ -1,5 +1,6 @@
 package me.majiajie.pagerbottomtabstriptest;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 //                .setMode(TabLayoutMode.CHANGE_BACKGROUND_COLOR)
                 .setMode(TabLayoutMode.HIDE_TEXT | TabLayoutMode.CHANGE_BACKGROUND_COLOR)
                 .build();
+
+        controller.setSelectedTabColor("A", Color.GREEN);
+        controller.setDefaultTabColor("A", Color.BLUE);
 
 //        controller.setMessageNumber("A", 2);
 //        controller.setMessageString("A", "II");

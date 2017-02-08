@@ -520,6 +520,16 @@ class TabItem extends View {
         invalidateView();
     }
 
+    public void setNewSelectedColor(int color) {
+        mColorSelected = color;
+        invalidateView();
+    }
+
+    public void setNewDefaultColor(int color) {
+        mColorDefault = color;
+        invalidateView();
+    }
+
     class builder implements TabItemBuild {
         private TabItemBuilder tabItemBuilder;
 
