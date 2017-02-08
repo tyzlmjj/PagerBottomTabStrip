@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
@@ -24,17 +25,16 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 底部导航的按钮项
  */
-class TabItem extends View
-{
+class TabItem extends View {
     /**
      * 文字未选中时的大小
      */
-    private final float TEXTSIZE_DEFAULT = 12;
+    private float TEXTSIZE_DEFAULT = 12;
 
     /**
      * 文字选中时的大小
      */
-    private final float TEXTSIZE_SELECTED = 14;
+    private float TEXTSIZE_SELECTED = 14;
 
     /**
      * 图标的宽度（正方形）
@@ -82,7 +82,6 @@ class TabItem extends View
     private int mColorMessageText = 0xFFFFFFFF;
 
 
-
     private Context mContext;
 
     /**
@@ -120,27 +119,29 @@ class TabItem extends View
      */
     private boolean hasMessages = false;
 
+    /**
+     * typeface of menu
+     */
+    private Typeface mTypeface = null;
+    private String mMessageString = null;
 
-    public TabItem(Context context)
-    {
+
+    public TabItem(Context context) {
         super(context);
         init(context);
     }
 
-    public TabItem(Context context, AttributeSet attrs)
-    {
+    public TabItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public TabItem(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public TabItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    private void init(Context context)
-    {
+    private void init(Context context) {
         mContext = context;
 
     }
@@ -150,46 +151,40 @@ class TabItem extends View
 
     /**
      * 设置模式
+     *
      * @param mode {@link TabLayoutMode TabLayoutMode}
      */
-    protected void setMode(int mode)
-    {
+    protected void setMode(int mode) {
         mMode = mode;
 
         //设置点击效果
-        if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
-        {
+        if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
             TabItem.this.setBackgroundColor(Color.TRANSPARENT);
-        }
-        else
-        {
-            TabItem.this.setBackgroundResource(Utils.getResourceId(mContext,R.attr.selectableItemBackgroundBorderless));
+        } else {
+            TabItem.this.setBackgroundResource(Utils.getResourceId(mContext, R.attr.selectableItemBackgroundBorderless));
         }
 
     }
 
     /**
      * 设置是否显示无数字的消息小圆点
-     * @param display   true显示
+     *
+     * @param display true显示
      */
-    protected void setDisplayOval(boolean display)
-    {
+    protected void setDisplayOval(boolean display) {
         hasMessages = display;
         invalidateView();
     }
 
     /**
      * 设置是否选中
+     *
      * @param isSelected true选中
      */
-    protected void setSelect(boolean isSelected)
-    {
-        if(isSelected)
-        {
+    protected void setSelect(boolean isSelected) {
+        if (isSelected) {
             mScale = SELECTED;
-        }
-        else
-        {
+        } else {
             mScale = DEFAULT;
         }
         invalidateView();
@@ -197,54 +192,52 @@ class TabItem extends View
 
     /**
      * 设置圆形消息的背景颜色
-     * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
+     *
+     * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    protected void setMessageBackgroundColor(@ColorInt int color)
-    {
+    protected void setMessageBackgroundColor(@ColorInt int color) {
         mColorMessageBackground = color;
     }
 
     /**
      * 设置圆形消息的数字颜色
-     * @param color  16进制整形表示的颜色，例如红色：0xFFFF0000
+     *
+     * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    protected void setMessageTextColor(@ColorInt int color)
-    {
+    protected void setMessageTextColor(@ColorInt int color) {
         mColorMessageText = color;
     }
 
     /**
      * 设置消息数量
-     * @param number  消息数量
+     *
+     * @param number 消息数量
      */
-    protected void setMessageNumber(int number)
-    {
+    protected void setMessageNumber(int number) {
         mMessageNumber = number;
         invalidateView();
     }
 
-    protected void setDefaultColor(@ColorInt int color)
-    {
+    protected void setDefaultColor(@ColorInt int color) {
         mColorDefault = color;
     }
 
     /**
      * 获取选中后的颜色
+     *
      * @return 16进制整形表示的颜色，例如红色：0xFFFF0000
      */
-    protected int getSelectedColor()
-    {
+    protected int getSelectedColor() {
         return mColorSelected;
     }
 
 
-
     /**
      * 构建导航按钮
+     *
      * @return
      */
-    protected TabItemBuild builder(TabItemBuilder tabItemBuilder)
-    {
+    protected TabItemBuild builder(TabItemBuilder tabItemBuilder) {
         return new builder(tabItemBuilder);
     }
 
@@ -252,47 +245,42 @@ class TabItem extends View
 
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMeasuredDimension(getMeasuredWidth(),(int)Utils.dp2px(mContext,56));
+        setMeasuredDimension(getMeasuredWidth(), (int) Utils.dp2px(mContext, 56));
 
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(mScale != mScaleTem)
-        {
+        if (mScale != mScaleTem) {
             float scale = getTemScale();
-            drawText(canvas,scale);
-            drawIcon(canvas,scale);
-            drawMessages(canvas,scale);
-            drawOval(canvas,scale);
+            drawText(canvas, scale);
+            drawIcon(canvas, scale);
+            drawMessages(canvas, scale);
+            drawMessageText(canvas, scale);
+            drawOval(canvas, scale);
             invalidate();
-        }
-        else
-        {
-            drawText(canvas,mScale);
-            drawIcon(canvas,mScale);
-            drawMessages(canvas,mScale);
-            drawOval(canvas,mScale);
+        } else {
+            drawText(canvas, mScale);
+            drawIcon(canvas, mScale);
+            drawMessages(canvas, mScale);
+            drawMessageText(canvas, mScale);
+            drawOval(canvas, mScale);
         }
     }
 
-    private float getTemScale()
-    {
-        mScaleTem += mScale-mScaleTem>0? +0.1f:-0.1f;
-        if(mScaleTem < 0f)
-        {
+
+    private float getTemScale() {
+        mScaleTem += mScale - mScaleTem > 0 ? +0.1f : -0.1f;
+        if (mScaleTem < 0f) {
             mScaleTem = 0f;
         }
 
-        if(mScaleTem > 1f)
-        {
+        if (mScaleTem > 1f) {
             mScaleTem = 1f;
         }
         return mScaleTem;
@@ -300,158 +288,193 @@ class TabItem extends View
 
     /**
      * 画文字
+     *
      * @param canvas {@link Canvas Canvas}
      */
-    private void drawText(Canvas canvas,float n)
-    {
+    private void drawText(Canvas canvas, float n) {
 
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0 && mScale == DEFAULT)
-        {
+        if ((mMode & TabLayoutMode.HIDE_TEXT) > 0 && mScale == DEFAULT) {
             return;
         }
 
         Rect textBound = new Rect();
         Paint textPaint = new Paint();
-        textPaint.setTextSize(Utils.sp2px(mContext,TEXTSIZE_DEFAULT+(TEXTSIZE_SELECTED-TEXTSIZE_DEFAULT)*n));
+        textPaint.setTextSize(Utils.sp2px(mContext, TEXTSIZE_DEFAULT + (TEXTSIZE_SELECTED - TEXTSIZE_DEFAULT) * n));
         textPaint.getTextBounds(mText, 0, mText.length(), textBound);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
 
+        if (mTypeface != null)
+            textPaint.setTypeface(mTypeface);
+
         //判断是否选中再设置颜色
-        if(mScale == DEFAULT)
-        {
+        if (mScale == DEFAULT) {
             textPaint.setColor(mColorDefault);
-        }
-        else
-        {
-            if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
-            {
+        } else {
+            if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
                 textPaint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
 
-            }
-            else
-            {
+            } else {
                 textPaint.setColor(mColorSelected);
             }
         }
 
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 
-        float x = getMeasuredWidth()/2f;
-        float y = getMeasuredHeight() - Utils.dp2px(mContext,10)- textBound.height()/2f- fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
+        float x = getMeasuredWidth() / 2f;
+        float y = getMeasuredHeight() - Utils.dp2px(mContext, 10) - textBound.height() / 2f - fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
 
-        canvas.drawText(mText,x,y, textPaint);
+        canvas.drawText(mText, x, y, textPaint);
     }
 
 
     /**
      * 画ICON
+     *
      * @param canvas {@link Canvas Canvas}
      */
-    private void drawIcon(Canvas canvas,float n)
-    {
-        int width = (int) Utils.dp2px(mContext,WIDTH_ICON);
+    private void drawIcon(Canvas canvas, float n) {
+        int width = (int) Utils.dp2px(mContext, WIDTH_ICON);
 
-        Bitmap bitmap = Bitmap.createBitmap(width,width,Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
         Canvas canvasTem = new Canvas(bitmap);
         Paint paint = new Paint();
         //判断是否选中再设置颜色
-        if(mScale == DEFAULT)
-        {
+        if (mScale == DEFAULT) {
             paint.setColor(mColorDefault);
-        }
-        else
-        {
-            if((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
-            {
+        } else {
+            if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
                 paint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
-            }
-            else
-            {
+            } else {
                 paint.setColor(mColorSelected);
             }
         }
         paint.setAntiAlias(true);
-        canvasTem.drawRect(0,0,width,width,paint);
+        canvasTem.drawRect(0, 0, width, width, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        canvasTem.drawBitmap(mScale == DEFAULT?mIconDefault:mIconSelected,0,0,paint);
+        canvasTem.drawBitmap(mScale == DEFAULT ? mIconDefault : mIconSelected, 0, 0, paint);
 
 
-        float left = getMeasuredWidth()/2f-Utils.dp2px(mContext,12);
+        float left = getMeasuredWidth() / 2f - Utils.dp2px(mContext, 12);
 
         float top;
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
-        {
-            top = Utils.dp2px(mContext,16-10*n);
-        }
-        else
-        {
-            top = Utils.dp2px(mContext,8-2*n);
+        if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+            top = Utils.dp2px(mContext, 16 - 10 * n);
+        } else {
+            top = Utils.dp2px(mContext, 8 - 2 * n);
         }
 
-        canvas.drawBitmap(bitmap,left,top,null);
+        canvas.drawBitmap(bitmap, left, top, null);
 
         //回收
         bitmap.recycle();
     }
 
-    /**
-     * 画消息图标
-     * @param canvas {@link Canvas Canvas}
-     */
-    private void drawMessages(Canvas canvas,float n)
-    {
-        if(mMessageNumber > 0)
-        {
+    private void drawMessageText(Canvas canvas, float n) {
+        if (mMessageString != null) {
             //画背景的圆形
             Paint backgroundPaint = new Paint();
             backgroundPaint.setColor(mColorMessageBackground);
             backgroundPaint.setAntiAlias(true);
 
-            int width = (int) Utils.dp2px(mContext,20);
-            Bitmap bitmap = Bitmap.createBitmap(width,width,Bitmap.Config.ARGB_8888);
+            int width = (int) Utils.dp2px(mContext, 20);
+            Bitmap bitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
             Canvas canvasMessages = new Canvas(bitmap);
-            RectF messageRectF = new RectF(0,0,width,width);
-            canvasMessages.drawOval(messageRectF,backgroundPaint);
+            RectF messageRectF = new RectF(0, 0, width, width);
+            canvasMessages.drawOval(messageRectF, backgroundPaint);
 
             //画数字
-            String number = mMessageNumber>99?"99+":mMessageNumber+"";
             float textSize;
-            if (number.length()==1)
-            {
+            if (mMessageString.length() == 1) {
                 textSize = 13;
-            }else if(number.length()==2)
-            {
+            } else if (mMessageString.length() == 2) {
                 textSize = 11;
-            }else
-            {
+            } else {
                 textSize = 10;
             }
             Paint numberPaint = new Paint();
             numberPaint.setColor(mColorMessageText);
-            numberPaint.setTextSize(Utils.dp2px(mContext,textSize));
+            numberPaint.setTextSize(Utils.dp2px(mContext, textSize));
             numberPaint.setAntiAlias(true);
             numberPaint.setTextAlign(Paint.Align.CENTER);
+            if (mTypeface != null) {
+                numberPaint.setTypeface(mTypeface);
+            }
             Paint.FontMetrics fontMetrics = numberPaint.getFontMetrics();
 
-            float x = width/2f;
-            float y = width/2f - fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
-            canvasMessages.drawText(number,x,y,numberPaint);
+            float x = width / 2f;
+            float y = width / 2f - fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
+            canvasMessages.drawText(mMessageString, x, y, numberPaint);
 
 
-            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
+            float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
 
             float top;
-            if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
-            {
-                top = Utils.dp2px(mContext,12-6*n);
+            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+                top = Utils.dp2px(mContext, 12 - 6 * n);
+            } else {
+                top = Utils.dp2px(mContext, 6);
             }
-            else
-            {
-                top = Utils.dp2px(mContext,6);
+            canvas.drawBitmap(bitmap, left, top, null);
+
+            //回收
+            bitmap.recycle();
+        }
+    }
+
+    /**
+     * 画消息图标
+     *
+     * @param canvas {@link Canvas Canvas}
+     */
+    private void drawMessages(Canvas canvas, float n) {
+        if (mMessageNumber > 0) {
+            //画背景的圆形
+            Paint backgroundPaint = new Paint();
+            backgroundPaint.setColor(mColorMessageBackground);
+            backgroundPaint.setAntiAlias(true);
+
+            int width = (int) Utils.dp2px(mContext, 20);
+            Bitmap bitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
+            Canvas canvasMessages = new Canvas(bitmap);
+            RectF messageRectF = new RectF(0, 0, width, width);
+            canvasMessages.drawOval(messageRectF, backgroundPaint);
+
+            //画数字
+            String number = mMessageNumber > 99 ? "99+" : mMessageNumber + "";
+            float textSize;
+            if (number.length() == 1) {
+                textSize = 13;
+            } else if (number.length() == 2) {
+                textSize = 11;
+            } else {
+                textSize = 10;
             }
-            canvas.drawBitmap(bitmap,left,top,null);
+            Paint numberPaint = new Paint();
+            numberPaint.setColor(mColorMessageText);
+            numberPaint.setTextSize(Utils.dp2px(mContext, textSize));
+            numberPaint.setAntiAlias(true);
+            numberPaint.setTextAlign(Paint.Align.CENTER);
+            if (mTypeface != null) {
+                numberPaint.setTypeface(mTypeface);
+            }
+            Paint.FontMetrics fontMetrics = numberPaint.getFontMetrics();
+
+            float x = width / 2f;
+            float y = width / 2f - fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
+            canvasMessages.drawText(number, x, y, numberPaint);
+
+
+            float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
+
+            float top;
+            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+                top = Utils.dp2px(mContext, 12 - 6 * n);
+            } else {
+                top = Utils.dp2px(mContext, 6);
+            }
+            canvas.drawBitmap(bitmap, left, top, null);
 
             //回收
             bitmap.recycle();
@@ -460,139 +483,140 @@ class TabItem extends View
 
     /**
      * 画无数字的消息红点
+     *
      * @param canvas {@link Canvas Canvas}
      */
-    private void drawOval(Canvas canvas,float n)
-    {
-        if(hasMessages && mMessageNumber <= 0)
-        {
+    private void drawOval(Canvas canvas, float n) {
+        if (hasMessages && mMessageNumber <= 0) {
             Paint paint = new Paint();
             paint.setColor(mColorMessageBackground);
             paint.setAntiAlias(true);
-            float left = getMeasuredWidth()/2f+Utils.dp2px(mContext,10);
+            float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
             float top;
-            if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
-            {
-                top = Utils.dp2px(mContext,12-6*n);
+            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+                top = Utils.dp2px(mContext, 12 - 6 * n);
+            } else {
+                top = Utils.dp2px(mContext, 6);
             }
-            else
-            {
-                top = Utils.dp2px(mContext,6);
-            }
-            float width = Utils.dp2px(getContext(),10);
-            RectF messageRectF = new RectF(left,top,left+width,top+width);
-            canvas.drawOval(messageRectF,paint);
+            float width = Utils.dp2px(getContext(), 10);
+            RectF messageRectF = new RectF(left, top, left + width, top + width);
+            canvas.drawOval(messageRectF, paint);
         }
     }
 
     /**
      * 刷新视图
      */
-    private void invalidateView()
-    {
-        if (Looper.getMainLooper() == Looper.myLooper())
-        {
+    private void invalidateView() {
+        if (Looper.getMainLooper() == Looper.myLooper()) {
             invalidate();
-        } else
-        {
+        } else {
             postInvalidate();
         }
     }
 
-    class builder implements TabItemBuild
-    {
+    public void setMessageString(String s) {
+        mMessageString = s;
+        invalidateView();
+    }
+
+    class builder implements TabItemBuild {
         private TabItemBuilder tabItemBuilder;
 
-        public builder(TabItemBuilder tabItemBuilder)
-        {
+        public builder(TabItemBuilder tabItemBuilder) {
             builder.this.tabItemBuilder = tabItemBuilder;
         }
 
         @Override
-        public TabItemBuilder build()
-        {
-            if(mIconDefault == null)
-            {
-                mIconDefault = getICON(ContextCompat.getDrawable(mContext,android.R.drawable.ic_menu_help));
+        public TabItemBuilder build() {
+            if (mIconDefault == null) {
+                mIconDefault = getICON(ContextCompat.getDrawable(mContext, android.R.drawable.ic_menu_help));
             }
 
-            if(mIconSelected == null)
-            {
+            if (mIconSelected == null) {
                 mIconSelected = mIconDefault;
             }
 
-            if(mColorSelected == 0)
-            {
-                mColorSelected = Utils.getAttrColor(mContext,R.attr.colorAccent);
+            if (mColorSelected == 0) {
+                mColorSelected = Utils.getAttrColor(mContext, R.attr.colorAccent);
             }
 
             return tabItemBuilder;
         }
 
         @Override
-        public TabItemBuild setText(@NotNull String text)
-        {
+        public TabItemBuild setText(@NotNull String text) {
             mText = text;
             TabItem.this.setTag(text);
             return builder.this;
         }
 
         @Override
-        public TabItemBuild setSelectedIcon(@DrawableRes int drawable)
-        {
-            return setSelectedIcon(ContextCompat.getDrawable(mContext,drawable));
+        public TabItemBuild setSelectedIcon(@DrawableRes int drawable) {
+            return setSelectedIcon(ContextCompat.getDrawable(mContext, drawable));
         }
 
         @Override
-        public TabItemBuild setSelectedIcon(@NotNull Drawable drawable)
-        {
+        public TabItemBuild setSelectedIcon(@NotNull Drawable drawable) {
             mIconSelected = getICON(drawable);
             return builder.this;
         }
 
         @Override
-        public TabItemBuild setDefaultIcon(@DrawableRes int drawable)
-        {
-            return setDefaultIcon(ContextCompat.getDrawable(mContext,drawable));
+        public TabItemBuild setDefaultIcon(@DrawableRes int drawable) {
+            return setDefaultIcon(ContextCompat.getDrawable(mContext, drawable));
         }
 
         @Override
-        public TabItemBuild setDefaultIcon(@NotNull Drawable drawable)
-        {
+        public TabItemBuild setDefaultIcon(@NotNull Drawable drawable) {
             mIconDefault = getICON(drawable);
             return builder.this;
         }
 
         @Override
-        public TabItemBuild setSelectedColor(@ColorInt int color)
-        {
+        public TabItemBuild setSelectedColor(@ColorInt int color) {
             mColorSelected = color;
             return builder.this;
         }
 
         @Override
-        public TabItemBuild setDefaultColor(@ColorInt int color)
-        {
+        public TabItemBuild setDefaultColor(@ColorInt int color) {
             mColorDefault = color;
             return builder.this;
         }
 
         @Override
-        public TabItemBuild setTag(@NotNull Object object)
-        {
+        public TabItemBuild setDefaultTypeFace(Typeface typeFace) {
+            mTypeface = typeFace;
+            return builder.this;
+        }
+
+        @Override
+        public TabItemBuild setTag(@NotNull Object object) {
             TabItem.this.setTag(object);
             return builder.this;
         }
 
-        private Bitmap getICON(Drawable drawable)
-        {
+        @Override
+        public TabItemBuild setTextSizeDefault(float textSize) {
+            TEXTSIZE_DEFAULT = textSize;
+            return builder.this;
+        }
+
+        @Override
+        public TabItemBuild setTextSizeSelected(float textSize) {
+            TEXTSIZE_SELECTED = textSize;
+            return builder.this;
+        }
+
+        private Bitmap getICON(Drawable drawable) {
             int width = drawable.getIntrinsicWidth();
-            int height= drawable.getIntrinsicHeight();
+            int height = drawable.getIntrinsicHeight();
 
             Bitmap oldbmp = Utils.drawableToBitmap(drawable);
             Matrix matrix = new Matrix();
-            float scaleWidth = (Utils.dp2px(mContext,24)/ width);
-            float scaleHeight = (Utils.dp2px(mContext,24)/ height);
+            float scaleWidth = (Utils.dp2px(mContext, 24) / width);
+            float scaleHeight = (Utils.dp2px(mContext, 24) / height);
             matrix.postScale(scaleWidth, scaleHeight);
             Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);
 

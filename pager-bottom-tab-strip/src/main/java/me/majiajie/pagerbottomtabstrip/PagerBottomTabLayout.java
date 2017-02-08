@@ -216,6 +216,15 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
             PagerBottomTabLayout.this.setBackgroundResource(resid);
         }
 
+        @Override
+        public void setMessageString(String tag, String s) {
+            TabItem tabItem = selectTag(tag);
+            if(tabItem != null)
+            {
+                tabItem.setMessageString(s);
+            }
+        }
+
         private TabItem selectTag(Object tag)
         {
             for(TabItem tabItem:mPagerBottomTabStrip.mTabItems)

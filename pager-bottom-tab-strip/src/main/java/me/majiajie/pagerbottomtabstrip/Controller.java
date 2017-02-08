@@ -92,4 +92,5 @@ public interface Controller
     void setBackgroundResource(@DrawableRes int resid);
 
 
+    void setMessageString(String tag, String s);
 }
