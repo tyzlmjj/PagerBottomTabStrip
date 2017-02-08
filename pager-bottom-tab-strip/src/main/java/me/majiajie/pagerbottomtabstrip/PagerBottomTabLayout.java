@@ -217,7 +217,7 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
         }
 
         @Override
-        public void setMessageString(String tag, String s) {
+        public void setMessageString(Object tag, String s) {
             TabItem tabItem = selectTag(tag);
             if(tabItem != null)
             {
@@ -226,7 +226,7 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
         }
 
         @Override
-        public void setSelectedTabColor(String tag, int color) {
+        public void setSelectedTabColor(Object tag, int color) {
             TabItem tabItem = selectTag(tag);
             if(tabItem != null)
             {
@@ -235,7 +235,7 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
         }
 
         @Override
-        public void setDefaultTabColor(String tag, int color) {
+        public void setDefaultTabColor(Object tag, int color) {
             TabItem tabItem = selectTag(tag);
             if(tabItem != null)
             {
