@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:animateLayoutChanges="true"
+    >
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="12sp"
+        android:text="title"
+        android:fontFamily="sans-serif"
+        />
+
+    <View
+        android:id="@+id/view_oval"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/round"
+        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true"
+        android:translationX="13dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
+        android:minWidth="20dp"
+        android:background="@drawable/round"
+        android:maxLines="1"
+        android:text="1"
+        android:textSize="12sp"
+        android:textColor="@android:color/primary_text_dark"
+        android:layout_marginTop="6dp"
+        android:translationX="24dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

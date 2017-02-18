@@ -62,13 +62,13 @@ public interface Controller
 
     /**
      * 获取当前选中项索引
-     * @return
+     * @return TAG
      */
     int getSelected();
 
     /**
      * 获取当前选中项的TAG
-     * @return
+     * @return TAG
      */
     Object getSelectedTag();
 

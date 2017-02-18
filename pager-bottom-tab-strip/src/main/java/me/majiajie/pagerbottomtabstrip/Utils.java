@@ -65,8 +65,6 @@ class Utils {
 		return ContextCompat.getDrawable(context,getResourceId(context,attrRes));
 	}
 
-
-
 	public static float dp2sp(Context context, float dipValue) {
 		float pxValue = dp2px(context, dipValue);
 		return px2sp(context, pxValue);
