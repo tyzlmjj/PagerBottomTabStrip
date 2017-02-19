@@ -1,4 +1,4 @@
-# PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=dev)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
+# PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=master)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
 
 PagerBottomTabStrip 是一个基本按谷歌Material Design规范完成的安卓底部导航栏控件
 
