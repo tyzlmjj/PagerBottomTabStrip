@@ -1,4 +1,4 @@
-package me.majiajie.pagerbottomtabstrip.item;
+package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.annotation.TargetApi;
 import android.content.Context;

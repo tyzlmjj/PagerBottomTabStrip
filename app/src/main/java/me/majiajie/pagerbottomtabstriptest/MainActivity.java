@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.Controller;
-import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayoutOld;
 import me.majiajie.pagerbottomtabstrip.TabItemBuilder;
 import me.majiajie.pagerbottomtabstrip.TabLayoutMode;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void BottomTabTest() {
-        PagerBottomTabLayout pagerBottomTabLayout = (PagerBottomTabLayout) findViewById(R.id.tab);
+        PagerBottomTabLayoutOld pagerBottomTabLayout = (PagerBottomTabLayoutOld) findViewById(R.id.tab);
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "MINECRAFT.ttf");
 

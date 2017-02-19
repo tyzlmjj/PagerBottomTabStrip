@@ -1,60 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:animateLayoutChanges="true"
-    >
-
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
-        android:id="@+id/img_icon"
+        android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="8dp"
-        android:layout_centerHorizontal="true"
-        />
-
-    <TextView
-        android:id="@+id/tv_text"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/material_bottom_navigation_margin"
+        android:layout_marginBottom="@dimen/material_bottom_navigation_margin"
+        android:duplicateParentState="true" />
+    <me.majiajie.pagerbottomtabstrip.internal.BaselineLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:maxLines="1"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="12sp"
-        android:text="title"
-        android:fontFamily="sans-serif"
-        />
-
-    <View
-        android:id="@+id/view_oval"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:background="@drawable/round"
-        android:layout_marginTop="6dp"
-        android:layout_centerHorizontal="true"
-        android:translationX="13dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_messages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="20dp"
-        android:minWidth="20dp"
-        android:background="@drawable/round"
-        android:maxLines="1"
-        android:text="1"
-        android:textSize="12sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:layout_marginTop="6dp"
-        android:translationX="24dp"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"/>
+        android:layout_gravity="bottom|center_horizontal"
+        android:clipToPadding="false"
+        android:paddingBottom="10dp"
+        android:duplicateParentState="true">
+        <TextView
+            android:id="@+id/smallLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/material_bottom_navigation_text_size"
+            android:singleLine="true"
+            android:duplicateParentState="true" />
+        <TextView
+            android:id="@+id/largeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:textSize="@dimen/material_bottom_navigation_active_text_size"
+            android:singleLine="true"
+            android:duplicateParentState="true" />
+    </me.majiajie.pagerbottomtabstrip.internal.BaselineLayout>
+</merge>
 
 
-</RelativeLayout>
+    <!--<View-->
+        <!--android:id="@+id/view_oval"-->
+        <!--android:layout_width="10dp"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:background="@drawable/round"-->
+        <!--android:layout_marginTop="6dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:translationX="13dp"-->
+        <!--/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_messages"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:minHeight="20dp"-->
+        <!--android:minWidth="20dp"-->
+        <!--android:background="@drawable/round"-->
+        <!--android:maxLines="1"-->
+        <!--android:text="1"-->
+        <!--android:textSize="12sp"-->
+        <!--android:textColor="@android:color/primary_text_dark"-->
+        <!--android:layout_marginTop="6dp"-->
+        <!--android:translationX="24dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_centerHorizontal="true"/>-->
+
+

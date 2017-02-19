@@ -17,7 +17,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
 /**
  * 底部导航栏主布局
  */
-public class PagerBottomTabLayout extends FrameLayout implements TabStripLinstener
+public class PagerBottomTabLayoutOld extends FrameLayout implements TabStripLinstener
 {
     private Context mContext;
 
@@ -25,17 +25,17 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
 
     private ChangeColorsView mChangeColorsView;
 
-    public PagerBottomTabLayout(Context context) {
+    public PagerBottomTabLayoutOld(Context context) {
         super(context);
         init(context);
     }
 
-    public PagerBottomTabLayout(Context context, AttributeSet attrs) {
+    public PagerBottomTabLayoutOld(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public PagerBottomTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PagerBottomTabLayoutOld(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -59,13 +59,13 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     public TabStripBuild builder()
     {
         mPagerBottomTabStrip = new PagerBottomTabStrip(mContext);
-        PagerBottomTabLayout.this.addView(mPagerBottomTabStrip);
+        PagerBottomTabLayoutOld.this.addView(mPagerBottomTabStrip);
 
         LayoutParams lp = new LayoutParams
                 (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mPagerBottomTabStrip.setLayoutParams(lp);
 
-        return mPagerBottomTabStrip.builder(PagerBottomTabLayout.this);
+        return mPagerBottomTabStrip.builder(PagerBottomTabLayoutOld.this);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
             mChangeColorsView.setBackgroundColor(
                     mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor());
 
-            PagerBottomTabLayout.this.addView(mChangeColorsView,0);
+            PagerBottomTabLayoutOld.this.addView(mChangeColorsView,0);
 
             LayoutParams lp = new LayoutParams
                     (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -202,18 +202,18 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
 
         @Override
         public void setBackgroundColor(@ColorInt int color) {
-            PagerBottomTabLayout.this.setBackgroundColor(color);
+            PagerBottomTabLayoutOld.this.setBackgroundColor(color);
         }
 
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void setBackground(Drawable drawable) {
-            PagerBottomTabLayout.this.setBackground(drawable);
+            PagerBottomTabLayoutOld.this.setBackground(drawable);
         }
 
         @Override
         public void setBackgroundResource(@DrawableRes int resid) {
-            PagerBottomTabLayout.this.setBackgroundResource(resid);
+            PagerBottomTabLayoutOld.this.setBackgroundResource(resid);
         }
 
         @Override
