@@ -10,7 +10,5 @@
     <dimen name="material_bottom_navigation_margin">8dp</dimen>
     <dimen name="material_bottom_navigation_shadow_height">1dp</dimen>
     <dimen name="material_bottom_navigation_text_size">12sp</dimen>
-    <dimen name="material_bottom_sheet_modal_elevation">16dp</dimen>
-    <dimen name="material_bottom_sheet_peek_height_min">64dp</dimen>
 
 </resources>

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.majiajie.pagerbottomtabstrip.R;
+import me.majiajie.pagerbottomtabstrip.Utils;
 
 public class MaterialItemView extends BaseTabItem
 {
@@ -25,13 +26,15 @@ public class MaterialItemView extends BaseTabItem
     private final TextView mSmallLabel;
     private final TextView mLargeLabel;
 
-    private boolean mShiftingMode;
+    private boolean mShiftingMode=true;
 
     private Drawable mDefaultDrawable;
     private Drawable mCheckedDrawable;
 
-    private int mDefaultColor;
-    private int mSelectColor;
+    private int mDefaultColor = 0x89000000;
+    private int mCheckedColor;
+
+    private boolean mChecked;
 
     public MaterialItemView(Context context) {
         this(context,null);
@@ -61,6 +64,8 @@ public class MaterialItemView extends BaseTabItem
         mSmallLabel = (TextView) findViewById(R.id.smallLabel);
         mLargeLabel = (TextView) findViewById(R.id.largeLabel);
 
+        mCheckedColor = Utils.getAttrColor(context,R.attr.colorPrimary);
+
     }
 
     @Override
@@ -72,6 +77,8 @@ public class MaterialItemView extends BaseTabItem
     @Override
     public void setChecked(boolean checked)
     {
+        mChecked = checked;
+
         ViewCompat.setPivotX(mLargeLabel, mLargeLabel.getWidth() / 2);
         ViewCompat.setPivotY(mLargeLabel, mLargeLabel.getBaseline());
         ViewCompat.setPivotX(mSmallLabel, mSmallLabel.getWidth() / 2);
@@ -127,35 +134,66 @@ public class MaterialItemView extends BaseTabItem
     }
 
     @Override
-    void setTitle(String title) {
+    public void setTitle(String title) {
         mSmallLabel.setText(title);
         mLargeLabel.setText(title);
     }
 
     @Override
-    void setIcon(Drawable drawable) {
+    public void setIcon(Drawable drawable) {
+        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
+        if(!mChecked)
+        {
+            mIcon.setImageDrawable(mDefaultDrawable);
+        }
     }
 
     @Override
-    void setCheckedIcon(Drawable drawable) {
+    public void setCheckedIcon(Drawable drawable) {
+        mCheckedDrawable = Utils.tint(drawable,mCheckedColor);
+        if(mChecked)
+        {
+            mIcon.setImageDrawable(mCheckedDrawable);
+        }
     }
 
     @Override
-    void setColor(int color) {
+    public void setColor(int color) {
+        mDefaultColor = color;
+
+        if(mDefaultDrawable != null)
+        {
+            mDefaultDrawable = Utils.tint(mDefaultDrawable,mDefaultColor);
+
+            if(!mChecked)
+            {
+                mIcon.setImageDrawable(mDefaultDrawable);
+            }
+        }
     }
 
     @Override
-    void setCheckedColor(int color) {
+    public void setCheckedColor(int color) {
+        mCheckedColor = color;
+
+        if(mCheckedDrawable != null)
+        {
+            mCheckedDrawable = Utils.tint(mCheckedDrawable,mCheckedColor);
+
+            if(mChecked)
+            {
+                mIcon.setImageDrawable(mCheckedDrawable);
+            }
+        }
+    }
+
+    @Override
+    public void setMessageNumber(int number) {
 
     }
 
     @Override
-    void setMessageNumber(int number) {
-
-    }
-
-    @Override
-    void setHasMessage(boolean hasMessage) {
+    public void setHasMessage(boolean hasMessage) {
 
     }
 }

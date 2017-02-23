@@ -188,7 +188,6 @@ class PagerBottomTabStrip extends LinearLayout
                 mOnTabItemClickListener.onSelected(mIndex,mTabItems.get(mIndex).getTag());
             }
         }
-
     }
 
     @Override
@@ -512,10 +511,5 @@ class PagerBottomTabStrip extends LinearLayout
                 .setSelectedColor(selectedColor)
                 .build().getTabItem());
     }
-
-
-
-
-
 
 }

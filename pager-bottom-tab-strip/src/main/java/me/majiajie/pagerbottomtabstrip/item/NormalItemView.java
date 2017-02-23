@@ -53,18 +53,18 @@ public class NormalItemView extends BaseTabItem {
     }
 
     @Override
-    void setChecked(boolean checked) {
+    public void setChecked(boolean checked) {
         mChecked = checked;
         mIcon.setImageDrawable(mChecked ? mCheckedDrawable : mDefaultDrawable);
     }
 
     @Override
-    void setTitle(String title) {
+    public void setTitle(String title) {
         mTitle.setText(title);
     }
 
     @Override
-    void setIcon(Drawable drawable) {
+    public void setIcon(Drawable drawable) {
         mDefaultDrawable = drawable;
         if(!mChecked){
             mIcon.setImageDrawable(mDefaultDrawable);
@@ -72,7 +72,7 @@ public class NormalItemView extends BaseTabItem {
     }
 
     @Override
-    void setCheckedIcon(Drawable drawable) {
+    public void setCheckedIcon(Drawable drawable) {
         mCheckedDrawable = drawable;
         if(mChecked)
         {
@@ -81,7 +81,7 @@ public class NormalItemView extends BaseTabItem {
     }
 
     @Override
-    void setMessageNumber(int number)
+    public void setMessageNumber(int number)
     {
         if(number > 0) {
             mMessageView.setVisibility(View.VISIBLE);
@@ -93,14 +93,14 @@ public class NormalItemView extends BaseTabItem {
     }
 
     @Override
-    void setHasMessage(boolean hasMessage) {
+    public void setHasMessage(boolean hasMessage) {
         mOval.setVisibility(hasMessage ? View.VISIBLE : View.INVISIBLE);
     }
 
 
     @Override
-    void setColor(int color) {}
+    public void setColor(int color) {}
 
     @Override
-    void setCheckedColor(int color) {}
+    public void setCheckedColor(int color) {}
 }

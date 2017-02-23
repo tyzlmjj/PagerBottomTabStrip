@@ -5,13 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.media.VolumeProviderCompat;
 import android.util.TypedValue;
 
 import org.jetbrains.annotations.NotNull;
 
-class Utils {
+public class Utils {
 
 	/**
 	 * Drawable转换成Bitmap
@@ -49,7 +51,7 @@ class Utils {
 	 * @param attrRes	自定义属性
 	 * @return	A single color value in the form 0xAARRGGBB
 	 */
-	public static int getAttrColor(@NotNull Context context, @VolumeProviderCompat.ControlType int attrRes)
+	public static int getAttrColor(@NotNull Context context, int attrRes)
 	{
 		return ContextCompat.getColor(context,getResourceId(context,attrRes));
 	}
@@ -95,6 +97,10 @@ class Utils {
 		return (spValue * fontScale);
 	}
 
-
-
+	public static Drawable tint(@NonNull Drawable drawable, int color)
+	{
+		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+		DrawableCompat.setTint(wrappedDrawable, color);
+		return wrappedDrawable;
+	}
 }
