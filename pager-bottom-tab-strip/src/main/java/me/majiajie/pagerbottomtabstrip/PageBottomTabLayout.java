@@ -24,7 +24,7 @@ public class PageBottomTabLayout extends LinearLayout
 
     private List<BaseTabItem> mItems;
 
-    private boolean mIsMaterial = false;
+    private boolean mIsMaterial = true;
 
     private int mIndex = -1;
     private int mOldIndex = -1;
@@ -94,6 +94,11 @@ public class PageBottomTabLayout extends LinearLayout
         //记录前一个选中项和当前选中项
         mOldIndex = mIndex;
         mIndex = n;
+
+        if(mIsMaterial)
+        {
+
+        }
 
         //前一个选中项必须大于0
         if(mOldIndex >= 0)

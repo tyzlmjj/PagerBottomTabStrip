@@ -26,8 +26,6 @@ import android.view.ViewGroup;
 /**
  * A simple ViewGroup that aligns all the views inside on a baseline. Note: bottom padding for this
  * view will be measured starting from the baseline.
- *
- * @hide
  */
 public class BaselineLayout extends ViewGroup {
     private int mBaseline = -1;

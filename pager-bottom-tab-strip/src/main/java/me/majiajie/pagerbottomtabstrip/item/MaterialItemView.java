@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstrip.item;
 
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -48,8 +49,7 @@ public class MaterialItemView extends BaseTabItem
         super(context, attrs, defStyleAttr);
 
         final Resources res = getResources();
-        int inactiveLabelSize =
-                res.getDimensionPixelSize(R.dimen.material_bottom_navigation_text_size);
+        int inactiveLabelSize = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_text_size);
         int activeLabelSize = res.getDimensionPixelSize(
                 R.dimen.material_bottom_navigation_active_text_size);
         mDefaultMargin = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_margin);
@@ -65,6 +65,8 @@ public class MaterialItemView extends BaseTabItem
         mLargeLabel = (TextView) findViewById(R.id.largeLabel);
 
         mCheckedColor = Utils.getAttrColor(context,R.attr.colorPrimary);
+
+        setLayoutTransition(new LayoutTransition());
 
     }
 
@@ -98,6 +100,7 @@ public class MaterialItemView extends BaseTabItem
                 iconParams.topMargin = mDefaultMargin;
                 mIcon.setLayoutParams(iconParams);
                 mLargeLabel.setVisibility(INVISIBLE);
+//                mLargeLabel.setScaleX(0.5f);
                 ViewCompat.setScaleX(mLargeLabel, 0.5f);
                 ViewCompat.setScaleY(mLargeLabel, 0.5f);
             }
@@ -130,7 +133,7 @@ public class MaterialItemView extends BaseTabItem
             }
         }
 
-        refreshDrawableState();
+        invalidate();
     }
 
     @Override
