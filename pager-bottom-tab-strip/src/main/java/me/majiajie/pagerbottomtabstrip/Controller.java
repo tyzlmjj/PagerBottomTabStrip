@@ -91,7 +91,7 @@ public interface Controller
      */
     void setBackgroundResource(@DrawableRes int resid);
 
-    void setMessageString(Object tag, String s);
+    void setMessageString(Object tag, String s, boolean b);
 
     void setSelectedTabColor(Object tag, int color);
 

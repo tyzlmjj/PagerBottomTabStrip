@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         controller.setDefaultTabColor("A", Color.BLUE);
 
 //        controller.setMessageNumber("A", 2);
-//        controller.setMessageString("A", "II");
+//        controller.setMessageString("A", "II", true);
 //        controller.setDisplayOval(0,true);
 
         controller.addTabItemClickListener(listener);
@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSelected(int index, Object tag) {
             Log.i("asd", "onSelected:" + index + "   TAG: " + tag.toString());
+
+            if (index == 2) {
+                controller.setMessageString("A", "II", false);
+            } else if (index == 0) {
+                controller.setMessageString("A", "II", true);
+            }
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             //transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);

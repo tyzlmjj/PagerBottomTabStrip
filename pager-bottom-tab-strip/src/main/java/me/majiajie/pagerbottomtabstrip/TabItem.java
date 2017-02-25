@@ -124,6 +124,7 @@ class TabItem extends View {
      */
     private Typeface mTypeface = null;
     private String mMessageString = null;
+    private boolean mMessageStringState = false;
 
 
     public TabItem(Context context) {
@@ -372,7 +373,7 @@ class TabItem extends View {
     }
 
     private void drawMessageText(Canvas canvas, float n) {
-        if (mMessageString != null) {
+        if (mMessageString != null && mMessageStringState) {
             //画背景的圆形
             Paint backgroundPaint = new Paint();
             backgroundPaint.setColor(mColorMessageBackground);
@@ -515,8 +516,9 @@ class TabItem extends View {
         }
     }
 
-    public void setMessageString(String s) {
+    public void setMessageString(String s, boolean state) {
         mMessageString = s;
+        mMessageStringState = state;
         invalidateView();
     }
 
