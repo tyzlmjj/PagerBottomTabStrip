@@ -1,3 +1,4 @@
+
 language: android
 android:
   components:
@@ -25,9 +26,3 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-
-
-
-
-
-

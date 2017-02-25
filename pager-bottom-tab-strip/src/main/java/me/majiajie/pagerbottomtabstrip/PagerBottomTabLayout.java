@@ -17,8 +17,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
 /**
  * 底部导航栏主布局
  */
-public class PagerBottomTabLayout extends FrameLayout implements TabStripLinstener
-{
+public class PagerBottomTabLayout extends FrameLayout implements TabStripLinstener {
     private Context mContext;
 
     private PagerBottomTabStrip mPagerBottomTabStrip;
@@ -49,15 +48,15 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMeasuredDimension(getMeasuredWidth(), (int) Utils.dp2px(mContext,56));
+        setMeasuredDimension(getMeasuredWidth(), (int) Utils.dp2px(mContext, 56));
     }
 
     /**
      * 构建导航栏
+     *
      * @return {@link TabStripBuild}
      */
-    public TabStripBuild builder()
-    {
+    public TabStripBuild builder() {
         mPagerBottomTabStrip = new PagerBottomTabStrip(mContext);
         PagerBottomTabLayout.this.addView(mPagerBottomTabStrip);
 
@@ -69,16 +68,14 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     }
 
     @Override
-    public Controller onFinishBuild()
-    {
-        if((mPagerBottomTabStrip.mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
-        {
+    public Controller onFinishBuild() {
+        if ((mPagerBottomTabStrip.mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
             mChangeColorsView = new ChangeColorsView(mContext);
 
             mChangeColorsView.setBackgroundColor(
                     mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor());
 
-            PagerBottomTabLayout.this.addView(mChangeColorsView,0);
+            PagerBottomTabLayout.this.addView(mChangeColorsView, 0);
 
             LayoutParams lp = new LayoutParams
                     (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -89,29 +86,24 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     }
 
     @Override
-    public void onSelect()
-    {
-        if(mChangeColorsView != null)
-        {
+    public void onSelect() {
+        if (mChangeColorsView != null) {
             mChangeColorsView.addOvalColor(
-                    mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor(),touch_x,touch_y);
+                    mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor(), touch_x, touch_y);
         }
     }
 
     @Override
-    public void onSelect(float x, float y)
-    {
-        if(mChangeColorsView != null)
-        {
+    public void onSelect(float x, float y) {
+        if (mChangeColorsView != null) {
             mChangeColorsView.addOvalColor(
-                    mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor(),x,y);
+                    mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getSelectedColor(), x, y);
         }
     }
 
     @Override
-    public void onNotMeasure(int color)
-    {
-        if(mChangeColorsView != null) {
+    public void onNotMeasure(int color) {
+        if (mChangeColorsView != null) {
             mChangeColorsView.setBackgroundColor(color);
         }
     }
@@ -121,82 +113,67 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     private float touch_y;
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev)
-    {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         touch_x = ev.getX();
         touch_y = ev.getY();
         return super.onInterceptTouchEvent(ev);
     }
 
 
-    Controller mController = new Controller()
-    {
+    Controller mController = new Controller() {
         @Override
-        public void addTabItemClickListener(OnTabItemSelectListener listener)
-        {
+        public void addTabItemClickListener(OnTabItemSelectListener listener) {
             mPagerBottomTabStrip.mOnTabItemClickListener = listener;
         }
 
         @Override
-        public void setMessageNumber(int index, int number)
-        {
+        public void setMessageNumber(int index, int number) {
             mPagerBottomTabStrip.mTabItems.get(index).setMessageNumber(number);
         }
 
         @Override
-        public void setMessageNumber(Object tag, int number)
-        {
+        public void setMessageNumber(Object tag, int number) {
             TabItem tabItem = selectTag(tag);
-            if(tabItem != null)
-            {
+            if (tabItem != null) {
                 tabItem.setMessageNumber(number);
             }
         }
 
         @Override
-        public void setDisplayOval(int index, boolean display)
-        {
+        public void setDisplayOval(int index, boolean display) {
             mPagerBottomTabStrip.mTabItems.get(index).setDisplayOval(display);
         }
 
         @Override
-        public void setDisplayOval(Object tag, boolean display)
-        {
+        public void setDisplayOval(Object tag, boolean display) {
             TabItem tabItem = selectTag(tag);
-            if(tabItem != null)
-            {
+            if (tabItem != null) {
                 tabItem.setDisplayOval(display);
             }
         }
 
         @Override
-        public void setSelect(int index)
-        {
+        public void setSelect(int index) {
             mPagerBottomTabStrip.setSetectManually(index);
         }
 
         @Override
-        public void setSelect(Object tag)
-        {
-            for(int i = 0; i < mPagerBottomTabStrip.mTabItems.size(); i++)
-            {
-                if(mPagerBottomTabStrip.mTabItems.get(i).getTag().equals(tag))
-                {
+        public void setSelect(Object tag) {
+            for (int i = 0; i < mPagerBottomTabStrip.mTabItems.size(); i++) {
+                if (mPagerBottomTabStrip.mTabItems.get(i).getTag().equals(tag)) {
                     setSelect(i);
                 }
             }
         }
 
         @Override
-        public int getSelected()
-        {
+        public int getSelected() {
 
             return mPagerBottomTabStrip.mIndex;
         }
 
         @Override
-        public Object getSelectedTag()
-        {
+        public Object getSelectedTag() {
             return mPagerBottomTabStrip.mTabItems.get(mPagerBottomTabStrip.mIndex).getTag();
         }
 
@@ -216,23 +193,39 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
             PagerBottomTabLayout.this.setBackgroundResource(resid);
         }
 
-        private TabItem selectTag(Object tag)
-        {
-            for(TabItem tabItem:mPagerBottomTabStrip.mTabItems)
-            {
-                if(tabItem.getTag().equals(tag))
-                {
+        @Override
+        public void setMessageString(Object tag, String s, boolean b) {
+            TabItem tabItem = selectTag(tag);
+            if (tabItem != null) {
+                tabItem.setMessageString(s, b);
+            }
+        }
+
+        @Override
+        public void setSelectedTabColor(Object tag, int color) {
+            TabItem tabItem = selectTag(tag);
+            if (tabItem != null) {
+                tabItem.setNewSelectedColor(color);
+            }
+        }
+
+        @Override
+        public void setDefaultTabColor(Object tag, int color) {
+            TabItem tabItem = selectTag(tag);
+            if (tabItem != null) {
+                tabItem.setNewDefaultColor(color);
+            }
+        }
+
+        private TabItem selectTag(Object tag) {
+            for (TabItem tabItem : mPagerBottomTabStrip.mTabItems) {
+                if (tabItem.getTag().equals(tag)) {
                     return tabItem;
                 }
             }
             return null;
         }
     };
-
-
-
-
-
 
 
 }
