@@ -1,7 +1,6 @@
 package me.majiajie.pagerbottomtabstrip.item;
 
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -17,7 +16,6 @@ import me.majiajie.pagerbottomtabstrip.Utils;
 
 public class MaterialItemView extends BaseTabItem
 {
-    private final int mDefaultHeight;
     private final int mDefaultMargin;
     private final int mShiftAmount;
     private final float mScaleUpFactor;
@@ -27,7 +25,7 @@ public class MaterialItemView extends BaseTabItem
     private final TextView mSmallLabel;
     private final TextView mLargeLabel;
 
-    private boolean mShiftingMode=true;
+    private boolean mShiftingMode;
 
     private Drawable mDefaultDrawable;
     private Drawable mCheckedDrawable;
@@ -53,27 +51,15 @@ public class MaterialItemView extends BaseTabItem
         int activeLabelSize = res.getDimensionPixelSize(
                 R.dimen.material_bottom_navigation_active_text_size);
         mDefaultMargin = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_margin);
-        mDefaultHeight = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_height);
         mShiftAmount = inactiveLabelSize - activeLabelSize;
         mScaleUpFactor = 1f * activeLabelSize / inactiveLabelSize;
         mScaleDownFactor = 1f * inactiveLabelSize / activeLabelSize;
 
         LayoutInflater.from(context).inflate(R.layout.item_material, this, true);
-//        setBackgroundResource(R.drawable.material_bottom_navigation_item_background);
         mIcon = (ImageView) findViewById(R.id.icon);
         mSmallLabel = (TextView) findViewById(R.id.smallLabel);
         mLargeLabel = (TextView) findViewById(R.id.largeLabel);
 
-        mCheckedColor = Utils.getAttrColor(context,R.attr.colorPrimary);
-
-        setLayoutTransition(new LayoutTransition());
-
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), mDefaultHeight);
     }
 
     @Override
@@ -100,7 +86,6 @@ public class MaterialItemView extends BaseTabItem
                 iconParams.topMargin = mDefaultMargin;
                 mIcon.setLayoutParams(iconParams);
                 mLargeLabel.setVisibility(INVISIBLE);
-//                mLargeLabel.setScaleX(0.5f);
                 ViewCompat.setScaleX(mLargeLabel, 0.5f);
                 ViewCompat.setScaleY(mLargeLabel, 0.5f);
             }
@@ -133,7 +118,21 @@ public class MaterialItemView extends BaseTabItem
             }
         }
 
-        invalidate();
+        changeColor();
+
+    }
+
+    private void changeColor()
+    {
+        if(mChecked) {
+            mLargeLabel.setTextColor(mCheckedColor);
+            mSmallLabel.setTextColor(mCheckedColor);
+            mIcon.setImageDrawable(mCheckedDrawable);
+        } else {
+            mLargeLabel.setTextColor(mDefaultColor);
+            mSmallLabel.setTextColor(mDefaultColor);
+            mIcon.setImageDrawable(mDefaultDrawable);
+        }
     }
 
     @Override
@@ -171,6 +170,8 @@ public class MaterialItemView extends BaseTabItem
             if(!mChecked)
             {
                 mIcon.setImageDrawable(mDefaultDrawable);
+                mLargeLabel.setTextColor(mDefaultColor);
+                mSmallLabel.setTextColor(mDefaultColor);
             }
         }
     }
@@ -186,8 +187,19 @@ public class MaterialItemView extends BaseTabItem
             if(mChecked)
             {
                 mIcon.setImageDrawable(mCheckedDrawable);
+                mLargeLabel.setTextColor(mCheckedColor);
+                mSmallLabel.setTextColor(mCheckedColor);
             }
         }
+    }
+
+    public int getCheckedColor()
+    {
+        return mCheckedColor;
+    }
+
+    public void setShiftingMode(boolean shiftingMode) {
+        mShiftingMode = shiftingMode;
     }
 
     @Override

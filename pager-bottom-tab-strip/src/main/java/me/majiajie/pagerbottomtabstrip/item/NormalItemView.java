@@ -85,7 +85,7 @@ public class NormalItemView extends BaseTabItem {
     {
         if(number > 0) {
             mMessageView.setVisibility(View.VISIBLE);
-            mMessageView.setText(number + "");
+            mMessageView.setText(String.valueOf(number));
         }
         else {
             mMessageView.setVisibility(View.INVISIBLE);

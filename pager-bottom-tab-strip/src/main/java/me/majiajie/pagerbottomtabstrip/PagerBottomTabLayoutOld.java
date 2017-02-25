@@ -71,7 +71,7 @@ public class PagerBottomTabLayoutOld extends FrameLayout implements TabStripLins
     @Override
     public Controller onFinishBuild()
     {
-        if((mPagerBottomTabStrip.mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0)
+        if((mPagerBottomTabStrip.mMode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0)
         {
             mChangeColorsView = new ChangeColorsView(mContext);
 

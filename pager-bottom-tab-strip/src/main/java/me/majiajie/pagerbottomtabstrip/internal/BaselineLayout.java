@@ -18,7 +18,6 @@ package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.ViewUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +63,7 @@ public class BaselineLayout extends ViewGroup {
             }
             maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
             maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
-            childState = ViewUtils.combineMeasuredStates(childState,
-                    ViewCompat.getMeasuredState(child));
+            childState = childState | ViewCompat.getMeasuredState(child);
         }
         if (maxChildBaseline != -1) {
             maxChildDescent = Math.max(maxChildDescent, getPaddingBottom());

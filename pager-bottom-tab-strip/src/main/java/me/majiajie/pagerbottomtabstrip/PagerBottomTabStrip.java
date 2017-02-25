@@ -121,7 +121,7 @@ class PagerBottomTabStrip extends LinearLayout
         int width_dp = (int) Utils.px2dp(mContext,getMeasuredWidth());
 
         //设置按钮的初始宽度
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
+        if((mMode & MaterialMode.HIDE_TEXT) > 0)
         {
             int max_w = HIDE_TEXT_MAX_WIDTH*(mTabItems.size()-1)+HIDE_TEXT_SELECTED_MAX_WIDTH;
             if(width_dp > max_w)
@@ -197,7 +197,7 @@ class PagerBottomTabStrip extends LinearLayout
 
         isCreated = true;
 
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0 && mIndex != mOldIndex)
+        if((mMode & MaterialMode.HIDE_TEXT) > 0 && mIndex != mOldIndex)
         {
             TabItem newView = mTabItems.get(mIndex);
             TabItem oldView = mTabItems.get(mOldIndex);
@@ -283,7 +283,7 @@ class PagerBottomTabStrip extends LinearLayout
             mTabItems.get(i).setSelect(i == mIndex);
         }
 
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
+        if((mMode & MaterialMode.HIDE_TEXT) > 0)
         {
             invalidateView();
         }
@@ -327,7 +327,7 @@ class PagerBottomTabStrip extends LinearLayout
             mTabItems.get(i).setSelect(i == mIndex);
         }
 
-        if((mMode & TabLayoutMode.HIDE_TEXT) > 0)
+        if((mMode & MaterialMode.HIDE_TEXT) > 0)
         {
             invalidateView();
         }

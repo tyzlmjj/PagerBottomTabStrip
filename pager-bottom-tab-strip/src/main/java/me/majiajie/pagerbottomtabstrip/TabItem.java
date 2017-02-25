@@ -152,13 +152,13 @@ class TabItem extends View {
     /**
      * 设置模式
      *
-     * @param mode {@link TabLayoutMode TabLayoutMode}
+     * @param mode {@link MaterialMode MaterialMode}
      */
     protected void setMode(int mode) {
         mMode = mode;
 
         //设置点击效果
-        if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
+        if ((mMode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
             TabItem.this.setBackgroundColor(Color.TRANSPARENT);
         } else {
             TabItem.this.setBackgroundResource(Utils.getResourceId(mContext, R.attr.selectableItemBackgroundBorderless));
@@ -293,7 +293,7 @@ class TabItem extends View {
      */
     private void drawText(Canvas canvas, float n) {
 
-        if ((mMode & TabLayoutMode.HIDE_TEXT) > 0 && mScale == DEFAULT) {
+        if ((mMode & MaterialMode.HIDE_TEXT) > 0 && mScale == DEFAULT) {
             return;
         }
 
@@ -311,7 +311,7 @@ class TabItem extends View {
         if (mScale == DEFAULT) {
             textPaint.setColor(mColorDefault);
         } else {
-            if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
+            if ((mMode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
                 textPaint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
 
             } else {
@@ -343,7 +343,7 @@ class TabItem extends View {
         if (mScale == DEFAULT) {
             paint.setColor(mColorDefault);
         } else {
-            if ((mMode & TabLayoutMode.CHANGE_BACKGROUND_COLOR) > 0) {
+            if ((mMode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
                 paint.setColor(SELECTED_COLOR_ON_MULTIPLE_BACKGROUND);
             } else {
                 paint.setColor(mColorSelected);
@@ -359,7 +359,7 @@ class TabItem extends View {
         float left = getMeasuredWidth() / 2f - Utils.dp2px(mContext, 12);
 
         float top;
-        if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+        if ((mMode & MaterialMode.HIDE_TEXT) > 0) {
             top = Utils.dp2px(mContext, 16 - 10 * n);
         } else {
             top = Utils.dp2px(mContext, 8 - 2 * n);
@@ -411,7 +411,7 @@ class TabItem extends View {
             float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
 
             float top;
-            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+            if ((mMode & MaterialMode.HIDE_TEXT) > 0) {
                 top = Utils.dp2px(mContext, 12 - 6 * n);
             } else {
                 top = Utils.dp2px(mContext, 6);
@@ -469,7 +469,7 @@ class TabItem extends View {
             float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
 
             float top;
-            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+            if ((mMode & MaterialMode.HIDE_TEXT) > 0) {
                 top = Utils.dp2px(mContext, 12 - 6 * n);
             } else {
                 top = Utils.dp2px(mContext, 6);
@@ -493,7 +493,7 @@ class TabItem extends View {
             paint.setAntiAlias(true);
             float left = getMeasuredWidth() / 2f + Utils.dp2px(mContext, 10);
             float top;
-            if ((mMode & TabLayoutMode.HIDE_TEXT) > 0) {
+            if ((mMode & MaterialMode.HIDE_TEXT) > 0) {
                 top = Utils.dp2px(mContext, 12 - 6 * n);
             } else {
                 top = Utils.dp2px(mContext, 6);

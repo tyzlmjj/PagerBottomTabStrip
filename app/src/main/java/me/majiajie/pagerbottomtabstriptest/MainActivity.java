@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(android.R.drawable.ic_menu_search, "搜索", testColors[2])
                 .addItem(android.R.drawable.ic_menu_help, "帮助", testColors[3])
                 .build();
-
     }
 
 }

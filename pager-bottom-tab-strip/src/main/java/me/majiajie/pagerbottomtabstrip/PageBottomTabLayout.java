@@ -2,32 +2,24 @@ package me.majiajie.pagerbottomtabstrip;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
+import me.majiajie.pagerbottomtabstrip.internal.MaterialItemLayout;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 
-public class PageBottomTabLayout extends LinearLayout
+public class PageBottomTabLayout extends FrameLayout
 {
-    private final int MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH;
-    private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH;
-    private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
 
-    private List<BaseTabItem> mItems;
-
-    private boolean mIsMaterial = true;
-
-    private int mIndex = -1;
-    private int mOldIndex = -1;
+    private int mTabPaddingTop;
+    private int mTabPaddingBottom;
 
     public PageBottomTabLayout(Context context) {
         this(context,null);
@@ -39,32 +31,17 @@ public class PageBottomTabLayout extends LinearLayout
 
     public PageBottomTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setPadding(0,0,0,0);
 
-        final Resources res = getResources();
-
-        MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_active_item_max_width);
-        MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_item_max_width);
-        MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_item_min_width);
-
-        setOrientation(HORIZONTAL);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (mItems.size() <= 0 ){return;}
-
-        if(mIsMaterial) {
-
+        TintTypedArray a = TintTypedArray.obtainStyledAttributes(context, attrs,
+                R.styleable.PageBottomTabLayout);
+        if(a.hasValue(R.styleable.PageBottomTabLayout_tabPaddingTop)) {
+            mTabPaddingTop = a.getDimensionPixelSize(R.styleable.PageBottomTabLayout_tabPaddingTop,0);
         }
-        else {
-            int childWidth = getMeasuredWidth() / mItems.size();
-
-            for (BaseTabItem v : mItems) {
-                v.getLayoutParams().width = childWidth;
-            }
+        if(a.hasValue(R.styleable.PageBottomTabLayout_tabPaddingBottom)) {
+            mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.PageBottomTabLayout_tabPaddingBottom,0);
         }
+        a.recycle();
     }
 
     /**
@@ -83,31 +60,6 @@ public class PageBottomTabLayout extends LinearLayout
 
     }
 
-    void checked(int n)
-    {
-        //不正常的选择项
-        if(n >= mItems.size() || n < 0){return;}
-
-        //重复选择
-        if(n == mIndex){return;}
-
-        //记录前一个选中项和当前选中项
-        mOldIndex = mIndex;
-        mIndex = n;
-
-        if(mIsMaterial)
-        {
-
-        }
-
-        //前一个选中项必须大于0
-        if(mOldIndex >= 0)
-        {
-            mItems.get(mOldIndex).setChecked(false);
-        }
-        mItems.get(mIndex).setChecked(true);
-    }
-
     /**
      * 构建 Material Desgin 风格的导航栏
      */
@@ -115,40 +67,37 @@ public class PageBottomTabLayout extends LinearLayout
     {
         List<MaterialItemView> items;
         int defaultColor;
+        int mode;
 
-        MaterialBuilder(){
+        MaterialBuilder() {
             items = new ArrayList<>();
         }
 
         /**
          * 完成构建
          *
-         * @return  {@link Controller},通过它进行后续操作
+         * @return  {@link NavigationController},通过它进行后续操作
          */
-        public Controller build()
+        public NavigationController build()
         {
+            //未添加任何按钮
+            if(items.size() == 0){return null;}
+
+            //检查是否设置了默认颜色
             if(defaultColor != 0) {
                 for (MaterialItemView v:items) {
                     v.setColor(defaultColor);
                 }
             }
 
-            int n = items.size();
-            for (int i = 0; i < n; i++) {
-                final int finalI = i;
-                items.get(i).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checked(finalI);
-                    }
-                });
+            MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
+            materialItemLayout.initialize(items,mode);
+            materialItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
-                PageBottomTabLayout.this.addView(items.get(i));
-            }
+            PageBottomTabLayout.this.removeAllViews();
+            PageBottomTabLayout.this.addView(materialItemLayout);
 
-            mItems = new ArrayList<BaseTabItem>(items);
-
-            return null;
+            return materialItemLayout;
         }
 
         /**
@@ -158,12 +107,7 @@ public class PageBottomTabLayout extends LinearLayout
          * @return {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable, String title){
-
-            MaterialItemView itemView = new MaterialItemView(getContext());
-            itemView.setIcon(ContextCompat.getDrawable(getContext(),drawable));
-            itemView.setTitle(title);
-            items.add(itemView);
-
+            addItem(drawable,drawable,title,Utils.getAttrColor(getContext(),R.attr.colorPrimary));
             return MaterialBuilder.this;
         }
 
@@ -175,13 +119,7 @@ public class PageBottomTabLayout extends LinearLayout
          * @return  {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable,String title,@ColorInt int chekedColor){
-
-            MaterialItemView itemView = new MaterialItemView(getContext());
-            itemView.setIcon(ContextCompat.getDrawable(getContext(),drawable));
-            itemView.setTitle(title);
-            itemView.setCheckedColor(chekedColor);
-            items.add(itemView);
-
+            addItem(drawable,drawable,title,chekedColor);
             return MaterialBuilder.this;
         }
 
@@ -196,12 +134,11 @@ public class PageBottomTabLayout extends LinearLayout
         public MaterialBuilder addItem(@DrawableRes int drawable,@DrawableRes int checkedDrawable,String title,@ColorInt int chekedColor){
 
             MaterialItemView itemView = new MaterialItemView(getContext());
+            itemView.setCheckedColor(chekedColor);
             itemView.setIcon(ContextCompat.getDrawable(getContext(),drawable));
             itemView.setCheckedIcon(ContextCompat.getDrawable(getContext(),checkedDrawable));
             itemView.setTitle(title);
-            itemView.setCheckedColor(chekedColor);
             items.add(itemView);
-
             return MaterialBuilder.this;
         }
 
@@ -217,19 +154,19 @@ public class PageBottomTabLayout extends LinearLayout
 
         /**
          * 设置模式。默认文字一直显示，且背景色不变。
-         * 可以通过{@link TabLayoutMode}选择模式。
+         * 可以通过{@link MaterialMode}选择模式。
          *
          * <p>例如:</p>
-         * {@code TabLayoutMode.HIDE_TEXT}
+         * {@code MaterialMode.HIDE_TEXT}
          *
          * <p>或者多选:</p>
-         * {@code TabLayoutMode.HIDE_TEXT | TabLayoutMode.CHANGE_BACKGROUND_COLOR}
+         * {@code MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR}
          *
-         * @param tabStripMode {@link TabLayoutMode}
+         * @param mode {@link MaterialMode}
          * @return {@link TabStripBuild}
          */
-        public MaterialBuilder setMode(int tabStripMode){
-
+        public MaterialBuilder setMode(int mode){
+            MaterialBuilder.this.mode = mode;
             return MaterialBuilder.this;
         }
     }

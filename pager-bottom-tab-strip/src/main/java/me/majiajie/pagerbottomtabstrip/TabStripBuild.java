@@ -119,15 +119,15 @@ public interface TabStripBuild
 
     /**
      * 设置模式。默认文字一直显示，且背景色不变。
-     * 可以通过{@link TabLayoutMode}选择模式。
+     * 可以通过{@link MaterialMode}选择模式。
      *
      * <p>例如:</p>
-     * {@code TabLayoutMode.HIDE_TEXT}
+     * {@code MaterialMode.HIDE_TEXT}
      *
      * <p>或者多选:</p>
-     * {@code TabLayoutMode.HIDE_TEXT | TabLayoutMode.CHANGE_BACKGROUND_COLOR}
+     * {@code MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR}
      *
-     * @param tabStripMode {@link TabLayoutMode}
+     * @param tabStripMode {@link MaterialMode}
      * @return {@link TabStripBuild}
      */
     TabStripBuild setMode(int tabStripMode);
