@@ -1,4 +1,5 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
@@ -7,6 +8,7 @@
         android:layout_marginTop="@dimen/material_bottom_navigation_margin"
         android:layout_marginBottom="@dimen/material_bottom_navigation_margin"
         android:duplicateParentState="true" />
+
     <me.majiajie.pagerbottomtabstrip.internal.BaselineLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,33 +32,17 @@
             android:singleLine="true"
             android:duplicateParentState="true" />
     </me.majiajie.pagerbottomtabstrip.internal.BaselineLayout>
+
+    <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
+        android:id="@+id/messages"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:translationX="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        />
+
 </merge>
-
-
-    <!--<View-->
-        <!--android:id="@+id/view_oval"-->
-        <!--android:layout_width="10dp"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:background="@drawable/round"-->
-        <!--android:layout_marginTop="6dp"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:translationX="13dp"-->
-        <!--/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_messages"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:minHeight="20dp"-->
-        <!--android:minWidth="20dp"-->
-        <!--android:background="@drawable/round"-->
-        <!--android:maxLines="1"-->
-        <!--android:text="1"-->
-        <!--android:textSize="12sp"-->
-        <!--android:textColor="@android:color/primary_text_dark"-->
-        <!--android:layout_marginTop="6dp"-->
-        <!--android:translationX="24dp"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_centerHorizontal="true"/>-->
 
 

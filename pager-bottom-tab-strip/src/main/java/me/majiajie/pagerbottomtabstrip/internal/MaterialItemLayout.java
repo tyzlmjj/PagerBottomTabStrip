@@ -30,6 +30,8 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class MaterialItemLayout extends ViewGroup implements NavigationController{
 
+    private final int DEFAULT_SELECTED = 0;
+
     private final int MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH;
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH;
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
@@ -111,7 +113,12 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
             }
 
             //设置默认的背景
-            setBackgroundColor(mColors.get(0));
+            setBackgroundColor(mColors.get(DEFAULT_SELECTED));
+        } else {
+            //设置按钮点击效果
+            for(MaterialItemView v:mItems) {
+                v.setBackgroundResource(Utils.getResourceId(getContext(),R.attr.selectableItemBackgroundBorderless));
+            }
         }
 
         //判断是否隐藏文字
@@ -133,34 +140,24 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelect(finali);
+
+                    setSelect(finali,mLastUpX,mLastUpY);
                 }
             });
         }
 
         //默认选中第一项
-        mSelected = 0;
-        mItems.get(mSelected).setChecked(true);
+        mSelected = DEFAULT_SELECTED;
+        mItems.get(DEFAULT_SELECTED).setChecked(true);
     }
-
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//
-//        //排除空状态
-//        if (mItems == null || mItems.size() <= 0 ){return;}
-//
-//        int childWidth = getMeasuredWidth() / mItems.size();
-//
-//        for (BaseTabItem v : mItems) {
-//            v.getLayoutParams().width = childWidth;
-//        }
-//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //排除空状态
-        if (mItems == null || mItems.size() <= 0 ){return;}
+        if (mItems == null || mItems.size() <= 0 ) {
+            super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+            return;
+        }
 
         final int width = MeasureSpec.getSize(widthMeasureSpec);
         final int count = getChildCount();
@@ -208,10 +205,6 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
         }
 
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
-//        setMeasuredDimension(
-//                ViewCompat.resolveSizeAndState(totalWidth,
-//                        MeasureSpec.makeMeasureSpec(totalWidth, MeasureSpec.EXACTLY), 0),
-//                ViewCompat.resolveSizeAndState(MATERIAL_BOTTOM_NAVIGATION_ITEM_HEIGHT, heightSpec, 0));
     }
 
     @Override
@@ -286,42 +279,12 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
     }
 
     @Override
-    public void setSelect(int n) {
-
+    public void setSelect(int index) {
         //不正常的选择项
-        if(n >= mItems.size() || n < 0){return;}
+        if(index >= mItems.size() || index < 0){return;}
 
-        //重复选择
-        if(n == mSelected){
-            for(OnTabItemSelectedListener listener:mListeners) {
-                listener.onRepeat(mSelected);
-            }
-            return;
-        }
-
-        //记录前一个选中项和当前选中项
-        mOldSelected = mSelected;
-        mSelected = n;
-
-        mDelayedAnimationHelper.beginDelayedTransition(this);
-
-        //切换背景颜色
-        if(mChangeBackgroundMode)
-        {
-            addOvalColor(mColors.get(mSelected),mLastUpX,mLastUpY);
-        }
-
-        //前一个选中项必须不小于0才有效
-        if(mOldSelected >= 0) {
-            mItems.get(mOldSelected).setChecked(false);
-        }
-
-        mItems.get(mSelected).setChecked(true);
-
-        //事件回调
-        for(OnTabItemSelectedListener listener:mListeners) {
-            listener.onSelected(mSelected,mOldSelected);
-        }
+        View v = mItems.get(index);
+        setSelect(index,v.getX() + v.getWidth() / 2f,v.getY() + v.getHeight() / 2f);
     }
 
     @Override
@@ -342,6 +305,51 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
     @Override
     public int getSelected() {
         return mSelected;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    @Override
+    public String getItemTitle(int index) {
+        return mItems.get(index).getTitle();
+    }
+
+    private void setSelect(int index,float x,float y) {
+
+        //重复选择
+        if(index == mSelected){
+            for(OnTabItemSelectedListener listener:mListeners) {
+                listener.onRepeat(mSelected);
+            }
+            return;
+        }
+
+        //记录前一个选中项和当前选中项
+        mOldSelected = mSelected;
+        mSelected = index;
+
+        mDelayedAnimationHelper.beginDelayedTransition(this);
+
+        //切换背景颜色
+        if(mChangeBackgroundMode)
+        {
+            addOvalColor(mColors.get(mSelected),x,y);
+        }
+
+        //前一个选中项必须不小于0才有效
+        if(mOldSelected >= 0) {
+            mItems.get(mOldSelected).setChecked(false);
+        }
+
+        mItems.get(mSelected).setChecked(true);
+
+        //事件回调
+        for(OnTabItemSelectedListener listener:mListeners) {
+            listener.onSelected(mSelected,mOldSelected);
+        }
     }
 
     /**
@@ -375,7 +383,6 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
             }
         });
         valueAnimator.start();
-
     }
 
     /**
@@ -396,7 +403,6 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
 
         return (float) Math.sqrt(Math.max(Math.max(r1_square,r2_square),Math.max(r3_square,r4_square)));
     }
-
 
     class Oval
     {

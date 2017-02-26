@@ -2,28 +2,27 @@ package me.majiajie.pagerbottomtabstrip.item;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.majiajie.pagerbottomtabstrip.R;
+import me.majiajie.pagerbottomtabstrip.internal.RoundMessageView;
 
 public class NormalItemView extends BaseTabItem {
 
-    private final int mDefaultHeight;
-
     private ImageView mIcon;
     private final TextView mTitle;
-    private final TextView mMessageView;
-    private final View mOval;
+    private final RoundMessageView mMessages;
 
-    private Drawable mDefaultDrawable;
-    private Drawable mCheckedDrawable;
+    private int mDefaultDrawable;
+    private int mCheckedDrawable;
 
-    private boolean mChecked;
+    private int mDefaultTextColor = 0x56000000;
+    private int mCheckedTextColor = 0x56000000;
 
     public NormalItemView(Context context) {
         this(context,null);
@@ -36,71 +35,57 @@ public class NormalItemView extends BaseTabItem {
     public NormalItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mDefaultHeight = getResources().getDimensionPixelSize(R.dimen.material_bottom_navigation_height);
-
-        LayoutInflater.from(context).inflate(R.layout.item_material, this, true);
+        LayoutInflater.from(context).inflate(R.layout.item_normal, this, true);
 
         mIcon = (ImageView) findViewById(R.id.icon);
         mTitle = (TextView) findViewById(R.id.title);
-        mMessageView = (TextView) findViewById(R.id.messages);
-        mOval = findViewById(R.id.oval);
+        mMessages = (RoundMessageView) findViewById(R.id.messages);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), mDefaultHeight);
-    }
-
-    @Override
-    public void setChecked(boolean checked) {
-        mChecked = checked;
-        mIcon.setImageDrawable(mChecked ? mCheckedDrawable : mDefaultDrawable);
-    }
-
-    @Override
-    public void setTitle(String title) {
+    /**
+     * 方便初始化的方法
+     * @param drawableRes           默认状态的图标
+     * @param checkedDrawableRes    选中状态的图标
+     * @param title                 标题
+     */
+    public void initialize(@DrawableRes int drawableRes,@DrawableRes  int checkedDrawableRes, String title)
+    {
+        mDefaultDrawable = drawableRes;
+        mCheckedDrawable = checkedDrawableRes;
         mTitle.setText(title);
     }
 
     @Override
-    public void setIcon(Drawable drawable) {
-        mDefaultDrawable = drawable;
-        if(!mChecked){
-            mIcon.setImageDrawable(mDefaultDrawable);
+    public void setChecked(boolean checked) {
+        if(checked){
+            mIcon.setImageResource(mCheckedDrawable);
+            mTitle.setTextColor(mCheckedTextColor);
+        } else {
+            mIcon.setImageResource(mDefaultDrawable);
+            mTitle.setTextColor(mDefaultTextColor);
         }
     }
 
     @Override
-    public void setCheckedIcon(Drawable drawable) {
-        mCheckedDrawable = drawable;
-        if(mChecked)
-        {
-            mIcon.setImageDrawable(mCheckedDrawable);
-        }
-    }
-
-    @Override
-    public void setMessageNumber(int number)
-    {
-        if(number > 0) {
-            mMessageView.setVisibility(View.VISIBLE);
-            mMessageView.setText(String.valueOf(number));
-        }
-        else {
-            mMessageView.setVisibility(View.INVISIBLE);
-        }
+    public void setMessageNumber(int number) {
+        mMessages.setMessageNumber(number);
     }
 
     @Override
     public void setHasMessage(boolean hasMessage) {
-        mOval.setVisibility(hasMessage ? View.VISIBLE : View.INVISIBLE);
+        mMessages.setHasMessage(hasMessage);
     }
 
-
     @Override
-    public void setColor(int color) {}
+    public String getTitle() {
+        return mTitle.getText().toString();
+    }
 
-    @Override
-    public void setCheckedColor(int color) {}
+    public void setTextDefaultColor(@ColorInt int color){
+        mDefaultTextColor = color;
+    }
+
+    public void setTextCheckedColor(@ColorInt int color){
+        mCheckedTextColor = color;
+    }
 }

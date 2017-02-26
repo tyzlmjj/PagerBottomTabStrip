@@ -4,15 +4,18 @@ package me.majiajie.pagerbottomtabstrip.item;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.majiajie.pagerbottomtabstrip.R;
-import me.majiajie.pagerbottomtabstrip.Utils;
+import me.majiajie.pagerbottomtabstrip.internal.RoundMessageView;
+import me.majiajie.pagerbottomtabstrip.internal.Utils;
 
 public class MaterialItemView extends BaseTabItem
 {
@@ -24,6 +27,7 @@ public class MaterialItemView extends BaseTabItem
     private ImageView mIcon;
     private final TextView mSmallLabel;
     private final TextView mLargeLabel;
+    private final RoundMessageView mMessages;
 
     private boolean mShiftingMode;
 
@@ -59,6 +63,7 @@ public class MaterialItemView extends BaseTabItem
         mIcon = (ImageView) findViewById(R.id.icon);
         mSmallLabel = (TextView) findViewById(R.id.smallLabel);
         mLargeLabel = (TextView) findViewById(R.id.largeLabel);
+        mMessages = (RoundMessageView) findViewById(R.id.messages);
 
     }
 
@@ -122,6 +127,26 @@ public class MaterialItemView extends BaseTabItem
 
     }
 
+    @Override
+    public void setMessageNumber(int number) {
+        mMessages.setVisibility(View.VISIBLE);
+        mMessages.setMessageNumber(number);
+    }
+
+    @Override
+    public void setHasMessage(boolean hasMessage) {
+        mMessages.setVisibility(View.VISIBLE);
+        mMessages.setHasMessage(hasMessage);
+    }
+
+    @Override
+    public String getTitle() {
+        return mLargeLabel.getText().toString();
+    }
+
+    /**
+     * 改变选中和未选中状态的外观颜色
+     */
     private void changeColor()
     {
         if(mChecked) {
@@ -135,13 +160,11 @@ public class MaterialItemView extends BaseTabItem
         }
     }
 
-    @Override
     public void setTitle(String title) {
         mSmallLabel.setText(title);
         mLargeLabel.setText(title);
     }
 
-    @Override
     public void setIcon(Drawable drawable) {
         mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
         if(!mChecked)
@@ -150,7 +173,6 @@ public class MaterialItemView extends BaseTabItem
         }
     }
 
-    @Override
     public void setCheckedIcon(Drawable drawable) {
         mCheckedDrawable = Utils.tint(drawable,mCheckedColor);
         if(mChecked)
@@ -159,7 +181,6 @@ public class MaterialItemView extends BaseTabItem
         }
     }
 
-    @Override
     public void setColor(int color) {
         mDefaultColor = color;
 
@@ -176,7 +197,6 @@ public class MaterialItemView extends BaseTabItem
         }
     }
 
-    @Override
     public void setCheckedColor(int color) {
         mCheckedColor = color;
 
@@ -193,8 +213,7 @@ public class MaterialItemView extends BaseTabItem
         }
     }
 
-    public int getCheckedColor()
-    {
+    public int getCheckedColor() {
         return mCheckedColor;
     }
 
@@ -202,13 +221,11 @@ public class MaterialItemView extends BaseTabItem
         mShiftingMode = shiftingMode;
     }
 
-    @Override
-    public void setMessageNumber(int number) {
-
+    public void setMessageBackgroundColor(@ColorInt int color) {
+        mMessages.tintMessageBackground(color);
     }
 
-    @Override
-    public void setHasMessage(boolean hasMessage) {
-
+    public void setMessageNumberColor(@ColorInt int color){
+        mMessages.setMessageNumberColor(color);
     }
 }

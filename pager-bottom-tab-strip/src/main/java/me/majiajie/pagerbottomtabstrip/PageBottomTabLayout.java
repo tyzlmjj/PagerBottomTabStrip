@@ -2,9 +2,12 @@ package me.majiajie.pagerbottomtabstrip;
 
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -12,14 +15,22 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.majiajie.pagerbottomtabstrip.internal.CustomItemLayout;
 import me.majiajie.pagerbottomtabstrip.internal.MaterialItemLayout;
+import me.majiajie.pagerbottomtabstrip.internal.Utils;
+import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class PageBottomTabLayout extends FrameLayout
 {
-
     private int mTabPaddingTop;
     private int mTabPaddingBottom;
+
+    private NavigationController mNavigationController;
+
+    private ViewPagerPageChangeListener mPageChangeListener;
+    private ViewPager mViewPager;
 
     public PageBottomTabLayout(Context context) {
         this(context,null);
@@ -55,9 +66,114 @@ public class PageBottomTabLayout extends FrameLayout
     /**
      * 构建自定义导航栏
      */
-    public void custom()
+    public CustomBuilder custom()
     {
+        return new CustomBuilder();
+    }
 
+    /**
+     * 方便适配ViewPager页面切换<p>
+     * 注意：ViewPager页面数量必须等于导航栏的Item数量
+     * @param viewPager {@link ViewPager}
+     */
+    public void setupWithViewPager(ViewPager viewPager){
+
+        if(viewPager == null){return;}
+
+        mViewPager = viewPager;
+
+        if(mPageChangeListener != null){
+            mViewPager.removeOnPageChangeListener(mPageChangeListener);
+        } else {
+            mPageChangeListener = new ViewPagerPageChangeListener();
+        }
+
+        if(mNavigationController != null) {
+            int n = mViewPager.getCurrentItem();
+            if(mNavigationController.getSelected() != n){
+                mNavigationController.setSelect(n);
+            }
+            mViewPager.addOnPageChangeListener(mPageChangeListener);
+        }
+    }
+
+    private class ViewPagerPageChangeListener implements ViewPager.OnPageChangeListener{
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if(mNavigationController != null && mNavigationController.getSelected() != position){
+                mNavigationController.setSelect(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+    OnTabItemSelectedListener mTabItemListener = new OnTabItemSelectedListener() {
+        @Override
+        public void onSelected(int index, int old) {
+            if(mViewPager != null){
+                mViewPager.setCurrentItem(index,false);
+            }
+        }
+
+        @Override
+        public void onRepeat(int index) {
+        }
+    };
+
+
+    /**
+     * 构建 自定义 的导航栏
+     */
+    public class CustomBuilder
+    {
+        List<BaseTabItem> items;
+
+        CustomBuilder(){
+            items = new ArrayList<>();
+        }
+
+        /**
+         * 完成构建
+         *
+         * @return  {@link NavigationController},通过它进行后续操作
+         */
+        public NavigationController build(){
+
+            //未添加任何按钮
+            if(items.size() == 0){return null;}
+
+            CustomItemLayout customItemLayout = new CustomItemLayout(getContext());
+            customItemLayout.initialize(items);
+            customItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
+
+            PageBottomTabLayout.this.removeAllViews();
+            PageBottomTabLayout.this.addView(customItemLayout);
+
+            mNavigationController = customItemLayout;
+            mNavigationController.addTabItemSelectedListener(mTabItemListener);
+
+            return customItemLayout;
+        }
+
+        /**
+         * 添加一个导航按钮
+         * @param baseTabItem   {@link BaseTabItem},所有自定义Item都必须继承它
+         * @return {@link CustomBuilder}
+         */
+        public CustomBuilder addItem(BaseTabItem baseTabItem){
+            items.add(baseTabItem);
+            return CustomBuilder.this;
+        }
     }
 
     /**
@@ -68,6 +184,8 @@ public class PageBottomTabLayout extends FrameLayout
         List<MaterialItemView> items;
         int defaultColor;
         int mode;
+        int messageBackgroundColor;
+        int messageNumberColor;
 
         MaterialBuilder() {
             items = new ArrayList<>();
@@ -90,12 +208,30 @@ public class PageBottomTabLayout extends FrameLayout
                 }
             }
 
+            //检查是否设置了消息圆点的颜色
+            if(messageBackgroundColor != 0) {
+                for (MaterialItemView v:items) {
+                    v.setMessageBackgroundColor(messageBackgroundColor);
+                }
+            }
+
+            //检查是否设置了消息数字的颜色
+            if(messageNumberColor != 0) {
+                for (MaterialItemView v:items) {
+                    v.setMessageNumberColor(messageNumberColor);
+                }
+            }
+
             MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
             materialItemLayout.initialize(items,mode);
             materialItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
             PageBottomTabLayout.this.removeAllViews();
             PageBottomTabLayout.this.addView(materialItemLayout);
+
+            mNavigationController = materialItemLayout;
+            mNavigationController.addTabItemSelectedListener(mTabItemListener);
+
 
             return materialItemLayout;
         }
@@ -107,7 +243,7 @@ public class PageBottomTabLayout extends FrameLayout
          * @return {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable, String title){
-            addItem(drawable,drawable,title,Utils.getAttrColor(getContext(),R.attr.colorPrimary));
+            addItem(drawable,drawable,title, Utils.getAttrColor(getContext(),R.attr.colorPrimary));
             return MaterialBuilder.this;
         }
 
@@ -153,6 +289,26 @@ public class PageBottomTabLayout extends FrameLayout
         }
 
         /**
+         * 设置消息圆点的颜色
+         * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder setMessageBackgroundColor(@ColorInt int color){
+            messageBackgroundColor = color;
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 设置消息数字的颜色
+         * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder setMessageNumberColor(@ColorInt int color){
+            messageNumberColor = color;
+            return MaterialBuilder.this;
+        }
+
+        /**
          * 设置模式。默认文字一直显示，且背景色不变。
          * 可以通过{@link MaterialMode}选择模式。
          *
@@ -169,5 +325,37 @@ public class PageBottomTabLayout extends FrameLayout
             MaterialBuilder.this.mode = mode;
             return MaterialBuilder.this;
         }
+    }
+
+    private static final String INSTANCE_STATUS = "INSTANCE_STATUS";
+    private final String STATUS_SELECTED = "STATUS_SELECTED";
+
+    @Override
+    protected Parcelable onSaveInstanceState()
+    {
+        if(mNavigationController == null){return super.onSaveInstanceState();}
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE_STATUS, super.onSaveInstanceState());
+        bundle.putInt(STATUS_SELECTED,mNavigationController.getSelected());
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state)
+    {
+        if (state instanceof Bundle)
+        {
+            Bundle bundle = (Bundle) state;
+            int selected = bundle.getInt(STATUS_SELECTED,0);
+            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATUS));
+
+            if(selected != 0 && mNavigationController != null)
+            {
+                mNavigationController.setSelect(selected);
+            }
+
+            return;
+        }
+        super.onRestoreInstanceState(state);
     }
 }

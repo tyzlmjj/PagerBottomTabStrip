@@ -1,7 +1,6 @@
-package me.majiajie.pagerbottomtabstriptest;
+package me.majiajie.pagerbottomtabstriptest.other;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,23 +12,25 @@ import android.widget.TextView;
 
 public class AFragment extends Fragment
 {
-    private Context mContext;
+    private static final String ARG_C = "content";
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
+    public static AFragment newInstance(String content) {
+        Bundle args = new Bundle();
+        args.putString(ARG_C,content);
+        AFragment fragment = new AFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        String content = getArguments().getString("content");
-        TextView textView = new TextView(mContext);
+        String content = getArguments().getString(ARG_C);
+        TextView textView = new TextView(getContext());
         textView.setTextSize(30);
         textView.setGravity(Gravity.CENTER);
-        textView.setText("测试页面\n\n" +content);
+        textView.setText("Test\n\n" +content);
         textView.setBackgroundColor(0xFFececec);
         return textView;
     }

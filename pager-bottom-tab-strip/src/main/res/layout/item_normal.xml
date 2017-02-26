@@ -6,8 +6,7 @@
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/material_bottom_navigation_margin"
-        android:layout_marginBottom="@dimen/material_bottom_navigation_margin"
-        android:duplicateParentState="true" />
+        android:layout_marginBottom="@dimen/material_bottom_navigation_margin" />
 
     <TextView
         android:id="@+id/title"
@@ -17,35 +16,17 @@
         android:singleLine="true"
         android:layout_gravity="bottom|center_horizontal"
         android:clipToPadding="false"
-        android:paddingBottom="10dp"
-        android:duplicateParentState="true" />
+        android:paddingBottom="10dp" />
 
-    <View
-        android:id="@+id/oval"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:background="@drawable/round"
-        android:layout_marginTop="6dp"
+    <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
+        android:id="@+id/messages"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:translationX="20dp"
         android:layout_gravity="center_horizontal"
-        android:translationX="13dp"
-        android:visibility="invisible"
+        android:layout_marginTop="6dp"
         />
 
-    <TextView
-        android:id="@+id/messages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="20dp"
-        android:minWidth="20dp"
-        android:background="@drawable/round"
-        android:maxLines="1"
-        android:textSize="12sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:layout_marginTop="6dp"
-        android:translationX="14dp"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:visibility="invisible"/>
 </merge>
 
 

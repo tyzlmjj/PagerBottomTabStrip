@@ -37,4 +37,17 @@ public interface NavigationController
      */
     int getSelected();
 
+    /**
+     * 获取导航按钮总数
+     * @return 总数
+     */
+    int getItemCount();
+
+    /**
+     * 获取导航按钮文字
+     * @param index 顺序索引
+     * @return  文字
+     */
+    String getItemTitle(int index);
+
 }
