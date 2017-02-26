@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.Controller;
 import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 
 
@@ -16,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 //    int[] testColors = {0xFF00796B,0xFF8D6E63,0xFF2196F3,0xFF607D8B,0xFFF57C00};
     int[] testColors = {0xFF00796B, 0xFF5B4947, 0xFF607D8B, 0xFFF57C00, 0xFFF57C00};
 
-    Controller controller;
+
 
     List<Fragment> mFragments;
 

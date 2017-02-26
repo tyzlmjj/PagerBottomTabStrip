@@ -145,7 +145,7 @@ public class PageBottomTabLayout extends FrameLayout
         /**
          * 设置导航按钮的默认（未选中状态）颜色
          * @param color 16进制整形表示的颜色，例如红色：0xFFFF0000
-         * @return  {@link TabStripBuild}
+         * @return  {@link MaterialBuilder}
          */
         public MaterialBuilder setDefaultColor(@ColorInt int color) {
             defaultColor = color;
@@ -163,7 +163,7 @@ public class PageBottomTabLayout extends FrameLayout
          * {@code MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR}
          *
          * @param mode {@link MaterialMode}
-         * @return {@link TabStripBuild}
+         * @return {@link MaterialBuilder}
          */
         public MaterialBuilder setMode(int mode){
             MaterialBuilder.this.mode = mode;
