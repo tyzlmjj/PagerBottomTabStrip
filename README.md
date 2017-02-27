@@ -24,7 +24,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:2.0.0-alpha2'
+compile 'me.majiajie:pager-bottom-tab-strip:2.0.0'
 ```
 
 and for Maven:
@@ -32,7 +32,7 @@ and for Maven:
 <dependency>
   <groupId>me.majiajie</groupId>
   <artifactId>pager-bottom-tab-strip</artifactId>
-  <version>2.0.0-alpha2</version>
+  <version>2.0.0</version>
   <type>pom</type>
 </dependency>
 ```

@@ -1,7 +1,7 @@
-//plugins {
-//    id "com.jfrog.bintray" version "1.7.3"
-//    id "com.github.dcendents.android-maven" version "1.5"
-//}
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.dcendents.android-maven" version "1.5"
+}
 
 apply plugin: 'com.android.library'
 
@@ -34,7 +34,7 @@ dependencies {
     compile 'com.android.support:transition:25.2.0'
 }
 
-//apply from: 'upload_to_bintray.gradle'
+apply from: 'upload_to_bintray.gradle'
 
 
 

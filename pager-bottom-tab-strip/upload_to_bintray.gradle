@@ -11,7 +11,7 @@ ext {
     siteUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip'
     gitUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip.git'
 
-    libraryVersion = '2.0.0-alpha2'
+    libraryVersion = '2.0.0'
 
     developerId = 'tyzlmjj'
     developerName = 'Ma JiaJie'
