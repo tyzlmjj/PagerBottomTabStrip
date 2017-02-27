@@ -29,5 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile project(':pager-bottom-tab-strip')
-//    compile 'me.majiajie:pager-bottom-tab-strip:2.0.0-alpha1'
+//    compile 'me.majiajie:pager-bottom-tab-strip:2.0.0-alpha2'
 }

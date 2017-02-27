@@ -22,7 +22,7 @@ PagerBottomTabStrip 是一个基本按谷歌Material Design规范完成的安卓
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:2.0.0-alpha1'
+compile 'me.majiajie:pager-bottom-tab-strip:2.0.0-alpha2'
 ```
 
 and for Maven:
@@ -30,7 +30,7 @@ and for Maven:
 <dependency>
   <groupId>me.majiajie</groupId>
   <artifactId>pager-bottom-tab-strip</artifactId>
-  <version>2.0.0-alpha1</version>
+  <version>2.0.0-alpha2</version>
   <type>pom</type>
 </dependency>
 ```

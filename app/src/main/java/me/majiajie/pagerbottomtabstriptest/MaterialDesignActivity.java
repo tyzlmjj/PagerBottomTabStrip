@@ -1,6 +1,5 @@
 package me.majiajie.pagerbottomtabstriptest;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,7 @@ import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
 
 public class MaterialDesignActivity extends AppCompatActivity {
 
-    int[] testColors = {0xFF00796B, 0xFF5B4947, 0xFF607D8B, 0xFFF57C00, 0xFFF57C00};
+    int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
 //    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
 
     @Override
@@ -27,13 +26,13 @@ public class MaterialDesignActivity extends AppCompatActivity {
         PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(tab);
 
         NavigationController navigationController = pageBottomTabLayout.material()
-                .addItem(R.drawable.ic_restore_gray_24dp,"位置",testColors[0])
-                .addItem(android.R.drawable.ic_menu_send, "信息",testColors[1])
-                .addItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
-                .addItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])
-                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)//这里可以设置样式模式
+                .addItem(R.drawable.ic_ondemand_video_black_24dp,"Movies & TV",testColors[0])
+                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
+                .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
+                .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
+                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
-
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),navigationController.getItemCount()));
