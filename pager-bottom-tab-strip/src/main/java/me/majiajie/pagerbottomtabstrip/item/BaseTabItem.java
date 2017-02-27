@@ -3,6 +3,7 @@ package me.majiajie.pagerbottomtabstrip.item;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 /**
@@ -11,16 +12,23 @@ import android.widget.FrameLayout;
 public abstract class BaseTabItem extends FrameLayout
 {
     public BaseTabItem(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public BaseTabItem(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public BaseTabItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        LayoutInflater.from(context).inflate(getLayoutRes(), this, true);
     }
+
+    /**
+     * 获得Item布局文件，必需实现
+     */
+    protected abstract int getLayoutRes();
 
     /**
      * 设置选中状态

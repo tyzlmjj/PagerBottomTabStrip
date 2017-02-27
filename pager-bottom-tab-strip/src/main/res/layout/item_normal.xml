@@ -5,18 +5,17 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/material_bottom_navigation_margin"
-        android:layout_marginBottom="@dimen/material_bottom_navigation_margin" />
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/material_bottom_navigation_text_size"
+        android:textSize="12sp"
         android:singleLine="true"
+        android:layout_marginBottom="6dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:clipToPadding="false"
-        android:paddingBottom="10dp" />
+        />
 
     <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
         android:id="@+id/messages"

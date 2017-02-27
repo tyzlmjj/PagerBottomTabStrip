@@ -36,6 +36,7 @@ public class Utils {
 	public static Drawable tint(Drawable drawable, int color)
 	{
 		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+		wrappedDrawable.mutate();
 		DrawableCompat.setTint(wrappedDrawable, color);
 		return wrappedDrawable;
 	}

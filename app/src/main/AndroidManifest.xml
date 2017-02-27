@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MaterialDesignActivity" />
-        <activity android:name=".CustomActivity"></activity>
+        <activity android:name=".CustomActivity" />
+        <activity android:name=".Custom2Activity"/>
     </application>
 
 </manifest>

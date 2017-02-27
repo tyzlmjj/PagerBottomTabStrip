@@ -22,4 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public void toCustom(View view) {
         startActivity(new Intent(this,CustomActivity.class));
     }
+
+    public void toCustom2(View view) {
+        startActivity(new Intent(this,Custom2Activity.class));
+    }
 }

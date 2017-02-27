@@ -1,10 +1,12 @@
 package me.majiajie.pagerbottomtabstriptest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
@@ -25,11 +27,11 @@ public class MaterialDesignActivity extends AppCompatActivity {
         PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(tab);
 
         NavigationController navigationController = pageBottomTabLayout.material()
-                .addItem(android.R.drawable.ic_menu_compass, "位置",testColors[0])
+                .addItem(R.drawable.ic_restore_gray_24dp,"位置",testColors[0])
                 .addItem(android.R.drawable.ic_menu_send, "信息",testColors[1])
                 .addItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
                 .addItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])
-//                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)//这里可以设置样式模式
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)//这里可以设置样式模式
                 .build();
 
 
@@ -52,7 +54,8 @@ public class MaterialDesignActivity extends AppCompatActivity {
             }
         });
 
-        navigationController.setMessageNumber(0,8);
-        navigationController.setHasMessage(1,true);
+        //设置消息圆点
+//        navigationController.setMessageNumber(0,8);
+//        navigationController.setHasMessage(1,true);
     }
 }

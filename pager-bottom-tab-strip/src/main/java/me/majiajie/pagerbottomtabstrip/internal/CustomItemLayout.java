@@ -2,9 +2,10 @@ package me.majiajie.pagerbottomtabstrip.internal;
 
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class CustomItemLayout extends LinearLayout implements NavigationController{
+public class CustomItemLayout extends ViewGroup implements NavigationController{
 
     private final int BOTTOM_NAVIGATION_ITEM_HEIGHT;
 
@@ -39,7 +40,6 @@ public class CustomItemLayout extends LinearLayout implements NavigationControll
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         final int n = getChildCount();
         int childWidth = getMeasuredWidth() / n;
@@ -55,7 +55,34 @@ public class CustomItemLayout extends LinearLayout implements NavigationControll
             child.measure(widthSpec, heightSpec);
             child.getLayoutParams().width = child.getMeasuredWidth();
         }
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        final int count = getChildCount();
+        final int width = right - left;
+        final int height = bottom - top;
+        //只支持top、bottom的padding
+        final int padding_top = getPaddingTop();
+        final int padding_bottom = getPaddingBottom();
+        int used = 0;
+
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                child.layout(width - used - child.getMeasuredWidth(), padding_top, width - used, height - padding_bottom);
+            } else {
+                child.layout(used, padding_top, child.getMeasuredWidth() + used, height - padding_bottom);
+            }
+            used += child.getMeasuredWidth();
+        }
+    }
+
 
     public void initialize(List<BaseTabItem> items) {
         mItems = items;
