@@ -1,0 +1,34 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:layout_marginBottom="6dp"
+        android:layout_gravity="bottom|center_horizontal"
+        />
+
+    <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
+        android:id="@+id/messages"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:translationX="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        />
+
+</merge>
+
+
+
+
+

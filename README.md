@@ -1,13 +1,10 @@
 # PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=master)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
 
-PagerBottomTabStrip 是一个基本按谷歌Material Design规范完成的安卓底部导航栏控件
+PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www.google.com/design/spec/components/bottom-navigation.html)的样式以外，增强其扩展性，并且更加方便的适配常用的ViewPager
 
-官方设计规范：https://www.google.com/design/spec/components/bottom-navigation.html
 
-这个仓库是官方设计规范还没出来的时候就创建了,原来是模仿了微信的底部导航栏，现在完全重构遵照官方的规范,并上传到中央库。旧的项目代码存放在`old`分支中了
-
+代码内部结构已经完全不一样了，不过使用方式跟V1版本类似，具体细节请看：
 [使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)
-
 
 ##实现效果图
 
@@ -17,12 +14,17 @@ PagerBottomTabStrip 是一个基本按谷歌Material Design规范完成的安卓
 |---|---|
 |![PagerBottomTabStrip](/img/demo3.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo4.gif "PagerBottomTabStrip")|
 
+##自定义扩展例子
+
+|Library中已经实现的一个国内常用的效果|Demo中的一个例子|
+|---|---|
+|![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
 
 ##引入库
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:1.0.0'
+compile 'me.majiajie:pager-bottom-tab-strip:2.0.0'
 ```
 
 and for Maven:
@@ -30,7 +32,7 @@ and for Maven:
 <dependency>
   <groupId>me.majiajie</groupId>
   <artifactId>pager-bottom-tab-strip</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <type>pom</type>
 </dependency>
 ```

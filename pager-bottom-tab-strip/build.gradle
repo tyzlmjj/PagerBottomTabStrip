@@ -1,39 +1,21 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.dcendents.android-maven" version "1.5"
+}
+
 apply plugin: 'com.android.library'
 
-//ext {
-//    bintrayRepo = 'maven'
-//    bintrayName = 'pager-bottom-tab-strip'
-//
-//    publishedGroupId = 'me.majiajie'
-//    libraryName = 'PagerBottomTabStrip'
-//    artifact = 'pager-bottom-tab-strip'
-//
-//    libraryDescription = 'A bottom navigation bar for Android'
-//
-//    siteUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip'
-//    gitUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip.git'
-//
-//    libraryVersion = '1.0.0'
-//
-//    developerId = 'tyzlmjj'
-//    developerName = 'Ma JiaJie'
-//    developerEmail = 'tyzl931019@gmail.com'
-//
-//    licenseName = 'The Apache Software License, Version 2.0'
-//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//    allLicenses = ["Apache-2.0"]
-//}
-
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 14
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -48,10 +30,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:transition:25.2.0'
 }
 
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'upload_to_bintray.gradle'
+
+
+
