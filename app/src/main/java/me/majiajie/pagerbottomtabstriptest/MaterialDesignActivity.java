@@ -31,7 +31,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
                 .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
                 .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
                 .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
-                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)//这里可以设置样式模式，总共可以组合出4种效果
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -54,7 +54,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
         });
 
         //设置消息圆点
-//        navigationController.setMessageNumber(0,8);
-//        navigationController.setHasMessage(1,true);
+//        navigationController.setMessageNumber(2,8);
+//        navigationController.setHasMessage(2,true);
     }
 }

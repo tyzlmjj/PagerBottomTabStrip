@@ -33,7 +33,7 @@ public class MaterialItemView extends BaseTabItem
     private Drawable mDefaultDrawable;
     private Drawable mCheckedDrawable;
 
-    private int mDefaultColor = 0x89000000;
+    private int mDefaultColor = 0x56000000;
     private int mCheckedColor;
 
     private boolean mChecked;
