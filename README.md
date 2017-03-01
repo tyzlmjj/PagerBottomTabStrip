@@ -49,8 +49,6 @@ and for Maven:
 
 这个库有BUG？请点这里 [Github Issues](https://github.com/tyzlmjj/PagerBottomTabStrip/issues)
 
-代码里没BUG的程序员都太年轻，又或者……
-
 ##LICENSE
 
 PagerBottomTabStrip is released under the [Apache 2.0 license](/LICENSE).
