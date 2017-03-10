@@ -2,8 +2,6 @@ package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
-import android.support.annotation.RequiresApi;
 import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
@@ -16,8 +14,7 @@ import android.widget.TextView;
 import java.util.Map;
 
 
-@TargetApi(14)
-public class DelayedAnimationHelper
+class DelayedAnimationHelper
 {
     private static final long ACTIVE_ANIMATION_DURATION_MS = 115L;
 
@@ -36,8 +33,6 @@ public class DelayedAnimationHelper
         TransitionManager.beginDelayedTransition(view, mSet);
     }
 
-    @RequiresApi(14)
-    @TargetApi(14)
     private class TextScale extends Transition {
         private static final String PROPNAME_SCALE = "android:textscale:scale";
 

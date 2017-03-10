@@ -49,6 +49,13 @@ public class RoundMessageView extends FrameLayout
         if(mMessageNumber > 0) {
             mOval.setVisibility(View.INVISIBLE);
             mMessages.setVisibility(View.VISIBLE);
+
+            if(mMessageNumber < 10){
+                mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+            } else {
+                mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            }
+
             if(mMessageNumber <= 99) {
                 mMessages.setText(String.format(Locale.ENGLISH,"%d",mMessageNumber));
             } else {
