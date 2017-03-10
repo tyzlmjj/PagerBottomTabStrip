@@ -2,15 +2,16 @@ package me.majiajie.pagerbottomtabstrip;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class PageBottomTabLayout extends FrameLayout
+public class PageBottomTabLayout extends ViewGroup
 {
     private int mTabPaddingTop;
     private int mTabPaddingBottom;
@@ -44,8 +45,8 @@ public class PageBottomTabLayout extends FrameLayout
         super(context, attrs, defStyleAttr);
         setPadding(0,0,0,0);
 
-        TintTypedArray a = TintTypedArray.obtainStyledAttributes(context, attrs,
-                R.styleable.PageBottomTabLayout);
+        final TypedArray a = context.obtainStyledAttributes(
+                attrs, R.styleable.PageBottomTabLayout);
         if(a.hasValue(R.styleable.PageBottomTabLayout_tabPaddingTop)) {
             mTabPaddingTop = a.getDimensionPixelSize(R.styleable.PageBottomTabLayout_tabPaddingTop,0);
         }
@@ -53,6 +54,40 @@ public class PageBottomTabLayout extends FrameLayout
             mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.PageBottomTabLayout_tabPaddingBottom,0);
         }
         a.recycle();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        final int count = getChildCount();
+        final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
+                getMeasuredWidth(), MeasureSpec.EXACTLY);
+        final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
+                getMeasuredHeight(), MeasureSpec.EXACTLY);
+
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+            child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        final int count = getChildCount();
+        final int width = r - l;
+        final int height = b - t;
+
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+            child.layout(0, 0, width, height);
+        }
     }
 
     /**
@@ -186,6 +221,7 @@ public class PageBottomTabLayout extends FrameLayout
         int mode;
         int messageBackgroundColor;
         int messageNumberColor;
+        int itemBackgroundResource;
 
         MaterialBuilder() {
             items = new ArrayList<>();
@@ -232,6 +268,12 @@ public class PageBottomTabLayout extends FrameLayout
             mNavigationController = materialItemLayout;
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
 
+            //检查是否设置了Item背景
+            if(itemBackgroundResource != 0) {
+                for (MaterialItemView v:items) {
+                    v.setBackgroundResource(itemBackgroundResource);
+                }
+            }
 
             return materialItemLayout;
         }
@@ -243,7 +285,7 @@ public class PageBottomTabLayout extends FrameLayout
          * @return {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable, String title){
-            addItem(drawable,drawable,title, Utils.getAttrColor(getContext(),R.attr.colorPrimary));
+            addItem(drawable,drawable,title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
 
@@ -305,6 +347,16 @@ public class PageBottomTabLayout extends FrameLayout
          */
         public MaterialBuilder setMessageNumberColor(@ColorInt int color){
             messageNumberColor = color;
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 设置每个Item的背景
+         * @param resid 背景资源
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder setItemBackgroundResource(@DrawableRes int resid){
+            itemBackgroundResource = resid;
             return MaterialBuilder.this;
         }
 

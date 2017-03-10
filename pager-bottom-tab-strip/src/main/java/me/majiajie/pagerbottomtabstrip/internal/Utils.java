@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -23,13 +24,16 @@ public class Utils {
 	}
 
 	/**
-	 * 获取颜色类自定义属性的颜色值
-	 * @param context	上下文
-	 * @param attrRes	自定义属性
-	 * @return	A single color value in the form 0xAARRGGBB
+	 * 获取colorPrimary的颜色,需要V7包的支持
+	 * @param context 上下文
+	 * @return 0xAARRGGBB
 	 */
-	public static int getAttrColor(Context context, int attrRes)
-	{
+	public static int getColorPrimary(Context context){
+		Resources res = context.getResources();
+		int attrRes =res.getIdentifier("colorPrimary","attr",context.getPackageName());
+		if(attrRes == 0){
+			return 0xFF009688;
+		}
 		return ContextCompat.getColor(context,getResourceId(context,attrRes));
 	}
 

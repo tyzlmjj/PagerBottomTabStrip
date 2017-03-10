@@ -5,12 +5,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import me.majiajie.pagerbottomtabstriptest.other.MyViewPagerAdapter;
 
 import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
+
 
 public class MaterialDesignActivity extends AppCompatActivity {
 
@@ -31,8 +33,8 @@ public class MaterialDesignActivity extends AppCompatActivity {
                 .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
                 .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
                 .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
-//                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
-//                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
+                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);

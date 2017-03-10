@@ -117,7 +117,7 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
         } else {
             //设置按钮点击效果
             for(MaterialItemView v:mItems) {
-                v.setBackgroundResource(Utils.getResourceId(getContext(),R.attr.selectableItemBackgroundBorderless));
+                v.setBackgroundResource(R.drawable.material_item_background);
             }
         }
 

@@ -25,4 +25,10 @@
         android:text="Custom example 2"
         android:onClick="toCustom2"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="scrolling view behavior"
+        android:onClick="toBehavior"/>
+
 </LinearLayout>

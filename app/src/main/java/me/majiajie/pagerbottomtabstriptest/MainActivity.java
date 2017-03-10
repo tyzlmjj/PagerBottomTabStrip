@@ -26,4 +26,8 @@ public class MainActivity extends AppCompatActivity {
     public void toCustom2(View view) {
         startActivity(new Intent(this,Custom2Activity.class));
     }
+
+    public void toBehavior(View view) {
+        startActivity(new Intent(this,BehaviorActivity.class));
+    }
 }
