@@ -3,6 +3,7 @@ package me.majiajie.pagerbottomtabstriptest.custom;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
 
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
@@ -29,6 +30,8 @@ public class OnlyIconItemView extends BaseTabItem {
     public OnlyIconItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        LayoutInflater.from(context).inflate(R.layout.item_only_icon, this, true);
+
         mIcon = (ImageView) findViewById(R.id.icon);
     }
 
@@ -36,11 +39,6 @@ public class OnlyIconItemView extends BaseTabItem {
     {
         mDefaultDrawable = drawableRes;
         mCheckedDrawable = checkedDrawableRes;
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.item_only_icon;
     }
 
     @Override

@@ -161,10 +161,8 @@ public class PageBottomTabLayout extends ViewGroup
         }
 
         @Override
-        public void onRepeat(int index) {
-        }
+        public void onRepeat(int index) {}
     };
-
 
     /**
      * 构建 自定义 的导航栏
@@ -285,7 +283,19 @@ public class PageBottomTabLayout extends ViewGroup
          * @return {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable, String title){
-            addItem(drawable,drawable,title, Utils.getColorPrimary(getContext()));
+            addItem(drawable,drawable,title,Utils.getColorPrimary(getContext()));
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 添加一个导航按钮
+         * @param drawable          图标资源
+         * @param checkedDrawable   选中时的图标资源
+         * @param title             显示文字内容.尽量简短
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder addItem(@DrawableRes int drawable, @DrawableRes int checkedDrawable,String title){
+            addItem(drawable,checkedDrawable,title,Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
 

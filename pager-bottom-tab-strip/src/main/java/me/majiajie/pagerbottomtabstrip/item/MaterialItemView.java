@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,16 +59,13 @@ public class MaterialItemView extends BaseTabItem
         mScaleUpFactor = 1f * activeLabelSize / inactiveLabelSize;
         mScaleDownFactor = 1f * inactiveLabelSize / activeLabelSize;
 
+        LayoutInflater.from(context).inflate(R.layout.item_material, this, true);
+
         mIcon = (ImageView) findViewById(R.id.icon);
         mSmallLabel = (TextView) findViewById(R.id.smallLabel);
         mLargeLabel = (TextView) findViewById(R.id.largeLabel);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
 
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.item_material;
     }
 
     @Override

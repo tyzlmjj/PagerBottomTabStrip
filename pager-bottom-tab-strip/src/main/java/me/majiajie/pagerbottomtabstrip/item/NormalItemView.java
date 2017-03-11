@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,14 +35,11 @@ public class NormalItemView extends BaseTabItem {
     public NormalItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        LayoutInflater.from(context).inflate(R.layout.item_normal, this, true);
+
         mIcon = (ImageView) findViewById(R.id.icon);
         mTitle = (TextView) findViewById(R.id.title);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.item_normal;
     }
 
     /**

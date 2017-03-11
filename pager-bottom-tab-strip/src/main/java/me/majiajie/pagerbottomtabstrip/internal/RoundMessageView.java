@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
@@ -39,7 +40,7 @@ public class RoundMessageView extends FrameLayout
 
         mOval = findViewById(R.id.oval);
         mMessages = (TextView) findViewById(R.id.msg);
-
+        mMessages.setTypeface(Typeface.DEFAULT_BOLD);
         mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
     }
 
@@ -51,7 +52,7 @@ public class RoundMessageView extends FrameLayout
             mMessages.setVisibility(View.VISIBLE);
 
             if(mMessageNumber < 10){
-                mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+                mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
             } else {
                 mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
             }

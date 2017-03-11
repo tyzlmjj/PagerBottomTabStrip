@@ -28,11 +28,10 @@
         android:id="@+id/tab"
         android:elevation="8dp"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:background="#FFF"
         app:layout_behavior="me.majiajie.pagerbottomtabstriptest.behavior.BottomViewBehavior"
-        app:tabPaddingBottom="20dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

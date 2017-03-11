@@ -31,7 +31,6 @@ public class BehaviorActivity extends AppCompatActivity {
                 .addItem(R.drawable.ic_restore_teal_24dp,"Recents")
                 .addItem(R.drawable.ic_favorite_teal_24dp,"Favorites")
                 .addItem(R.drawable.ic_nearby_teal_24dp,"Nearby")
-                .setItemBackgroundResource(R.drawable.asdasd)
                 .build();
     }
 
