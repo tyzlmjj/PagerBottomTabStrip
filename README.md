@@ -1,4 +1,4 @@
-# PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=dev)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
+# PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=master)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
 
 PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www.google.com/design/spec/components/bottom-navigation.html)的样式以外，增强其扩展性，并且更加方便的适配常用的ViewPager
 
@@ -24,7 +24,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:2.0.0'
+compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
 ```
 
 and for Maven:
@@ -32,7 +32,7 @@ and for Maven:
 <dependency>
   <groupId>me.majiajie</groupId>
   <artifactId>pager-bottom-tab-strip</artifactId>
-  <version>2.0.0</version>
+  <version>2.1.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -53,7 +53,7 @@ and for Maven:
 
 PagerBottomTabStrip is released under the [Apache 2.0 license](/LICENSE).
 ```
-Copyright 2016 JiaJie Ma
+Copyright 2016 MJJ
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
