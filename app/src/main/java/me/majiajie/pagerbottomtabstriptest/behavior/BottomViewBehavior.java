@@ -7,10 +7,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * @author mjj
- * @date 2017/3/10 下午10:10
- */
+
 public class BottomViewBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
 
     public BottomViewBehavior() {}
@@ -28,7 +25,6 @@ public class BottomViewBehavior<V extends View> extends CoordinatorLayout.Behavi
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-
         return dependency instanceof AppBarLayout;
     }
 

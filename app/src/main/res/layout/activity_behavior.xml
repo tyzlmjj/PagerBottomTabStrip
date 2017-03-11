@@ -17,12 +17,11 @@
             app:layout_scrollFlags="scroll|enterAlways"/>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <me.majiajie.pagerbottomtabstrip.PageBottomTabLayout
         android:id="@+id/tab"
@@ -30,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFF"
+        android:background="@drawable/tab_background"
         app:layout_behavior="me.majiajie.pagerbottomtabstriptest.behavior.BottomViewBehavior"
         />
 

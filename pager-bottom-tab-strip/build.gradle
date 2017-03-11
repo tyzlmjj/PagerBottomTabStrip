@@ -32,7 +32,8 @@ dependencies {
     compile 'com.android.support:transition:25.2.0'
 }
 
-// apply from: 'upload_to_bintray.gradle'
+
+//apply from: 'upload_to_bintray.gradle'
 
 
 

@@ -18,7 +18,10 @@
         <activity android:name=".MaterialDesignActivity" />
         <activity android:name=".CustomActivity" />
         <activity android:name=".Custom2Activity" />
-        <activity android:name=".BehaviorActivity"
+        <activity
+            android:name=".BehaviorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".HideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

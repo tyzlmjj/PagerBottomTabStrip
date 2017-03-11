@@ -41,7 +41,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),mNavigationController.getItemCount()));
 
         //自动适配ViewPager页面切换
-        pageBottomTabLayout.setupWithViewPager(viewPager);
+        mNavigationController.setupWithViewPager(viewPager);
 
         //也可以设置Item选中事件的监听
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {

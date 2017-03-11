@@ -21,14 +21,14 @@ import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 
 import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
 
-public class BehaviorActivity extends AppCompatActivity {
+public class HideActivity extends AppCompatActivity {
 
     NavigationController mNavigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_behavior);
+        setContentView(R.layout.activity_hide);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,8 +47,25 @@ public class BehaviorActivity extends AppCompatActivity {
         mNavigationController.setupWithViewPager(viewPager);
     }
 
+    /**
+     * 监听列表的滑动来控制底部导航栏的显示与隐藏
+     */
+    private class ListScrollListener extends RecyclerView.OnScrollListener{
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if(dy > 8){//列表向上滑动
+                mNavigationController.hideBottomLayout();
+            } else if(dy < -8){//列表向下滑动
+                mNavigationController.showBottomLayout();
+            }
+        }
+    }
+
     //下面几个类都是为了测试写的
-    private class TestViewPagerAdapter extends FragmentPagerAdapter{
+
+    private class TestViewPagerAdapter extends FragmentPagerAdapter {
 
         public TestViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -56,7 +73,9 @@ public class BehaviorActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new TestFragment();
+            TestFragment fragment = new TestFragment();
+            fragment.setListListener(new ListScrollListener());
+            return fragment;
         }
 
         @Override
@@ -66,6 +85,8 @@ public class BehaviorActivity extends AppCompatActivity {
     }
 
     public static class TestFragment extends Fragment{
+
+        RecyclerView.OnScrollListener listListener;
 
         @Nullable
         @Override
@@ -78,6 +99,12 @@ public class BehaviorActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
             recyclerView.setAdapter(new TestAdapter());
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
+            recyclerView.addOnScrollListener(listListener);
+
+        }
+
+        public void setListListener(RecyclerView.OnScrollListener listListener) {
+            this.listListener = listListener;
         }
     }
 

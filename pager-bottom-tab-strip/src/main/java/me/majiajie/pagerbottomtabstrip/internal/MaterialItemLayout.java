@@ -23,12 +23,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
-import me.majiajie.pagerbottomtabstrip.NavigationController;
+import me.majiajie.pagerbottomtabstrip.ItemController;
 import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class MaterialItemLayout extends ViewGroup implements NavigationController{
+public class MaterialItemLayout extends ViewGroup implements ItemController {
 
     private final int DEFAULT_SELECTED = 0;
 
@@ -404,7 +404,7 @@ public class MaterialItemLayout extends ViewGroup implements NavigationControlle
         return (float) Math.sqrt(Math.max(Math.max(r1_square,r2_square),Math.max(r3_square,r4_square)));
     }
 
-    class Oval
+    private class Oval
     {
         int color;
         float r;

@@ -30,7 +30,7 @@ public class CustomActivity extends AppCompatActivity {
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),navigationController.getItemCount()));
 
         //自动适配ViewPager页面切换
-        tab.setupWithViewPager(viewPager);
+        navigationController.setupWithViewPager(viewPager);
 
         //设置消息数
         navigationController.setMessageNumber(1,8);

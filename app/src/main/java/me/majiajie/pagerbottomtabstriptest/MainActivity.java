@@ -30,4 +30,8 @@ public class MainActivity extends AppCompatActivity {
     public void toBehavior(View view) {
         startActivity(new Intent(this,BehaviorActivity.class));
     }
+
+    public void toHide(View view) {
+        startActivity(new Intent(this,HideActivity.class));
+    }
 }

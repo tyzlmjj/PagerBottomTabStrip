@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.NavigationController;
+import me.majiajie.pagerbottomtabstrip.ItemController;
 import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class CustomItemLayout extends ViewGroup implements NavigationController{
+public class CustomItemLayout extends ViewGroup implements ItemController {
 
     private final int BOTTOM_NAVIGATION_ITEM_HEIGHT;
 

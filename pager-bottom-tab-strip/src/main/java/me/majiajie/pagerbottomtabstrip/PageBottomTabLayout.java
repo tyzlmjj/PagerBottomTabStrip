@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstrip;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,17 @@ public class PageBottomTabLayout extends ViewGroup
 
     private ViewPagerPageChangeListener mPageChangeListener;
     private ViewPager mViewPager;
+
+    private OnTabItemSelectedListener mTabItemListener = new OnTabItemSelectedListener() {
+        @Override
+        public void onSelected(int index, int old) {
+            if(mViewPager != null){
+                mViewPager.setCurrentItem(index,false);
+            }
+        }
+        @Override
+        public void onRepeat(int index) {}
+    };
 
     public PageBottomTabLayout(Context context) {
         this(context,null);
@@ -106,63 +119,6 @@ public class PageBottomTabLayout extends ViewGroup
         return new CustomBuilder();
     }
 
-    /**
-     * 方便适配ViewPager页面切换<p>
-     * 注意：ViewPager页面数量必须等于导航栏的Item数量
-     * @param viewPager {@link ViewPager}
-     */
-    public void setupWithViewPager(ViewPager viewPager){
-
-        if(viewPager == null){return;}
-
-        mViewPager = viewPager;
-
-        if(mPageChangeListener != null){
-            mViewPager.removeOnPageChangeListener(mPageChangeListener);
-        } else {
-            mPageChangeListener = new ViewPagerPageChangeListener();
-        }
-
-        if(mNavigationController != null) {
-            int n = mViewPager.getCurrentItem();
-            if(mNavigationController.getSelected() != n){
-                mNavigationController.setSelect(n);
-            }
-            mViewPager.addOnPageChangeListener(mPageChangeListener);
-        }
-    }
-
-    private class ViewPagerPageChangeListener implements ViewPager.OnPageChangeListener{
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            if(mNavigationController != null && mNavigationController.getSelected() != position){
-                mNavigationController.setSelect(position);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    }
-
-    OnTabItemSelectedListener mTabItemListener = new OnTabItemSelectedListener() {
-        @Override
-        public void onSelected(int index, int old) {
-            if(mViewPager != null){
-                mViewPager.setCurrentItem(index,false);
-            }
-        }
-
-        @Override
-        public void onRepeat(int index) {}
-    };
 
     /**
      * 构建 自定义 的导航栏
@@ -177,7 +133,6 @@ public class PageBottomTabLayout extends ViewGroup
 
         /**
          * 完成构建
-         *
          * @return  {@link NavigationController},通过它进行后续操作
          */
         public NavigationController build(){
@@ -192,10 +147,10 @@ public class PageBottomTabLayout extends ViewGroup
             PageBottomTabLayout.this.removeAllViews();
             PageBottomTabLayout.this.addView(customItemLayout);
 
-            mNavigationController = customItemLayout;
+            mNavigationController = new NavigationController(new Controller(),customItemLayout);
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
 
-            return customItemLayout;
+            return mNavigationController;
         }
 
         /**
@@ -263,7 +218,7 @@ public class PageBottomTabLayout extends ViewGroup
             PageBottomTabLayout.this.removeAllViews();
             PageBottomTabLayout.this.addView(materialItemLayout);
 
-            mNavigationController = materialItemLayout;
+            mNavigationController = new NavigationController(new Controller(),materialItemLayout);
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
 
             //检查是否设置了Item背景
@@ -273,7 +228,7 @@ public class PageBottomTabLayout extends ViewGroup
                 }
             }
 
-            return materialItemLayout;
+            return mNavigationController;
         }
 
         /**
@@ -386,6 +341,82 @@ public class PageBottomTabLayout extends ViewGroup
         public MaterialBuilder setMode(int mode){
             MaterialBuilder.this.mode = mode;
             return MaterialBuilder.this;
+        }
+    }
+
+    /**
+     * 实现控制接口
+     */
+    private class Controller implements BottomLayoutController{
+
+        private ObjectAnimator animator;
+        private boolean hide = false;
+
+        @Override
+        public void setupWithViewPager(ViewPager viewPager) {
+            if(viewPager == null){return;}
+
+            mViewPager = viewPager;
+
+            if(mPageChangeListener != null){
+                mViewPager.removeOnPageChangeListener(mPageChangeListener);
+            } else {
+                mPageChangeListener = new ViewPagerPageChangeListener();
+            }
+
+            if(mNavigationController != null) {
+                int n = mViewPager.getCurrentItem();
+                if(mNavigationController.getSelected() != n){
+                    mNavigationController.setSelect(n);
+                }
+                mViewPager.addOnPageChangeListener(mPageChangeListener);
+            }
+        }
+
+        @Override
+        public void hideBottomLayout() {
+            if(!hide){
+                hide = true;
+                getAnimator().start();
+            }
+        }
+
+        @Override
+        public void showBottomLayout() {
+            if(hide){
+                hide = false;
+                getAnimator().reverse();
+            }
+        }
+
+        private ObjectAnimator getAnimator(){
+            if (animator == null){
+                animator = ObjectAnimator.ofFloat(
+                        PageBottomTabLayout.this,"translationY",0,PageBottomTabLayout.this.getHeight());
+                animator.setDuration(300);
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            }
+            return animator;
+        }
+    }
+
+    private class ViewPagerPageChangeListener implements ViewPager.OnPageChangeListener{
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if(mNavigationController != null && mNavigationController.getSelected() != position){
+                mNavigationController.setSelect(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 

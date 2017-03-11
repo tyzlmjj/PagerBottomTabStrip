@@ -29,7 +29,7 @@ public class Custom2Activity extends AppCompatActivity {
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),navigationController.getItemCount()));
 
         //自动适配ViewPager页面切换
-        tab.setupWithViewPager(viewPager);
+        navigationController.setupWithViewPager(viewPager);
     }
 
     //创建一个Item
