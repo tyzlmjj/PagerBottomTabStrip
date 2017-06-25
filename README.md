@@ -8,7 +8,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 也可以下载[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.1.0/Demo.apk)
 
-##实现效果图
+## 实现效果图
 
 ![PagerBottomTabStrip](/img/demo.gif "PagerBottomTabStrip")
 
@@ -16,13 +16,14 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 |---|---|
 |![PagerBottomTabStrip](/img/demo3.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo4.gif "PagerBottomTabStrip")|
 
-##自定义扩展例子
+## 自定义扩展例子
 
 |Library中已经实现的一个国内常用的效果|Demo中的一个例子|
 |---|---|
 |![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
+|![PagerBottomTabStrip](/img/demo7.gif "PagerBottomTabStrip")||
 
-##引入库
+## 引入库
 
 for Gradle:
 ```
@@ -39,7 +40,7 @@ and for Maven:
 </dependency>
 ```
 
-##联系我
+## 联系我
 
 **Email:** tyzl931019@gmail.com
 
@@ -51,7 +52,7 @@ and for Maven:
 
 这个库有BUG？请点这里 [Github Issues](https://github.com/tyzlmjj/PagerBottomTabStrip/issues)
 
-##LICENSE
+## LICENSE
 
 PagerBottomTabStrip is released under the [Apache 2.0 license](/LICENSE).
 ```
