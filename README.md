@@ -21,7 +21,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 |Library中已经实现的一个国内常用的效果|Demo中的一个例子|
 |---|---|
 |![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
-|![PagerBottomTabStrip](/img/demo7.gif "PagerBottomTabStrip")||
+|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")||
 
 ## 引入库
 
