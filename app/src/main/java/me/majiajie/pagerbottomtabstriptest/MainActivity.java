@@ -34,4 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public void toHide(View view) {
         startActivity(new Intent(this,HideActivity.class));
     }
+
+    public void toSpecial(View view) {
+        startActivity(new Intent(this,SpecialActivity.class));
+    }
 }

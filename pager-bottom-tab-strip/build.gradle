@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:transition:25.2.0'
+    compile 'com.android.support:transition:25.3.1'
 }
 
 

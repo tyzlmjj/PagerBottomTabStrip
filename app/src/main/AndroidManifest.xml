@@ -21,8 +21,11 @@
         <activity
             android:name=".BehaviorActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HideActivity"
+        <activity
+            android:name=".HideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SpecialActivity"/>
+
     </application>
 
 </manifest>

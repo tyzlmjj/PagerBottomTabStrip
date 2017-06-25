@@ -37,4 +37,10 @@
         android:text="scrolling view hide"
         android:onClick="toHide"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="special"
+        android:onClick="toSpecial"/>
+
 </LinearLayout>
