@@ -52,7 +52,19 @@ public class NormalItemView extends BaseTabItem {
     {
         mDefaultDrawable = drawableRes;
         mCheckedDrawable = checkedDrawableRes;
-        mTitle.setText(title);
+        if (title.isEmpty()){
+            mTitle.setVisibility(View.GONE);
+        } else {
+            mTitle.setText(title);
+        }
+    }
+    
+    public void setShowTitled(boolean showed){
+        if (showed) {
+             mTitle.setVisibility(View.VISIBLE);  
+        } else {
+            mTitle.setVisibility(View.GONE);
+        }
     }
 
     @Override
