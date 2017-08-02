@@ -3,8 +3,10 @@ package me.majiajie.pagerbottomtabstriptest.custom;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +45,14 @@ public class SpecialTab extends BaseTabItem {
         mIcon = (ImageView) findViewById(R.id.icon);
         mTitle = (TextView) findViewById(R.id.title);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        View view = getChildAt(0);
+        if (view != null){
+            view.setOnClickListener(l);
+        }
     }
 
     /**
