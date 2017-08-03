@@ -4,6 +4,8 @@ package me.majiajie.pagerbottomtabstrip;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
@@ -119,7 +121,6 @@ public class PageBottomTabLayout extends ViewGroup
         return new CustomBuilder();
     }
 
-
     /**
      * 构建 自定义 的导航栏
      */
@@ -169,7 +170,7 @@ public class PageBottomTabLayout extends ViewGroup
      */
     public class MaterialBuilder
     {
-        List<MaterialItemView> items;
+        List<ViewData> itemDatas;
         int defaultColor;
         int mode;
         int messageBackgroundColor;
@@ -177,7 +178,7 @@ public class PageBottomTabLayout extends ViewGroup
         int itemBackgroundResource;
 
         MaterialBuilder() {
-            items = new ArrayList<>();
+            itemDatas = new ArrayList<>();
         }
 
         /**
@@ -187,32 +188,51 @@ public class PageBottomTabLayout extends ViewGroup
          */
         public NavigationController build()
         {
-            //未添加任何按钮
-            if(items.size() == 0){return null;}
+            // 未添加任何按钮
+            if(itemDatas.size() == 0){return null;}
 
-            //检查是否设置了默认颜色
-            if(defaultColor != 0) {
-                for (MaterialItemView v:items) {
-                    v.setColor(defaultColor);
-                }
+            // 设置默认颜色
+            if (defaultColor == 0){
+                defaultColor = 0x56000000;
             }
 
-            //检查是否设置了消息圆点的颜色
-            if(messageBackgroundColor != 0) {
-                for (MaterialItemView v:items) {
-                    v.setMessageBackgroundColor(messageBackgroundColor);
-                }
-            }
+            boolean changeBackground = (mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0;
 
-            //检查是否设置了消息数字的颜色
-            if(messageNumberColor != 0) {
-                for (MaterialItemView v:items) {
-                    v.setMessageNumberColor(messageNumberColor);
+            List<MaterialItemView> items = new ArrayList<>();
+            List<Integer> checkedColors = new ArrayList<>();
+
+            for (ViewData data:itemDatas){
+                // 记录设置的选中颜色
+                checkedColors.add(data.chekedColor);
+
+                MaterialItemView materialItemView = new MaterialItemView(getContext());
+                // 需要切换背景颜色就默认将选中颜色改成白色
+                if (changeBackground){
+                    materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor, Color.WHITE);
+                } else {
+                    materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor,data.chekedColor);
                 }
+
+                //检查是否设置了消息圆点的颜色
+                if(messageBackgroundColor != 0) {
+                    materialItemView.setMessageBackgroundColor(messageBackgroundColor);
+                }
+
+                //检查是否设置了消息数字的颜色
+                if(messageNumberColor != 0) {
+                    materialItemView.setMessageNumberColor(messageNumberColor);
+                }
+
+                //检查是否设置了Item背景
+                if(itemBackgroundResource != 0) {
+                    materialItemView.setBackgroundResource(itemBackgroundResource);
+                }
+
+                items.add(materialItemView);
             }
 
             MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
-            materialItemLayout.initialize(items,mode);
+            materialItemLayout.initialize(items,checkedColors,mode);
             materialItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
             PageBottomTabLayout.this.removeAllViews();
@@ -220,13 +240,6 @@ public class PageBottomTabLayout extends ViewGroup
 
             mNavigationController = new NavigationController(new Controller(),materialItemLayout);
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
-
-            //检查是否设置了Item背景
-            if(itemBackgroundResource != 0) {
-                for (MaterialItemView v:items) {
-                    v.setBackgroundResource(itemBackgroundResource);
-                }
-            }
 
             return mNavigationController;
         }
@@ -275,13 +288,12 @@ public class PageBottomTabLayout extends ViewGroup
          * @return  {@link MaterialBuilder}
          */
         public MaterialBuilder addItem(@DrawableRes int drawable,@DrawableRes int checkedDrawable,String title,@ColorInt int chekedColor){
-
-            MaterialItemView itemView = new MaterialItemView(getContext());
-            itemView.setCheckedColor(chekedColor);
-            itemView.setIcon(ContextCompat.getDrawable(getContext(),drawable));
-            itemView.setCheckedIcon(ContextCompat.getDrawable(getContext(),checkedDrawable));
-            itemView.setTitle(title);
-            items.add(itemView);
+            ViewData data = new ViewData();
+            data.drawable = ContextCompat.getDrawable(getContext(),drawable);
+            data.checkedDrawable = ContextCompat.getDrawable(getContext(),checkedDrawable);
+            data.title = title;
+            data.chekedColor = chekedColor;
+            itemDatas.add(data);
             return MaterialBuilder.this;
         }
 
@@ -341,6 +353,13 @@ public class PageBottomTabLayout extends ViewGroup
         public MaterialBuilder setMode(int mode){
             MaterialBuilder.this.mode = mode;
             return MaterialBuilder.this;
+        }
+
+        private class ViewData{
+            Drawable drawable;
+            Drawable checkedDrawable;
+            String title;
+            @ColorInt int chekedColor;
         }
     }
 

@@ -1,47 +1,33 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/material_bottom_navigation_margin"
         android:layout_marginBottom="@dimen/material_bottom_navigation_margin"
-        android:duplicateParentState="true" />
+        android:layout_marginTop="@dimen/material_bottom_navigation_margin" />
 
-    <me.majiajie.pagerbottomtabstrip.internal.BaselineLayout
+    <TextView
+        android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:clipToPadding="false"
-        android:paddingBottom="10dp"
-        android:duplicateParentState="true">
-        <TextView
-            android:id="@+id/smallLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/material_bottom_navigation_text_size"
-            android:singleLine="true"
-            android:duplicateParentState="true" />
-        <TextView
-            android:id="@+id/largeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:textSize="@dimen/material_bottom_navigation_active_text_size"
-            android:singleLine="true"
-            android:duplicateParentState="true" />
-    </me.majiajie.pagerbottomtabstrip.internal.BaselineLayout>
+        android:layout_marginBottom="8dp"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textSize="@dimen/material_bottom_navigation_text_size"
+        tools:text="123" />
 
     <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
         android:id="@+id/messages"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:translationX="14dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
-        android:visibility="gone"
-        />
+        android:translationX="14dp"
+        android:visibility="gone" />
 
 </merge>
 

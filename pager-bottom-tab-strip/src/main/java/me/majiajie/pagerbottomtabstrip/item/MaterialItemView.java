@@ -1,15 +1,17 @@
 package me.majiajie.pagerbottomtabstrip.item;
 
-
+import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
-import android.support.v4.view.ViewCompat;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,115 +19,82 @@ import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.internal.RoundMessageView;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
 
-public class MaterialItemView extends BaseTabItem
-{
-    private final int mDefaultMargin;
-    private final int mShiftAmount;
-    private final float mScaleUpFactor;
-    private final float mScaleDownFactor;
+/**
+ * 材料设计风格项
+ */
+public class MaterialItemView extends BaseTabItem {
 
-    private ImageView mIcon;
-    private final TextView mSmallLabel;
-    private final TextView mLargeLabel;
     private final RoundMessageView mMessages;
-
-    private boolean mShiftingMode;
+    private TextView mLabel;
+    private ImageView mIcon;
 
     private Drawable mDefaultDrawable;
     private Drawable mCheckedDrawable;
 
-    private int mDefaultColor = 0x56000000;
+    private int mDefaultColor;
     private int mCheckedColor;
 
+    private final float mTranslation;
+    private final float mTranslationHideTitle;
+
+    private final int mTopMargin;
+    private final int mTopMarginHideTitle;
+
+    private boolean mHideTitle;
     private boolean mChecked;
 
-    public MaterialItemView(Context context) {
+    private ValueAnimator mAnimator;
+    private float mAnimatorValue = 1f;
+
+    public MaterialItemView(@NonNull Context context) {
         this(context,null);
     }
 
-    public MaterialItemView(Context context, AttributeSet attrs) {
+    public MaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public MaterialItemView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        final float scale = context.getResources().getDisplayMetrics().density;
 
-        final Resources res = getResources();
-        int inactiveLabelSize = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_text_size);
-        int activeLabelSize = res.getDimensionPixelSize(
-                R.dimen.material_bottom_navigation_active_text_size);
-        mDefaultMargin = res.getDimensionPixelSize(R.dimen.material_bottom_navigation_margin);
-        mShiftAmount = inactiveLabelSize - activeLabelSize;
-        mScaleUpFactor = 1f * activeLabelSize / inactiveLabelSize;
-        mScaleDownFactor = 1f * inactiveLabelSize / activeLabelSize;
+        mTranslation = scale * 2;
+        mTranslationHideTitle = scale * 10;
+        mTopMargin = (int) (scale * 8);
+        mTopMarginHideTitle = (int) (scale * 16);
 
         LayoutInflater.from(context).inflate(R.layout.item_material, this, true);
 
         mIcon = (ImageView) findViewById(R.id.icon);
-        mSmallLabel = (TextView) findViewById(R.id.smallLabel);
-        mLargeLabel = (TextView) findViewById(R.id.largeLabel);
+        mLabel = (TextView) findViewById(R.id.label);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
-
     }
 
     @Override
-    public void setChecked(boolean checked)
-    {
+    public void setChecked(boolean checked) {
+        if (mChecked == checked){return;}
+
         mChecked = checked;
 
-        ViewCompat.setPivotX(mLargeLabel, mLargeLabel.getWidth() / 2);
-        ViewCompat.setPivotY(mLargeLabel, mLargeLabel.getBaseline());
-        ViewCompat.setPivotX(mSmallLabel, mSmallLabel.getWidth() / 2);
-        ViewCompat.setPivotY(mSmallLabel, mSmallLabel.getBaseline());
-        if (mShiftingMode) {
-            if (checked) {
-                LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
-                iconParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                iconParams.topMargin = mDefaultMargin;
-                mIcon.setLayoutParams(iconParams);
-                mLargeLabel.setVisibility(VISIBLE);
-                ViewCompat.setScaleX(mLargeLabel, 1f);
-                ViewCompat.setScaleY(mLargeLabel, 1f);
-            } else {
-                LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
-                iconParams.gravity = Gravity.CENTER;
-                iconParams.topMargin = mDefaultMargin;
-                mIcon.setLayoutParams(iconParams);
-                mLargeLabel.setVisibility(INVISIBLE);
-                ViewCompat.setScaleX(mLargeLabel, 0.5f);
-                ViewCompat.setScaleY(mLargeLabel, 0.5f);
-            }
-            mSmallLabel.setVisibility(INVISIBLE);
-        } else {
-            if (checked) {
-                LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
-                iconParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                iconParams.topMargin = mDefaultMargin + mShiftAmount;
-                mIcon.setLayoutParams(iconParams);
-                mLargeLabel.setVisibility(VISIBLE);
-                mSmallLabel.setVisibility(INVISIBLE);
-
-                ViewCompat.setScaleX(mLargeLabel, 1f);
-                ViewCompat.setScaleY(mLargeLabel, 1f);
-                ViewCompat.setScaleX(mSmallLabel, mScaleUpFactor);
-                ViewCompat.setScaleY(mSmallLabel, mScaleUpFactor);
-            } else {
-                LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
-                iconParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                iconParams.topMargin = mDefaultMargin;
-                mIcon.setLayoutParams(iconParams);
-                mLargeLabel.setVisibility(INVISIBLE);
-                mSmallLabel.setVisibility(VISIBLE);
-
-                ViewCompat.setScaleX(mLargeLabel, mScaleDownFactor);
-                ViewCompat.setScaleY(mLargeLabel, mScaleDownFactor);
-                ViewCompat.setScaleX(mSmallLabel, 1f);
-                ViewCompat.setScaleY(mSmallLabel, 1f);
-            }
+        if (mHideTitle){
+            mLabel.setVisibility(mChecked ? View.VISIBLE : View.INVISIBLE);
         }
 
-        changeColor();
+        // 切换动画
+        if (mChecked){
+            mAnimator.start();
+        } else {
+            mAnimator.reverse();
+        }
 
+        // 切换颜色
+        if(mChecked) {
+            mIcon.setImageDrawable(mCheckedDrawable);
+            mLabel.setTextColor(mCheckedColor);
+        } else {
+            mIcon.setImageDrawable(mDefaultDrawable);
+            mLabel.setTextColor(mDefaultColor);
+        }
     }
 
     @Override
@@ -142,90 +111,75 @@ public class MaterialItemView extends BaseTabItem
 
     @Override
     public String getTitle() {
-        return mLargeLabel.getText().toString();
+        return mLabel.getText().toString();
+    }
+
+    public void initialization(String title,Drawable drawable,Drawable checkedDrawable,int color,int checkedColor){
+
+        mDefaultColor = color;
+        mCheckedColor = checkedColor;
+
+        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
+        mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
+
+        mLabel.setText(title);
+        mLabel.setTextColor(color);
+
+        mIcon.setImageDrawable(mDefaultDrawable);
+
+        mAnimator = ValueAnimator.ofFloat(1f);
+        mAnimator.setDuration(115L);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimatorValue = (float) animation.getAnimatedValue();
+                if (mHideTitle){
+                    mIcon.setTranslationY(-mTranslationHideTitle * mAnimatorValue);
+                } else {
+                    mIcon.setTranslationY(-mTranslation * mAnimatorValue);
+                }
+                mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f + mAnimatorValue * 2f);
+            }
+        });
     }
 
     /**
-     * 改变选中和未选中状态的外观颜色
+     * 获取动画运行值[0,1]
      */
-    private void changeColor()
-    {
-        if(mChecked) {
-            mLargeLabel.setTextColor(mCheckedColor);
-            mSmallLabel.setTextColor(mCheckedColor);
-            mIcon.setImageDrawable(mCheckedDrawable);
+    public float getAnimValue(){
+        return mAnimatorValue;
+    }
+
+    /**
+     * 设置是否隐藏文字
+     */
+    public void setHideTitle(boolean hideTitle) {
+        mHideTitle = hideTitle;
+
+        LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
+
+        if (mHideTitle){
+            iconParams.topMargin = mTopMarginHideTitle;
         } else {
-            mLargeLabel.setTextColor(mDefaultColor);
-            mSmallLabel.setTextColor(mDefaultColor);
-            mIcon.setImageDrawable(mDefaultDrawable);
+            iconParams.topMargin = mTopMargin;
         }
+
+        mLabel.setVisibility(mChecked ? View.VISIBLE : View.INVISIBLE);
+
+        mIcon.setLayoutParams(iconParams);
     }
 
-    public void setTitle(String title) {
-        mSmallLabel.setText(title);
-        mLargeLabel.setText(title);
-    }
-
-    public void setIcon(Drawable drawable) {
-        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
-        if(!mChecked)
-        {
-            mIcon.setImageDrawable(mDefaultDrawable);
-        }
-    }
-
-    public void setCheckedIcon(Drawable drawable) {
-        mCheckedDrawable = Utils.tint(drawable,mCheckedColor);
-        if(mChecked)
-        {
-            mIcon.setImageDrawable(mCheckedDrawable);
-        }
-    }
-
-    public void setColor(int color) {
-        mDefaultColor = color;
-
-        if(mDefaultDrawable != null)
-        {
-            mDefaultDrawable = Utils.tint(mDefaultDrawable,mDefaultColor);
-
-            if(!mChecked)
-            {
-                mIcon.setImageDrawable(mDefaultDrawable);
-                mLargeLabel.setTextColor(mDefaultColor);
-                mSmallLabel.setTextColor(mDefaultColor);
-            }
-        }
-    }
-
-    public void setCheckedColor(int color) {
-        mCheckedColor = color;
-
-        if(mCheckedDrawable != null)
-        {
-            mCheckedDrawable = Utils.tint(mCheckedDrawable,mCheckedColor);
-
-            if(mChecked)
-            {
-                mIcon.setImageDrawable(mCheckedDrawable);
-                mLargeLabel.setTextColor(mCheckedColor);
-                mSmallLabel.setTextColor(mCheckedColor);
-            }
-        }
-    }
-
-    public int getCheckedColor() {
-        return mCheckedColor;
-    }
-
-    public void setShiftingMode(boolean shiftingMode) {
-        mShiftingMode = shiftingMode;
-    }
-
+    /**
+     * 设置消息圆形的颜色
+     */
     public void setMessageBackgroundColor(@ColorInt int color) {
         mMessages.tintMessageBackground(color);
     }
 
+    /**
+     * 设置消息数据的颜色
+     */
     public void setMessageNumberColor(@ColorInt int color){
         mMessages.setMessageNumberColor(color);
     }

@@ -7,7 +7,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v4.view.ViewCompat;
@@ -22,11 +21,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.ItemController;
+import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+
 
 public class MaterialItemLayout extends ViewGroup implements ItemController {
 
@@ -36,8 +36,6 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH;
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_HEIGHT;
-
-    private final DelayedAnimationHelper mDelayedAnimationHelper = new DelayedAnimationHelper();
 
     private List<MaterialItemView> mItems;
 
@@ -92,7 +90,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
      * @param items 按钮集合
      * @param mode  {@link MaterialMode}
      */
-    public void initialize(List<MaterialItemView> items,int mode)
+    public void initialize(List<MaterialItemView> items, List<Integer> checkedColors, int mode)
     {
         mItems = items;
 
@@ -101,19 +99,14 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             //初始化一些成员变量
             mChangeBackgroundMode = true;
             mOvals = new ArrayList<>();
-            mColors = new ArrayList<>();
+            mColors = checkedColors;
             mInterpolator = new AccelerateDecelerateInterpolator();
             mTempRectF = new RectF();
             mPaint  = new Paint();
 
-            //获取各项的选中颜色，并替换成白色
-            for(MaterialItemView v:mItems) {
-                mColors.add(v.getCheckedColor());
-                v.setCheckedColor(Color.WHITE);
-            }
-
             //设置默认的背景
             setBackgroundColor(mColors.get(DEFAULT_SELECTED));
+
         } else {
             //设置按钮点击效果
             for(MaterialItemView v:mItems) {
@@ -125,7 +118,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         if((mode & MaterialMode.HIDE_TEXT) > 0) {
             mShiftingMode = true;
             for(MaterialItemView v:mItems) {
-                v.setShiftingMode(true);
+                v.setHideTitle(true);
             }
         }
 
@@ -170,24 +163,20 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             final int activeWidth = Math.min(activeMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH);
             final int inactiveMaxAvailable = (width - activeWidth) / inactiveCount;
             final int inactiveWidth = Math.min(inactiveMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH);
-            int extra = width - activeWidth - inactiveWidth * inactiveCount;
             for (int i = 0; i < count; i++) {
-                mTempChildWidths[i] = (i == mSelected) ? activeWidth : inactiveWidth;
-                if (extra > 0) {
-                    mTempChildWidths[i]++;
-                    extra--;
+                if (i == mSelected){
+                    mTempChildWidths[i] = (int) ((activeWidth - inactiveWidth) * mItems.get(mSelected).getAnimValue() + inactiveWidth);
+                } else if(i == mOldSelected){
+                    mTempChildWidths[i] = (int) (activeWidth - (activeWidth - inactiveWidth) * mItems.get(mSelected).getAnimValue());
+                } else {
+                    mTempChildWidths[i] = inactiveWidth;
                 }
             }
         } else {
             final int maxAvailable = width / (count == 0 ? 1 : count);
             final int childWidth = Math.min(maxAvailable, MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH);
-            int extra = width - childWidth * count;
             for (int i = 0; i < count; i++) {
                 mTempChildWidths[i] = childWidth;
-                if (extra > 0) {
-                    mTempChildWidths[i]++;
-                    extra--;
-                }
             }
         }
 
@@ -240,23 +229,19 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     {
         super.onDraw(canvas);
 
-        if(mChangeBackgroundMode)
-        {
+        if(mChangeBackgroundMode) {
             int width = getWidth();
             int height = getHeight();
 
             Iterator<Oval> iterator = mOvals.iterator();
-            while(iterator.hasNext())
-            {
+            while(iterator.hasNext()) {
                 Oval oval = iterator.next();
                 mPaint.setColor(oval.color);
-                if(oval.r < oval.maxR)
-                {
+                if(oval.r < oval.maxR) {
                     mTempRectF.set(oval.getLeft(),oval.getTop(),oval.getRight(),oval.getBottom());
                     canvas.drawOval(mTempRectF, mPaint);
                 }
-                else
-                {
+                else {
                     this.setBackgroundColor(oval.color);
                     canvas.drawRect(0,0,width,height,mPaint);
                     iterator.remove();
@@ -269,8 +254,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        if(ev.getAction() == MotionEvent.ACTION_UP)
-        {
+        if(ev.getAction() == MotionEvent.ACTION_UP) {
             mLastUpX = ev.getX();
             mLastUpY = ev.getY();
         }
@@ -330,8 +314,6 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         //记录前一个选中项和当前选中项
         mOldSelected = mSelected;
         mSelected = index;
-
-        mDelayedAnimationHelper.beginDelayedTransition(this);
 
         //切换背景颜色
         if(mChangeBackgroundMode)
