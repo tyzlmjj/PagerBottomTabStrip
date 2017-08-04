@@ -10,24 +10,26 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 ## 实现效果图
 
-![PagerBottomTabStrip](/img/demo.gif "PagerBottomTabStrip")
-
-|![PagerBottomTabStrip](/img/demo1.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo2.gif "PagerBottomTabStrip")|
+|![horizontal](/img/demo.png "horizontal")|![vertical](/img/demo8.png "vertical")|
 |---|---|
-|![PagerBottomTabStrip](/img/demo3.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo4.gif "PagerBottomTabStrip")|
+|![Material 1](/img/demo1.gif "Material 1")|![Material 2](/img/demo2.gif "Material 2")|
+|![Material 3](/img/demo3.gif "Material 3")|![Material 4](/img/demo4.gif "Material 4")|
 
 ## 自定义扩展例子
 
-|Library中已经实现的一个国内常用的效果|Demo中的一个例子|
+|Library中已经实现的一个最普通的效果|
+|---|
+|![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|
+
+|Demo中的例子||
 |---|---|
-|![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
-|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")| |
+|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
 
 ## 引入库
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
+compile 'me.majiajie:pager-bottom-tab-strip:2.2.0'
 ```
 
 ## 联系我
