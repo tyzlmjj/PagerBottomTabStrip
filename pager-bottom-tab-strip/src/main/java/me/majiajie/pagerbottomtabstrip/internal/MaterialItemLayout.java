@@ -27,7 +27,9 @@ import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-
+/**
+ * 存放 Material Design 风格按钮的布局
+ */
 public class MaterialItemLayout extends ViewGroup implements ItemController {
 
     private final int DEFAULT_SELECTED = 0;
@@ -47,7 +49,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     private int mSelected = -1;
     private int mOldSelected = -1;
 
-    private boolean mShiftingMode;
+    private boolean mHideTitle;
 
     //切换背景颜色时使用
     private final int ANIM_TIME = 300;
@@ -116,7 +118,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
         //判断是否隐藏文字
         if((mode & MaterialMode.HIDE_TEXT) > 0) {
-            mShiftingMode = true;
+            mHideTitle = true;
             for(MaterialItemView v:mItems) {
                 v.setHideTitle(true);
             }
@@ -133,7 +135,6 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     setSelect(finali,mLastUpX,mLastUpY);
                 }
             });
@@ -157,7 +158,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
         final int heightSpec = MeasureSpec.makeMeasureSpec(MATERIAL_BOTTOM_NAVIGATION_ITEM_HEIGHT, MeasureSpec.EXACTLY);
 
-        if (mShiftingMode) {
+        if (mHideTitle) {
             final int inactiveCount = count - 1;
             final int activeMaxAvailable = width - inactiveCount * MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
             final int activeWidth = Math.min(activeMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH);
@@ -353,8 +354,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float n = (float) valueAnimator.getAnimatedValue();
-                oval.r = n;
+                oval.r = (float) valueAnimator.getAnimatedValue();
             }
         });
         valueAnimator.addListener(new AnimatorListenerAdapter() {

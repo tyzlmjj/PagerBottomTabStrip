@@ -5,7 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
@@ -13,18 +12,19 @@ import me.majiajie.pagerbottomtabstriptest.other.MyViewPagerAdapter;
 
 import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
 
-
-public class MaterialDesignActivity extends AppCompatActivity {
+/**
+ * Created by mjj on 2017/8/3
+ */
+public class VerticalActivity extends AppCompatActivity {
 
     int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
-//    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
 
     NavigationController mNavigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_horizontal);
+        setContentView(R.layout.layout_vertical);
 
         PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(tab);
 
@@ -33,8 +33,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
                 .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
                 .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
                 .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
-                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
-                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
+                .enableVerticalLayout()//使用垂直布局
                 .build();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -57,7 +56,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
         });
 
         //设置消息圆点
-//        mNavigationController.setMessageNumber(0,12);
-//        mNavigationController.setHasMessage(3,true);
+        mNavigationController.setMessageNumber(0,8);
+        mNavigationController.setHasMessage(3,true);
     }
 }

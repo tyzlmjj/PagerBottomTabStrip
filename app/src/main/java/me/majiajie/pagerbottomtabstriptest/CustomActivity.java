@@ -16,7 +16,7 @@ public class CustomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show);
+        setContentView(R.layout.layout_horizontal);
 
         PageBottomTabLayout tab = (PageBottomTabLayout) findViewById(R.id.tab);
 

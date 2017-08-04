@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "2.2.0"
     }
 
     buildTypes {
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:transition:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
 }
 
 

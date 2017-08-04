@@ -1,8 +1,6 @@
 package me.majiajie.pagerbottomtabstrip.internal;
 
-
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,74 +14,31 @@ import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
- * 存放自定义项的布局
+ * <p>
+ *     垂直显示的导航按钮父布局
+ * </p>
  */
-public class CustomItemLayout extends ViewGroup implements ItemController {
+public class VerticalItemLayout extends ViewGroup implements ItemController{
 
-    private final int BOTTOM_NAVIGATION_ITEM_HEIGHT;
+    private final int NAVIGATION_ITEM_SIZE;
 
     private List<BaseTabItem> mItems;
     private List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
 
     private int mSelected = -1;
 
-    public CustomItemLayout(Context context) {
+    public VerticalItemLayout(Context context) {
         this(context,null);
     }
 
-    public CustomItemLayout(Context context, AttributeSet attrs) {
+    public VerticalItemLayout(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public CustomItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public VerticalItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        BOTTOM_NAVIGATION_ITEM_HEIGHT = getResources().getDimensionPixelSize(R.dimen.material_bottom_navigation_height);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        final int n = getChildCount();
-        int childWidth = getMeasuredWidth() / n;
-
-        final int heightSpec = MeasureSpec.makeMeasureSpec(BOTTOM_NAVIGATION_ITEM_HEIGHT, MeasureSpec.EXACTLY);
-        final int widthSpec = MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY);
-
-        for (int i = 0; i < n; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() == GONE) {
-                continue;
-            }
-            child.measure(widthSpec, heightSpec);
-            child.getLayoutParams().width = child.getMeasuredWidth();
-        }
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        final int count = getChildCount();
-        final int width = right - left;
-        final int height = bottom - top;
-        //只支持top、bottom的padding
-        final int padding_top = getPaddingTop();
-        final int padding_bottom = getPaddingBottom();
-        int used = 0;
-
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() == GONE) {
-                continue;
-            }
-            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                child.layout(width - used - child.getMeasuredWidth(), padding_top, width - used, height - padding_bottom);
-            } else {
-                child.layout(used, padding_top, child.getMeasuredWidth() + used, height - padding_bottom);
-            }
-            used += child.getMeasuredWidth();
-        }
+        NAVIGATION_ITEM_SIZE = getResources().getDimensionPixelSize(R.dimen.material_bottom_navigation_height);
     }
 
     public void initialize(List<BaseTabItem> items) {
@@ -108,6 +63,45 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
         //默认选中第一项
         mSelected = 0;
         mItems.get(0).setChecked(true);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        final int n = getChildCount();
+
+        final int heightSpec = MeasureSpec.makeMeasureSpec(NAVIGATION_ITEM_SIZE, MeasureSpec.EXACTLY);
+        final int widthSpec = MeasureSpec.makeMeasureSpec(NAVIGATION_ITEM_SIZE, MeasureSpec.EXACTLY);
+
+        for (int i = 0; i < n; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+            child.measure(widthSpec, heightSpec);
+//            child.getLayoutParams().width = child.getMeasuredWidth();
+        }
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        final int count = getChildCount();
+        //只支持top的padding
+        final int padding_top = getPaddingTop();
+        int used = padding_top;
+
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+
+            child.layout(0, used, child.getMeasuredWidth(), used + child.getMeasuredHeight());
+
+            used += child.getMeasuredHeight();
+        }
     }
 
     @Override
@@ -167,6 +161,4 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
     public String getItemTitle(int index) {
         return mItems.get(index).getTitle();
     }
-
-
 }

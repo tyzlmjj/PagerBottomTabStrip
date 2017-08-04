@@ -25,8 +25,8 @@ import me.majiajie.pagerbottomtabstrip.internal.Utils;
 public class MaterialItemView extends BaseTabItem {
 
     private final RoundMessageView mMessages;
-    private TextView mLabel;
-    private ImageView mIcon;
+    private final TextView mLabel;
+    private final ImageView mIcon;
 
     private Drawable mDefaultDrawable;
     private Drawable mCheckedDrawable;
@@ -56,6 +56,7 @@ public class MaterialItemView extends BaseTabItem {
 
     public MaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
         final float scale = context.getResources().getDisplayMetrics().density;
 
         mTranslation = scale * 2;
@@ -68,6 +69,36 @@ public class MaterialItemView extends BaseTabItem {
         mIcon = (ImageView) findViewById(R.id.icon);
         mLabel = (TextView) findViewById(R.id.label);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
+    }
+
+    public void initialization(String title,Drawable drawable,Drawable checkedDrawable,int color,int checkedColor){
+
+        mDefaultColor = color;
+        mCheckedColor = checkedColor;
+
+        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
+        mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
+
+        mLabel.setText(title);
+        mLabel.setTextColor(color);
+
+        mIcon.setImageDrawable(mDefaultDrawable);
+
+        mAnimator = ValueAnimator.ofFloat(1f);
+        mAnimator.setDuration(115L);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimatorValue = (float) animation.getAnimatedValue();
+                if (mHideTitle){
+                    mIcon.setTranslationY(-mTranslationHideTitle * mAnimatorValue);
+                } else {
+                    mIcon.setTranslationY(-mTranslation * mAnimatorValue);
+                }
+                mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f + mAnimatorValue * 2f);
+            }
+        });
     }
 
     @Override
@@ -112,36 +143,6 @@ public class MaterialItemView extends BaseTabItem {
     @Override
     public String getTitle() {
         return mLabel.getText().toString();
-    }
-
-    public void initialization(String title,Drawable drawable,Drawable checkedDrawable,int color,int checkedColor){
-
-        mDefaultColor = color;
-        mCheckedColor = checkedColor;
-
-        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
-        mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
-
-        mLabel.setText(title);
-        mLabel.setTextColor(color);
-
-        mIcon.setImageDrawable(mDefaultDrawable);
-
-        mAnimator = ValueAnimator.ofFloat(1f);
-        mAnimator.setDuration(115L);
-        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mAnimatorValue = (float) animation.getAnimatedValue();
-                if (mHideTitle){
-                    mIcon.setTranslationY(-mTranslationHideTitle * mAnimatorValue);
-                } else {
-                    mIcon.setTranslationY(-mTranslation * mAnimatorValue);
-                }
-                mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f + mAnimatorValue * 2f);
-            }
-        });
     }
 
     /**

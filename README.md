@@ -21,7 +21,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 |Library中已经实现的一个国内常用的效果|Demo中的一个例子|
 |---|---|
 |![PagerBottomTabStrip](/img/demo5.gif "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
-|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")||
+|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")| |
 
 ## 引入库
 
@@ -30,19 +30,7 @@ for Gradle:
 compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
 ```
 
-and for Maven:
-```
-<dependency>
-  <groupId>me.majiajie</groupId>
-  <artifactId>pager-bottom-tab-strip</artifactId>
-  <version>2.1.0</version>
-  <type>pom</type>
-</dependency>
-```
-
 ## 联系我
-
-**Email:** tyzl931019@gmail.com
 
 **QQ**: 809402737
 

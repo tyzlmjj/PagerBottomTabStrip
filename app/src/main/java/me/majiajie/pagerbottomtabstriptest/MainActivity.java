@@ -38,4 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public void toSpecial(View view) {
         startActivity(new Intent(this,SpecialActivity.class));
     }
+
+    public void toVertical(View view) {
+        startActivity(new Intent(this,VerticalActivity.class));
+    }
 }

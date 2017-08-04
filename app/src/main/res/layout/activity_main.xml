@@ -43,4 +43,10 @@
         android:text="special"
         android:onClick="toSpecial"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vertical Layout"
+        android:onClick="toVertical"/>
+
 </LinearLayout>

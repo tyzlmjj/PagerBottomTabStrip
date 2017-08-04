@@ -23,10 +23,15 @@ import java.util.List;
 import me.majiajie.pagerbottomtabstrip.internal.CustomItemLayout;
 import me.majiajie.pagerbottomtabstrip.internal.MaterialItemLayout;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
+import me.majiajie.pagerbottomtabstrip.internal.VerticalItemLayout;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
+import me.majiajie.pagerbottomtabstrip.item.OnlyIconMaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
+/**
+ * 导航栏
+ */
 public class PageBottomTabLayout extends ViewGroup
 {
     private int mTabPaddingTop;
@@ -108,16 +113,14 @@ public class PageBottomTabLayout extends ViewGroup
     /**
      * 构建 Material Desgin 风格的导航栏
      */
-    public MaterialBuilder material()
-    {
+    public MaterialBuilder material() {
         return new MaterialBuilder();
     }
 
     /**
      * 构建自定义导航栏
      */
-    public CustomBuilder custom()
-    {
+    public CustomBuilder custom() {
         return new CustomBuilder();
     }
 
@@ -127,6 +130,8 @@ public class PageBottomTabLayout extends ViewGroup
     public class CustomBuilder
     {
         List<BaseTabItem> items;
+
+        boolean enableVerticalLayout;
 
         CustomBuilder(){
             items = new ArrayList<>();
@@ -141,14 +146,27 @@ public class PageBottomTabLayout extends ViewGroup
             //未添加任何按钮
             if(items.size() == 0){return null;}
 
-            CustomItemLayout customItemLayout = new CustomItemLayout(getContext());
-            customItemLayout.initialize(items);
-            customItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
+            ItemController itemController;
 
-            PageBottomTabLayout.this.removeAllViews();
-            PageBottomTabLayout.this.addView(customItemLayout);
+            if (enableVerticalLayout){//垂直布局
+                VerticalItemLayout verticalItemLayout = new VerticalItemLayout(getContext());
+                verticalItemLayout.initialize(items);
+                verticalItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
-            mNavigationController = new NavigationController(new Controller(),customItemLayout);
+                PageBottomTabLayout.this.removeAllViews();
+                PageBottomTabLayout.this.addView(verticalItemLayout);
+                itemController = verticalItemLayout;
+            } else {//水平布局
+                CustomItemLayout customItemLayout = new CustomItemLayout(getContext());
+                customItemLayout.initialize(items);
+                customItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
+
+                PageBottomTabLayout.this.removeAllViews();
+                PageBottomTabLayout.this.addView(customItemLayout);
+                itemController = customItemLayout;
+            }
+
+            mNavigationController = new NavigationController(new Controller(),itemController);
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
 
             return mNavigationController;
@@ -163,6 +181,14 @@ public class PageBottomTabLayout extends ViewGroup
             items.add(baseTabItem);
             return CustomBuilder.this;
         }
+
+        /**
+         * 使用垂直布局
+         */
+        public CustomBuilder enableVerticalLayout(){
+            enableVerticalLayout = true;
+            return CustomBuilder.this;
+        }
     }
 
     /**
@@ -175,7 +201,7 @@ public class PageBottomTabLayout extends ViewGroup
         int mode;
         int messageBackgroundColor;
         int messageNumberColor;
-        int itemBackgroundResource;
+        boolean enableVerticalLayout;
 
         MaterialBuilder() {
             itemDatas = new ArrayList<>();
@@ -196,49 +222,82 @@ public class PageBottomTabLayout extends ViewGroup
                 defaultColor = 0x56000000;
             }
 
-            boolean changeBackground = (mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0;
+            ItemController itemController;
 
-            List<MaterialItemView> items = new ArrayList<>();
-            List<Integer> checkedColors = new ArrayList<>();
+            if (enableVerticalLayout){//垂直布局
 
-            for (ViewData data:itemDatas){
-                // 记录设置的选中颜色
-                checkedColors.add(data.chekedColor);
+                List<BaseTabItem> items = new ArrayList<>();
 
-                MaterialItemView materialItemView = new MaterialItemView(getContext());
-                // 需要切换背景颜色就默认将选中颜色改成白色
-                if (changeBackground){
-                    materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor, Color.WHITE);
-                } else {
+                for (ViewData data:itemDatas){
+
+                    OnlyIconMaterialItemView materialItemView = new OnlyIconMaterialItemView(getContext());
                     materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor,data.chekedColor);
+
+                    //检查是否设置了消息圆点的颜色
+                    if(messageBackgroundColor != 0) {
+                        materialItemView.setMessageBackgroundColor(messageBackgroundColor);
+                    }
+
+                    //检查是否设置了消息数字的颜色
+                    if(messageNumberColor != 0) {
+                        materialItemView.setMessageNumberColor(messageNumberColor);
+                    }
+
+                    items.add(materialItemView);
                 }
 
-                //检查是否设置了消息圆点的颜色
-                if(messageBackgroundColor != 0) {
-                    materialItemView.setMessageBackgroundColor(messageBackgroundColor);
+                VerticalItemLayout verticalItemLayout = new VerticalItemLayout(getContext());
+                verticalItemLayout.initialize(items);
+                verticalItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
+
+                PageBottomTabLayout.this.removeAllViews();
+                PageBottomTabLayout.this.addView(verticalItemLayout);
+
+                itemController = verticalItemLayout;
+
+            } else {//水平布局
+
+                boolean changeBackground = (mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0;
+
+                List<MaterialItemView> items = new ArrayList<>();
+                List<Integer> checkedColors = new ArrayList<>();
+
+                for (ViewData data:itemDatas){
+                    // 记录设置的选中颜色
+                    checkedColors.add(data.chekedColor);
+
+                    MaterialItemView materialItemView = new MaterialItemView(getContext());
+                    // 需要切换背景颜色就默认将选中颜色改成白色
+                    if (changeBackground){
+                        materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor, Color.WHITE);
+                    } else {
+                        materialItemView.initialization(data.title,data.drawable,data.checkedDrawable,defaultColor,data.chekedColor);
+                    }
+
+                    //检查是否设置了消息圆点的颜色
+                    if(messageBackgroundColor != 0) {
+                        materialItemView.setMessageBackgroundColor(messageBackgroundColor);
+                    }
+
+                    //检查是否设置了消息数字的颜色
+                    if(messageNumberColor != 0) {
+                        materialItemView.setMessageNumberColor(messageNumberColor);
+                    }
+
+                    items.add(materialItemView);
                 }
 
-                //检查是否设置了消息数字的颜色
-                if(messageNumberColor != 0) {
-                    materialItemView.setMessageNumberColor(messageNumberColor);
-                }
+                MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
+                materialItemLayout.initialize(items,checkedColors,mode);
+                materialItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
-                //检查是否设置了Item背景
-                if(itemBackgroundResource != 0) {
-                    materialItemView.setBackgroundResource(itemBackgroundResource);
-                }
+                PageBottomTabLayout.this.removeAllViews();
+                PageBottomTabLayout.this.addView(materialItemLayout);
 
-                items.add(materialItemView);
+                itemController = materialItemLayout;
             }
 
-            MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
-            materialItemLayout.initialize(items,checkedColors,mode);
-            materialItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
-
-            PageBottomTabLayout.this.removeAllViews();
-            PageBottomTabLayout.this.addView(materialItemLayout);
-
-            mNavigationController = new NavigationController(new Controller(),materialItemLayout);
+            mNavigationController = new NavigationController(new Controller(),itemController);
             mNavigationController.addTabItemSelectedListener(mTabItemListener);
 
             return mNavigationController;
@@ -328,16 +387,6 @@ public class PageBottomTabLayout extends ViewGroup
         }
 
         /**
-         * 设置每个Item的背景
-         * @param resid 背景资源
-         * @return  {@link MaterialBuilder}
-         */
-        public MaterialBuilder setItemBackgroundResource(@DrawableRes int resid){
-            itemBackgroundResource = resid;
-            return MaterialBuilder.this;
-        }
-
-        /**
          * 设置模式。默认文字一直显示，且背景色不变。
          * 可以通过{@link MaterialMode}选择模式。
          *
@@ -352,6 +401,14 @@ public class PageBottomTabLayout extends ViewGroup
          */
         public MaterialBuilder setMode(int mode){
             MaterialBuilder.this.mode = mode;
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 使用垂直布局
+         */
+        public MaterialBuilder enableVerticalLayout(){
+            enableVerticalLayout = true;
             return MaterialBuilder.this;
         }
 
