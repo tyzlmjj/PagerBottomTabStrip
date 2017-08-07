@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
-import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 
 import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
 
@@ -33,7 +33,7 @@ public class BehaviorActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(tab);
+        PageNavigationView pageBottomTabLayout = (PageNavigationView) findViewById(tab);
 
         mNavigationController = pageBottomTabLayout.material()
                 .addItem(R.drawable.ic_restore_teal_24dp,"Recents")

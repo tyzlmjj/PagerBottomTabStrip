@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
-import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import me.majiajie.pagerbottomtabstriptest.other.MyViewPagerAdapter;
 
@@ -26,7 +26,7 @@ public class VerticalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_vertical);
 
-        PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(tab);
+        PageNavigationView pageBottomTabLayout = (PageNavigationView) findViewById(tab);
 
         mNavigationController = pageBottomTabLayout.material()
                 .addItem(R.drawable.ic_ondemand_video_black_24dp,"Movies & TV",testColors[0])

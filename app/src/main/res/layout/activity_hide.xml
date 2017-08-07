@@ -19,7 +19,7 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <me.majiajie.pagerbottomtabstrip.PageBottomTabLayout
+    <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/tab"
         android:elevation="8dp"
         android:layout_width="match_parent"

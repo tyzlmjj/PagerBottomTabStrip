@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <me.majiajie.pagerbottomtabstrip.PageBottomTabLayout
+    <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/tab"
         android:elevation="8dp"
         android:layout_width="match_parent"

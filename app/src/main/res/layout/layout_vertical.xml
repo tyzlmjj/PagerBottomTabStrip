@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     >
 
-    <me.majiajie.pagerbottomtabstrip.PageBottomTabLayout
+    <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/tab"
         android:elevation="8dp"
         android:layout_width="56dp"
