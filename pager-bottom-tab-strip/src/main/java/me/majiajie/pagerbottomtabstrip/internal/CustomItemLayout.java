@@ -45,7 +45,7 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         final int n = getChildCount();
-        int childWidth = getMeasuredWidth() / n;
+        int childWidth = MeasureSpec.getSize(widthMeasureSpec) / n;
 
         final int heightSpec = MeasureSpec.makeMeasureSpec(BOTTOM_NAVIGATION_ITEM_HEIGHT, MeasureSpec.EXACTLY);
         final int widthSpec = MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY);
@@ -56,9 +56,7 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
                 continue;
             }
             child.measure(widthSpec, heightSpec);
-            child.getLayoutParams().width = child.getMeasuredWidth();
         }
-
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
