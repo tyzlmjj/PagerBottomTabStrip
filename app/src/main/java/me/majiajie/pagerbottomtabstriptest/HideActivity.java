@@ -23,7 +23,7 @@ import static me.majiajie.pagerbottomtabstriptest.R.id.tab;
 
 public class HideActivity extends AppCompatActivity {
 
-    NavigationController mNavigationController;
+    static NavigationController mNavigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class HideActivity extends AppCompatActivity {
     /**
      * 监听列表的滑动来控制底部导航栏的显示与隐藏
      */
-    private class ListScrollListener extends RecyclerView.OnScrollListener{
+    private static class ListScrollListener extends RecyclerView.OnScrollListener{
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -67,15 +67,13 @@ public class HideActivity extends AppCompatActivity {
 
     private class TestViewPagerAdapter extends FragmentPagerAdapter {
 
-        public TestViewPagerAdapter(FragmentManager fm) {
+        TestViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            TestFragment fragment = new TestFragment();
-            fragment.setListListener(new ListScrollListener());
-            return fragment;
+            return new TestFragment();
         }
 
         @Override
@@ -85,8 +83,6 @@ public class HideActivity extends AppCompatActivity {
     }
 
     public static class TestFragment extends Fragment{
-
-        RecyclerView.OnScrollListener listListener;
 
         @Nullable
         @Override
@@ -99,12 +95,7 @@ public class HideActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
             recyclerView.setAdapter(new TestAdapter());
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
-            recyclerView.addOnScrollListener(listListener);
-
-        }
-
-        public void setListListener(RecyclerView.OnScrollListener listListener) {
-            this.listListener = listListener;
+            recyclerView.addOnScrollListener(new ListScrollListener());
         }
     }
 
