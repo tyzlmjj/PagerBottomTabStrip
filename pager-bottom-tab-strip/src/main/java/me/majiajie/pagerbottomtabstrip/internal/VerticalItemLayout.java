@@ -79,7 +79,6 @@ public class VerticalItemLayout extends ViewGroup implements ItemController{
                 continue;
             }
             child.measure(widthSpec, heightSpec);
-//            child.getLayoutParams().width = child.getMeasuredWidth();
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

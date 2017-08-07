@@ -6,7 +6,7 @@ ext {
     libraryName = 'PagerBottomTabStrip'
     artifact = 'pager-bottom-tab-strip'
 
-    libraryDescription = 'A bottom navigation bar for Android'
+    libraryDescription = 'An navigation bar for Android'
 
     siteUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip'
     gitUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip.git'
