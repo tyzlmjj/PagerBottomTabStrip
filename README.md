@@ -23,7 +23,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 |Demo中的例子||
 |---|---|
-|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.gif "PagerBottomTabStrip")|
+|![PagerBottomTabStrip](/img/demo7.png "PagerBottomTabStrip")|![PagerBottomTabStrip](/img/demo6.png "PagerBottomTabStrip")|
 
 ## 引入库
 
@@ -38,7 +38,7 @@ compile 'me.majiajie:pager-bottom-tab-strip:2.2.0'
 
 木有微博、推特！
 
-##错误反馈
+## 错误反馈
 
 这个库有BUG？请点这里 [Github Issues](https://github.com/tyzlmjj/PagerBottomTabStrip/issues)
 
