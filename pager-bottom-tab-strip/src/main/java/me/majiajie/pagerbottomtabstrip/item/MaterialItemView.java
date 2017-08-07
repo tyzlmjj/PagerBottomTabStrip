@@ -46,6 +46,8 @@ public class MaterialItemView extends BaseTabItem {
     private ValueAnimator mAnimator;
     private float mAnimatorValue = 1f;
 
+    private boolean mIsMeasured = false;
+
     public MaterialItemView(@NonNull Context context) {
         this(context,null);
     }
@@ -101,6 +103,13 @@ public class MaterialItemView extends BaseTabItem {
         });
     }
 
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mIsMeasured = true;
+    }
+
     @Override
     public void setChecked(boolean checked) {
         if (mChecked == checked){return;}
@@ -111,11 +120,23 @@ public class MaterialItemView extends BaseTabItem {
             mLabel.setVisibility(mChecked ? View.VISIBLE : View.INVISIBLE);
         }
 
-        // 切换动画
-        if (mChecked){
-            mAnimator.start();
-        } else {
-            mAnimator.reverse();
+        if (mIsMeasured) {
+            // 切换动画
+            if (mChecked){
+                mAnimator.start();
+            } else {
+                mAnimator.reverse();
+            }
+        } else if (mChecked){ // 布局还未测量时选中，直接转换到选中的最终状态
+            if (mHideTitle){
+                mIcon.setTranslationY(-mTranslationHideTitle);
+            } else {
+                mIcon.setTranslationY(-mTranslation);
+            }
+            mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
+        } else { // 布局还未测量并且未选中，保持未选中状态
+            mIcon.setTranslationY(0);
+            mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
         }
 
         // 切换颜色
