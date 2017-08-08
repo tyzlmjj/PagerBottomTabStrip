@@ -6,7 +6,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 代码内部结构已经完全不一样了，不过使用方式跟V1版本类似，具体细节请看：
 [使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)
 
-也可以下载[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.2.0/Demo.apk)
+也可以下载[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.2.1/Demo.apk)
 
 ## 实现效果图
 
