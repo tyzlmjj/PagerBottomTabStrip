@@ -13,7 +13,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 5
-        versionName "2.2.1"
+        versionName "2.2.2-alpha1"
     }
 
     buildTypes {

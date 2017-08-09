@@ -5,10 +5,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -111,8 +114,13 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
         } else {
             //设置按钮点击效果
-            for(MaterialItemView v:mItems) {
-                v.setBackgroundResource(R.drawable.material_item_background);
+            for(int i = 0;i < mItems.size();i++) {
+                MaterialItemView v = mItems.get(i);
+                if (Build.VERSION.SDK_INT >= 21){
+                    v.setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}},new int[]{0xFFFFFF & checkedColors.get(i) | 0x56000000}),null,null));
+                } else {
+                    v.setBackgroundResource(R.drawable.material_item_background);
+                }
             }
         }
 

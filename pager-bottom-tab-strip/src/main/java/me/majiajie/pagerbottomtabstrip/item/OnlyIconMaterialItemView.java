@@ -1,7 +1,10 @@
 package me.majiajie.pagerbottomtabstrip.item;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -48,8 +51,6 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
 
         mIcon = (ImageView) findViewById(R.id.icon);
         mMessages = (RoundMessageView) findViewById(R.id.messages);
-
-        setBackgroundResource(R.drawable.material_item_background);
     }
 
     public void initialization(String title, Drawable drawable, Drawable checkedDrawable, int color, int checkedColor){
@@ -63,6 +64,12 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
         mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
 
         mIcon.setImageDrawable(mDefaultDrawable);
+
+        if (Build.VERSION.SDK_INT >= 21){
+            setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}},new int[]{0xFFFFFF & checkedColor | 0x56000000}),null,null));
+        } else {
+            setBackgroundResource(R.drawable.material_item_background);
+        }
     }
 
     @Override
