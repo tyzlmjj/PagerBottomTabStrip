@@ -5,22 +5,21 @@
         android:id="@+id/oval"
         android:layout_width="10dp"
         android:layout_height="10dp"
-        android:background="@drawable/round"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="2dp"
-        android:visibility="invisible"
-        />
+        android:background="@drawable/round"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round"
+        android:gravity="center"
         android:minHeight="20dp"
         android:minWidth="20dp"
-        android:background="@drawable/round"
         android:singleLine="true"
         android:textColor="@android:color/white"
-        android:gravity="center"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </merge>

@@ -1,30 +1,37 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/title"
+    <me.majiajie.pagerbottomtabstrip.internal.BaselineLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:singleLine="true"
-        android:layout_marginBottom="6dp"
         android:layout_gravity="bottom|center_horizontal"
-        />
+        android:clipToPadding="false"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="12sp"
+            tools:text="123" />
+
+    </me.majiajie.pagerbottomtabstrip.internal.BaselineLayout>
 
     <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
         android:id="@+id/messages"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:translationX="14dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
-        />
+        android:translationX="14dp" />
 
 </merge>
 
