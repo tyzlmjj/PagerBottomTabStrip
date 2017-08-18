@@ -27,6 +27,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':pager-bottom-tab-strip')
-//    compile 'me.majiajie:pager-bottom-tab-strip:2.2.2-alpha3'
+//    compile 'me.majiajie:pager-bottom-tab-strip:2.2.2'
     compile 'com.android.support:design:25.3.1'
 }
