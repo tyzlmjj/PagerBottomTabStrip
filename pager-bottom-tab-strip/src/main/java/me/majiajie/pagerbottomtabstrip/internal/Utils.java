@@ -3,6 +3,7 @@ package me.majiajie.pagerbottomtabstrip.internal;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.TypedValue;
@@ -10,17 +11,18 @@ import android.util.TypedValue;
 
 public class Utils {
 
-	/**
-	 * 获取自定义属性的资源ID
-	 * @param context	上下文
-	 * @param attrRes	自定义属性
-     * @return	resourceId
-     */
-	public static int getResourceId(Context context, int attrRes)
-	{
-		TypedValue typedValue = new TypedValue();
-		context.getTheme().resolveAttribute(attrRes, typedValue, true);
-		return typedValue.resourceId;
+	public static Drawable tint(Drawable drawable, int color) {
+		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			wrappedDrawable.mutate();
+		}
+		DrawableCompat.setTint(wrappedDrawable, color);
+		return wrappedDrawable;
+	}
+
+	public static Drawable newDrawable(Drawable drawable){
+		Drawable.ConstantState constantState = drawable.getConstantState();
+		return constantState != null ? constantState.newDrawable() : drawable;
 	}
 
 	/**
@@ -37,11 +39,15 @@ public class Utils {
 		return ContextCompat.getColor(context,getResourceId(context,attrRes));
 	}
 
-	public static Drawable tint(Drawable drawable, int color)
-	{
-		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-		wrappedDrawable.mutate();
-		DrawableCompat.setTint(wrappedDrawable, color);
-		return wrappedDrawable;
+	/**
+	 * 获取自定义属性的资源ID
+	 * @param context	上下文
+	 * @param attrRes	自定义属性
+	 * @return	resourceId
+	 */
+	private static int getResourceId(Context context, int attrRes) {
+		TypedValue typedValue = new TypedValue();
+		context.getTheme().resolveAttribute(attrRes, typedValue, true);
+		return typedValue.resourceId;
 	}
 }

@@ -310,12 +310,60 @@ public class PageNavigationView extends ViewGroup
 
         /**
          * 添加一个导航按钮
+         * @param drawableRes  图标资源
+         * @param title        显示文字内容.尽量简短
+         * @return {@link MaterialBuilder}
+         */
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, String title){
+            addItem(drawableRes,drawableRes,title, Utils.getColorPrimary(getContext()));
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 添加一个导航按钮
+         * @param drawableRes          图标资源
+         * @param checkedDrawableRes   选中时的图标资源
+         * @param title                显示文字内容.尽量简短
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes,String title){
+            addItem(drawableRes,checkedDrawableRes,title,Utils.getColorPrimary(getContext()));
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 添加一个导航按钮
+         * @param drawableRes   图标资源
+         * @param title         显示文字内容.尽量简短
+         * @param chekedColor   选中的颜色
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder addItem(@DrawableRes int drawableRes,String title,@ColorInt int chekedColor){
+            addItem(drawableRes,drawableRes,title,chekedColor);
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 添加一个导航按钮
+         * @param drawableRes           图标资源
+         * @param checkedDrawableRes    选中时的图标资源
+         * @param title                 显示文字内容.尽量简短
+         * @param chekedColor           选中的颜色
+         * @return  {@link MaterialBuilder}
+         */
+        public MaterialBuilder addItem(@DrawableRes int drawableRes,@DrawableRes int checkedDrawableRes,String title,@ColorInt int chekedColor){
+            addItem(ContextCompat.getDrawable(getContext(),drawableRes),ContextCompat.getDrawable(getContext(),checkedDrawableRes),title,chekedColor);
+            return MaterialBuilder.this;
+        }
+
+        /**
+         * 添加一个导航按钮
          * @param drawable  图标资源
          * @param title     显示文字内容.尽量简短
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawable, String title){
-            addItem(drawable,drawable,title, Utils.getColorPrimary(getContext()));
+        public MaterialBuilder addItem(Drawable drawable, String title){
+            addItem(drawable,Utils.newDrawable(drawable),title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
 
@@ -326,7 +374,7 @@ public class PageNavigationView extends ViewGroup
          * @param title             显示文字内容.尽量简短
          * @return  {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawable, @DrawableRes int checkedDrawable,String title){
+        public MaterialBuilder addItem(Drawable drawable, Drawable checkedDrawable,String title){
             addItem(drawable,checkedDrawable,title,Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
@@ -338,23 +386,24 @@ public class PageNavigationView extends ViewGroup
          * @param chekedColor   选中的颜色
          * @return  {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawable,String title,@ColorInt int chekedColor){
-            addItem(drawable,drawable,title,chekedColor);
+        public MaterialBuilder addItem(Drawable drawable,String title,@ColorInt int chekedColor){
+            addItem(drawable,Utils.newDrawable(drawable),title,chekedColor);
             return MaterialBuilder.this;
         }
 
         /**
          * 添加一个导航按钮
+         *
          * @param drawable          图标资源
          * @param checkedDrawable   选中时的图标资源
          * @param title             显示文字内容.尽量简短
          * @param chekedColor       选中的颜色
          * @return  {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawable,@DrawableRes int checkedDrawable,String title,@ColorInt int chekedColor){
+        public MaterialBuilder addItem(Drawable drawable,Drawable checkedDrawable,String title,@ColorInt int chekedColor){
             ViewData data = new ViewData();
-            data.drawable = ContextCompat.getDrawable(getContext(),drawable);
-            data.checkedDrawable = ContextCompat.getDrawable(getContext(),checkedDrawable);
+            data.drawable = drawable;
+            data.checkedDrawable = checkedDrawable;
             data.title = title;
             data.chekedColor = chekedColor;
             itemDatas.add(data);
