@@ -35,6 +35,8 @@
 
         <activity android:name=".VerticalActivity"/>
 
+        <activity android:name=".VerticalCustomActivity"/>
+
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package me.majiajie.pagerbottomtabstrip.internal;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.TypedValue;
@@ -13,9 +12,7 @@ public class Utils {
 
 	public static Drawable tint(Drawable drawable, int color) {
 		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-			wrappedDrawable.mutate();
-		}
+		wrappedDrawable.mutate();
 		DrawableCompat.setTint(wrappedDrawable, color);
 		return wrappedDrawable;
 	}
@@ -50,4 +47,5 @@ public class Utils {
 		context.getTheme().resolveAttribute(attrRes, typedValue, true);
 		return typedValue.resourceId;
 	}
+
 }

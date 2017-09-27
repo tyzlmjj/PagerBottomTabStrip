@@ -14,11 +14,9 @@ import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
- * <p>
- *     垂直显示的导航按钮父布局
- * </p>
+ * 存放 Material Design 风格按钮的垂直布局
  */
-public class VerticalItemLayout extends ViewGroup implements ItemController{
+public class MaterialItemVerticalLayout extends ViewGroup implements ItemController {
 
     private final int NAVIGATION_ITEM_SIZE;
 
@@ -27,15 +25,15 @@ public class VerticalItemLayout extends ViewGroup implements ItemController{
 
     private int mSelected = -1;
 
-    public VerticalItemLayout(Context context) {
+    public MaterialItemVerticalLayout(Context context) {
         this(context,null);
     }
 
-    public VerticalItemLayout(Context context, AttributeSet attrs) {
+    public MaterialItemVerticalLayout(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public VerticalItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaterialItemVerticalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         NAVIGATION_ITEM_SIZE = getResources().getDimensionPixelSize(R.dimen.material_bottom_navigation_height);

@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.internal.CustomItemLayout;
+import me.majiajie.pagerbottomtabstrip.internal.CustomItemVerticalLayout;
 import me.majiajie.pagerbottomtabstrip.internal.MaterialItemLayout;
+import me.majiajie.pagerbottomtabstrip.internal.MaterialItemVerticalLayout;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
-import me.majiajie.pagerbottomtabstrip.internal.VerticalItemLayout;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.item.OnlyIconMaterialItemView;
@@ -79,21 +80,24 @@ public class PageNavigationView extends ViewGroup
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         final int count = getChildCount();
-        final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                getMeasuredWidth(), MeasureSpec.EXACTLY);
-        final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                getMeasuredHeight(), MeasureSpec.EXACTLY);
+
+        int maxWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int maxHeight = MeasureSpec.getSize(heightMeasureSpec);
 
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
             if (child.getVisibility() == GONE) {
                 continue;
             }
-            child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+            measureChild(child,widthMeasureSpec,heightMeasureSpec);
+
+            maxWidth = Math.max(maxWidth,child.getMeasuredWidth());
+            maxHeight = Math.max(maxHeight,child.getMeasuredHeight());
         }
+
+        setMeasuredDimension(maxWidth,maxHeight);
     }
 
     @Override
@@ -152,7 +156,7 @@ public class PageNavigationView extends ViewGroup
             ItemController itemController;
 
             if (enableVerticalLayout){//垂直布局
-                VerticalItemLayout verticalItemLayout = new VerticalItemLayout(getContext());
+                CustomItemVerticalLayout verticalItemLayout = new CustomItemVerticalLayout(getContext());
                 verticalItemLayout.initialize(items);
                 verticalItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
@@ -251,14 +255,14 @@ public class PageNavigationView extends ViewGroup
                     items.add(materialItemView);
                 }
 
-                VerticalItemLayout verticalItemLayout = new VerticalItemLayout(getContext());
-                verticalItemLayout.initialize(items);
-                verticalItemLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
+                MaterialItemVerticalLayout materialItemVerticalLayout = new MaterialItemVerticalLayout(getContext());
+                materialItemVerticalLayout.initialize(items);
+                materialItemVerticalLayout.setPadding(0,mTabPaddingTop,0,mTabPaddingBottom);
 
                 PageNavigationView.this.removeAllViews();
-                PageNavigationView.this.addView(verticalItemLayout);
+                PageNavigationView.this.addView(materialItemVerticalLayout);
 
-                itemController = verticalItemLayout;
+                itemController = materialItemVerticalLayout;
 
             } else {//水平布局
 

@@ -42,4 +42,8 @@ public class MainActivity extends AppCompatActivity {
     public void toVertical(View view) {
         startActivity(new Intent(this,VerticalActivity.class));
     }
+
+    public void toCsutomVertical(View view) {
+        startActivity(new Intent(this,VerticalCustomActivity.class));
+    }
 }

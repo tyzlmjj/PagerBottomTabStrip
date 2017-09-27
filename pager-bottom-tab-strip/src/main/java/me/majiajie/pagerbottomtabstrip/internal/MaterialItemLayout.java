@@ -31,7 +31,7 @@ import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
- * 存放 Material Design 风格按钮的布局
+ * 存放 Material Design 风格按钮的水平布局
  */
 public class MaterialItemLayout extends ViewGroup implements ItemController {
 
