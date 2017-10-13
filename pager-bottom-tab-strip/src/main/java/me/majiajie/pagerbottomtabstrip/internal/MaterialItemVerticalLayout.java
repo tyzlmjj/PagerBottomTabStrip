@@ -86,8 +86,7 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final int count = getChildCount();
         //只支持top的padding
-        final int padding_top = getPaddingTop();
-        int used = padding_top;
+        int used = getPaddingTop();
 
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);

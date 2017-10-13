@@ -89,8 +89,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
         final int count = getChildCount();
         //只支持top的padding
-        final int padding_top = getPaddingTop();
-        int used = padding_top;
+        int used = getPaddingTop();
 
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
