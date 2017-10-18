@@ -115,6 +115,7 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
         //重复选择
         if(index == mSelected){
             for(OnTabItemSelectedListener listener:mListeners) {
+                mItems.get(mSelected).onRepeat();
                 listener.onRepeat(mSelected);
             }
             return;

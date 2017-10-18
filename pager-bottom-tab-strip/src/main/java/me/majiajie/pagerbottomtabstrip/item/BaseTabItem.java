@@ -45,4 +45,9 @@ public abstract class BaseTabItem extends FrameLayout
      */
     abstract public String getTitle();
 
+    /**
+     * 已选中的状态下再次点击时触发
+     */
+    public void onRepeat(){}
+
 }
