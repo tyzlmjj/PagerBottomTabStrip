@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstrip.internal;
 
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -34,6 +35,7 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
 
     public CustomItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setLayoutTransition(new LayoutTransition());
     }
 
     public void initialize(List<BaseTabItem> items) {
@@ -70,6 +72,8 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
                 visableChildCount++;
             }
         }
+
+        if (visableChildCount == 0){return;}
 
         final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) / visableChildCount, MeasureSpec.EXACTLY);
         final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(Math.max(0, MeasureSpec.getSize(heightMeasureSpec) - getPaddingBottom() - getPaddingTop()), MeasureSpec.EXACTLY);

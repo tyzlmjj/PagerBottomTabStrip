@@ -1,5 +1,6 @@
 package me.majiajie.pagerbottomtabstrip.internal;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,6 +33,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
     public CustomItemVerticalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setLayoutTransition(new LayoutTransition());
     }
 
     public void initialize(List<BaseTabItem> items) {
@@ -63,7 +65,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
         final int parentHeightMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.UNSPECIFIED);
         final int childwidthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY);
 
-        int totalHeight = 0;
+        int totalHeight = getPaddingTop() + getPaddingBottom();
         final int n = getChildCount();
         for (int i = 0; i < n; i++) {
 
