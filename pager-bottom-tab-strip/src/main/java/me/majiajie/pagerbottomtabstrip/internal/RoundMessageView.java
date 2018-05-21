@@ -39,7 +39,7 @@ public class RoundMessageView extends FrameLayout
         LayoutInflater.from(context).inflate(R.layout.round_message_view, this, true);
 
         mOval = findViewById(R.id.oval);
-        mMessages = (TextView) findViewById(R.id.msg);
+        mMessages = findViewById(R.id.msg);
         mMessages.setTypeface(Typeface.DEFAULT_BOLD);
         mMessages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
     }

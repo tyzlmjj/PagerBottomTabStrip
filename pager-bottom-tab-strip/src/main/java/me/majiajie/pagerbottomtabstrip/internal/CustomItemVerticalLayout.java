@@ -24,11 +24,11 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
     private int mSelected = -1;
 
     public CustomItemVerticalLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CustomItemVerticalLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public CustomItemVerticalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -41,7 +41,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
         //添加按钮到布局，并注册点击事件
         int n = mItems.size();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             BaseTabItem v = mItems.get(i);
             v.setChecked(false);
             this.addView(v);
@@ -78,12 +78,12 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
             final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
                     getPaddingTop() + getPaddingBottom(), lp.height);
 
-            child.measure(childwidthMeasureSpec,childHeightMeasureSpec);
+            child.measure(childwidthMeasureSpec, childHeightMeasureSpec);
 
             totalHeight += child.getMeasuredHeight();
         }
 
-        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),totalHeight);
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), totalHeight);
     }
 
     @Override
@@ -107,11 +107,19 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
     @Override
     public void setSelect(int index) {
+        setSelect(index,true);
+    }
+
+    @Override
+    public void setSelect(int index, boolean needListener) {
 
         //重复选择
-        if(index == mSelected){
-            for(OnTabItemSelectedListener listener:mListeners) {
-                listener.onRepeat(mSelected);
+        if (index == mSelected) {
+            if (needListener) {
+                for (OnTabItemSelectedListener listener : mListeners) {
+                    mItems.get(mSelected).onRepeat();
+                    listener.onRepeat(mSelected);
+                }
             }
             return;
         }
@@ -121,15 +129,17 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
         mSelected = index;
 
         //前一个选中项必须不小于0才有效
-        if(oldSelected >= 0) {
+        if (oldSelected >= 0) {
             mItems.get(oldSelected).setChecked(false);
         }
 
         mItems.get(mSelected).setChecked(true);
 
-        //事件回调
-        for(OnTabItemSelectedListener listener:mListeners) {
-            listener.onSelected(mSelected,oldSelected);
+        if (needListener) {
+            //事件回调
+            for (OnTabItemSelectedListener listener : mListeners) {
+                listener.onSelected(mSelected, oldSelected);
+            }
         }
     }
 

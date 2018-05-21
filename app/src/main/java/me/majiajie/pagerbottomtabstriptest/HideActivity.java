@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstriptest;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,18 +31,18 @@ public class HideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hide);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PageNavigationView pageBottomTabLayout = (PageNavigationView) findViewById(tab);
+        PageNavigationView pageBottomTabLayout = findViewById(tab);
 
         mNavigationController = pageBottomTabLayout.material()
-                .addItem(R.drawable.ic_restore_teal_24dp,"Recents")
-                .addItem(R.drawable.ic_favorite_teal_24dp,"Favorites")
-                .addItem(R.drawable.ic_nearby_teal_24dp,"Nearby")
+                .addItem(R.drawable.ic_restore_teal_24dp, "Recents")
+                .addItem(R.drawable.ic_favorite_teal_24dp, "Favorites")
+                .addItem(R.drawable.ic_nearby_teal_24dp, "Nearby")
                 .build();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(new TestViewPagerAdapter(getSupportFragmentManager()));
 
         mNavigationController.setupWithViewPager(viewPager);
@@ -50,14 +51,14 @@ public class HideActivity extends AppCompatActivity {
     /**
      * 监听列表的滑动来控制底部导航栏的显示与隐藏
      */
-    private static class ListScrollListener extends RecyclerView.OnScrollListener{
+    private static class ListScrollListener extends RecyclerView.OnScrollListener {
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if(dy > 8){//列表向上滑动
+            if (dy > 8) {//列表向上滑动
                 mNavigationController.hideBottomLayout();
-            } else if(dy < -8){//列表向下滑动
+            } else if (dy < -8) {//列表向下滑动
                 mNavigationController.showBottomLayout();
             }
         }
@@ -82,40 +83,42 @@ public class HideActivity extends AppCompatActivity {
         }
     }
 
-    public static class TestFragment extends Fragment{
+    public static class TestFragment extends Fragment {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.recyclerview,container,false);
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.recyclerview, container, false);
         }
 
         @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
             recyclerView.setAdapter(new TestAdapter());
-            recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
+            recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
             recyclerView.addOnScrollListener(new ListScrollListener());
         }
     }
 
-    private static class TestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private static class TestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             int padding = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 16, parent.getResources().getDisplayMetrics());
             TextView textView = new TextView(parent.getContext());
-            textView.setPadding(padding,padding,padding,padding);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+            textView.setPadding(padding, padding, padding, padding);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
-            return new RecyclerView.ViewHolder(textView) {};
+            return new RecyclerView.ViewHolder(textView) {
+            };
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-            if(holder.itemView instanceof TextView){
+            if (holder.itemView instanceof TextView) {
                 ((TextView) holder.itemView).setText(String.valueOf(position));
             }
         }

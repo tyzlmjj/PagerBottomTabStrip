@@ -1,15 +1,17 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 
     tasks.withType(Javadoc) {
@@ -19,4 +21,18 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext{
+    // 编译版本
+    compileSdkVersion = 27
+    minSdkVersion = 14
+    targetSdkVersion = 27
+
+    // 版本号
+    versionCode = 13
+    versionName = "2.3.0-alpha1"
+
+    // 依赖库版本
+    supportLibraryVersion = '27.1.1'
 }

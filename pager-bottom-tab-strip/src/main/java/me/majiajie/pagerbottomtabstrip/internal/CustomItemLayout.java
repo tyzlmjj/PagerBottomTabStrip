@@ -26,11 +26,11 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
     private int mSelected = -1;
 
     public CustomItemLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CustomItemLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public CustomItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -43,7 +43,7 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
 
         //添加按钮到布局，并注册点击事件
         int n = mItems.size();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             BaseTabItem v = mItems.get(i);
             v.setChecked(false);
             this.addView(v);
@@ -68,22 +68,24 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
         final int n = getChildCount();
         int visableChildCount = 0;
         for (int i = 0; i < n; i++) {
-            if (getChildAt(i).getVisibility() != GONE){
+            if (getChildAt(i).getVisibility() != GONE) {
                 visableChildCount++;
             }
         }
 
-        if (visableChildCount == 0){return;}
+        if (visableChildCount == 0) {
+            return;
+        }
 
         final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) / visableChildCount, MeasureSpec.EXACTLY);
         final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(Math.max(0, MeasureSpec.getSize(heightMeasureSpec) - getPaddingBottom() - getPaddingTop()), MeasureSpec.EXACTLY);
 
         for (int i = 0; i < n; i++) {
             final View child = getChildAt(i);
-            if (child.getVisibility() == GONE){
+            if (child.getVisibility() == GONE) {
                 continue;
             }
-            child.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+            child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -115,12 +117,19 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
 
     @Override
     public void setSelect(int index) {
+        setSelect(index,true);
+    }
+
+    @Override
+    public void setSelect(int index, boolean needListener) {
 
         //重复选择
-        if(index == mSelected){
-            for(OnTabItemSelectedListener listener:mListeners) {
-                mItems.get(mSelected).onRepeat();
-                listener.onRepeat(mSelected);
+        if (index == mSelected) {
+            if (needListener) {
+                for (OnTabItemSelectedListener listener : mListeners) {
+                    mItems.get(mSelected).onRepeat();
+                    listener.onRepeat(mSelected);
+                }
             }
             return;
         }
@@ -130,15 +139,17 @@ public class CustomItemLayout extends ViewGroup implements ItemController {
         mSelected = index;
 
         //前一个选中项必须不小于0才有效
-        if(oldSelected >= 0) {
+        if (oldSelected >= 0) {
             mItems.get(oldSelected).setChecked(false);
         }
 
         mItems.get(mSelected).setChecked(true);
 
-        //事件回调
-        for(OnTabItemSelectedListener listener:mListeners) {
-            listener.onSelected(mSelected,oldSelected);
+        if (needListener) {
+            //事件回调
+            for (OnTabItemSelectedListener listener : mListeners) {
+                listener.onSelected(mSelected, oldSelected);
+            }
         }
     }
 

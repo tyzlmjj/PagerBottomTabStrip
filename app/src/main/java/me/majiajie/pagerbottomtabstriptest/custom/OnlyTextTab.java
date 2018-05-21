@@ -17,7 +17,7 @@ public class OnlyTextTab extends BaseTabItem{
     public OnlyTextTab(Context context,String title) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.item_only_text, this, true);
-        mTitle = (TextView) findViewById(R.id.title);
+        mTitle = findViewById(R.id.title);
         mTitle.setText(title);
     }
 

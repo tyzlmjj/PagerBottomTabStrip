@@ -6,8 +6,7 @@ package me.majiajie.pagerbottomtabstrip;
  * <p>采用组合的形式，比如要两种效果可以这样做：</p>
  * MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR
  */
-public final class MaterialMode
-{
+public final class MaterialMode {
     /**
      * 隐藏文字内容，只在选中时显示文字
      */

@@ -29,7 +29,7 @@ PagerBottomTabStrip **V2** 现在除了支持[Material Design规范](https://www
 
 for Gradle:
 ```
-compile 'me.majiajie:pager-bottom-tab-strip:2.2.5'
+implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
 ```
 
 ## 联系我

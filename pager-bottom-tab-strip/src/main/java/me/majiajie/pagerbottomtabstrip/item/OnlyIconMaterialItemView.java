@@ -21,7 +21,7 @@ import me.majiajie.pagerbottomtabstrip.internal.Utils;
 /**
  * 只有图标的材料设计项(用于垂直布局)
  */
-public class OnlyIconMaterialItemView extends BaseTabItem{
+public class OnlyIconMaterialItemView extends BaseTabItem {
 
     private final RoundMessageView mMessages;
     private final ImageView mIcon;
@@ -37,11 +37,11 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
     private boolean mChecked;
 
     public OnlyIconMaterialItemView(@NonNull Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public OnlyIconMaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public OnlyIconMaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
@@ -49,24 +49,24 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
 
         LayoutInflater.from(context).inflate(R.layout.item_material_only_icon, this, true);
 
-        mIcon = (ImageView) findViewById(R.id.icon);
-        mMessages = (RoundMessageView) findViewById(R.id.messages);
+        mIcon = findViewById(R.id.icon);
+        mMessages = findViewById(R.id.messages);
     }
 
-    public void initialization(String title, Drawable drawable, Drawable checkedDrawable, int color, int checkedColor){
+    public void initialization(String title, Drawable drawable, Drawable checkedDrawable, int color, int checkedColor) {
 
         mTitle = title;
 
         mDefaultColor = color;
         mCheckedColor = checkedColor;
 
-        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
-        mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
+        mDefaultDrawable = Utils.tint(drawable, mDefaultColor);
+        mCheckedDrawable = Utils.tint(checkedDrawable, mCheckedColor);
 
         mIcon.setImageDrawable(mDefaultDrawable);
 
-        if (Build.VERSION.SDK_INT >= 21){
-            setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}},new int[]{0xFFFFFF & checkedColor | 0x56000000}),null,null));
+        if (Build.VERSION.SDK_INT >= 21) {
+            setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}}, new int[]{0xFFFFFF & checkedColor | 0x56000000}), null, null));
         } else {
             setBackgroundResource(R.drawable.material_item_background);
         }
@@ -74,12 +74,14 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
 
     @Override
     public void setChecked(boolean checked) {
-        if (mChecked == checked){return;}
+        if (mChecked == checked) {
+            return;
+        }
 
         mChecked = checked;
 
         // 切换颜色
-        if(mChecked) {
+        if (mChecked) {
             mIcon.setImageDrawable(mCheckedDrawable);
         } else {
             mIcon.setImageDrawable(mDefaultDrawable);
@@ -113,7 +115,7 @@ public class OnlyIconMaterialItemView extends BaseTabItem{
     /**
      * 设置消息数据的颜色
      */
-    public void setMessageNumberColor(@ColorInt int color){
+    public void setMessageNumberColor(@ColorInt int color) {
         mMessages.setMessageNumberColor(color);
     }
 }

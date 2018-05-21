@@ -37,9 +37,9 @@ public class NormalItemView extends BaseTabItem {
 
         LayoutInflater.from(context).inflate(R.layout.item_normal, this, true);
 
-        mIcon = (ImageView) findViewById(R.id.icon);
-        mTitle = (TextView) findViewById(R.id.title);
-        mMessages = (RoundMessageView) findViewById(R.id.messages);
+        mIcon = findViewById(R.id.icon);
+        mTitle = findViewById(R.id.title);
+        mMessages = findViewById(R.id.messages);
     }
 
     /**

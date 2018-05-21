@@ -68,11 +68,11 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     private float mLastUpY;
 
     public MaterialItemLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public MaterialItemLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public MaterialItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -95,29 +95,28 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
      * @param items 按钮集合
      * @param mode  {@link MaterialMode}
      */
-    public void initialize(List<MaterialItemView> items, List<Integer> checkedColors, int mode)
-    {
+    public void initialize(List<MaterialItemView> items, List<Integer> checkedColors, int mode) {
         mItems = items;
 
         //判断是否需要切换背景
-        if((mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
+        if ((mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
             //初始化一些成员变量
             mChangeBackgroundMode = true;
             mOvals = new ArrayList<>();
             mColors = checkedColors;
             mInterpolator = new AccelerateDecelerateInterpolator();
             mTempRectF = new RectF();
-            mPaint  = new Paint();
+            mPaint = new Paint();
 
             //设置默认的背景
             setBackgroundColor(mColors.get(DEFAULT_SELECTED));
 
         } else {
             //设置按钮点击效果
-            for(int i = 0;i < mItems.size();i++) {
+            for (int i = 0; i < mItems.size(); i++) {
                 MaterialItemView v = mItems.get(i);
-                if (Build.VERSION.SDK_INT >= 21){
-                    v.setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}},new int[]{0xFFFFFF & checkedColors.get(i) | 0x56000000}),null,null));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    v.setBackground(new RippleDrawable(new ColorStateList(new int[][]{{}}, new int[]{0xFFFFFF & checkedColors.get(i) | 0x56000000}), null, null));
                 } else {
                     v.setBackgroundResource(R.drawable.material_item_background);
                 }
@@ -125,16 +124,16 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         }
 
         //判断是否隐藏文字
-        if((mode & MaterialMode.HIDE_TEXT) > 0) {
+        if ((mode & MaterialMode.HIDE_TEXT) > 0) {
             mHideTitle = true;
-            for(MaterialItemView v:mItems) {
+            for (MaterialItemView v : mItems) {
                 v.setHideTitle(true);
             }
         }
 
         //添加按钮到布局，并注册点击事件
         int n = mItems.size();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             MaterialItemView v = mItems.get(i);
             v.setChecked(false);
             this.addView(v);
@@ -143,7 +142,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelect(finali,mLastUpX,mLastUpY);
+                    setSelect(finali, mLastUpX, mLastUpY,true);
                 }
             });
         }
@@ -156,8 +155,8 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //排除空状态
-        if (mItems == null || mItems.size() <= 0 ) {
-            super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        if (mItems == null || mItems.size() <= 0) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             return;
         }
 
@@ -173,9 +172,9 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             final int inactiveMaxAvailable = (width - activeWidth) / inactiveCount;
             final int inactiveWidth = Math.min(inactiveMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH);
             for (int i = 0; i < count; i++) {
-                if (i == mSelected){
+                if (i == mSelected) {
                     mTempChildWidths[i] = (int) ((activeWidth - inactiveWidth) * mItems.get(mSelected).getAnimValue() + inactiveWidth);
-                } else if(i == mOldSelected){
+                } else if (i == mOldSelected) {
                     mTempChildWidths[i] = (int) (activeWidth - (activeWidth - inactiveWidth) * mItems.get(mSelected).getAnimValue());
                 } else {
                     mTempChildWidths[i] = inactiveWidth;
@@ -202,7 +201,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             mItemTotalWidth += child.getMeasuredWidth();
         }
 
-        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -215,7 +214,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         final int padding_bottom = getPaddingBottom();
         int used = 0;
 
-        if(mItemTotalWidth > 0 && mItemTotalWidth < width) {
+        if (mItemTotalWidth > 0 && mItemTotalWidth < width) {
             used = (width - mItemTotalWidth) / 2;
         }
 
@@ -234,25 +233,23 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(mChangeBackgroundMode) {
+        if (mChangeBackgroundMode) {
             int width = getWidth();
             int height = getHeight();
 
             Iterator<Oval> iterator = mOvals.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 Oval oval = iterator.next();
                 mPaint.setColor(oval.color);
-                if(oval.r < oval.maxR) {
-                    mTempRectF.set(oval.getLeft(),oval.getTop(),oval.getRight(),oval.getBottom());
+                if (oval.r < oval.maxR) {
+                    mTempRectF.set(oval.getLeft(), oval.getTop(), oval.getRight(), oval.getBottom());
                     canvas.drawOval(mTempRectF, mPaint);
-                }
-                else {
+                } else {
                     this.setBackgroundColor(oval.color);
-                    canvas.drawRect(0,0,width,height,mPaint);
+                    canvas.drawRect(0, 0, width, height, mPaint);
                     iterator.remove();
                 }
                 invalidate();
@@ -263,7 +260,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        if(ev.getAction() == MotionEvent.ACTION_UP) {
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
             mLastUpX = ev.getX();
             mLastUpY = ev.getY();
         }
@@ -273,11 +270,18 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
     @Override
     public void setSelect(int index) {
-        //不正常的选择项
-        if(index >= mItems.size() || index < 0){return;}
+        setSelect(index, true);
+    }
+
+    @Override
+    public void setSelect(int index, boolean needListener) {
+        // 不正常的选择项
+        if (index >= mItems.size() || index < 0) {
+            return;
+        }
 
         View v = mItems.get(index);
-        setSelect(index,v.getX() + v.getWidth() / 2f,v.getY() + v.getHeight() / 2f);
+        setSelect(index, v.getX() + v.getWidth() / 2f, v.getY() + v.getHeight() / 2f, needListener);
     }
 
     @Override
@@ -310,12 +314,14 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         return mItems.get(index).getTitle();
     }
 
-    private void setSelect(int index,float x,float y) {
+    private void setSelect(int index, float x, float y, boolean needListener) {
 
         //重复选择
-        if(index == mSelected){
-            for(OnTabItemSelectedListener listener:mListeners) {
-                listener.onRepeat(mSelected);
+        if (index == mSelected) {
+            if (needListener) {
+                for (OnTabItemSelectedListener listener : mListeners) {
+                    listener.onRepeat(mSelected);
+                }
             }
             return;
         }
@@ -325,38 +331,39 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         mSelected = index;
 
         //切换背景颜色
-        if(mChangeBackgroundMode)
-        {
-            addOvalColor(mColors.get(mSelected),x,y);
+        if (mChangeBackgroundMode) {
+            addOvalColor(mColors.get(mSelected), x, y);
         }
 
         //前一个选中项必须不小于0才有效
-        if(mOldSelected >= 0) {
+        if (mOldSelected >= 0) {
             mItems.get(mOldSelected).setChecked(false);
         }
 
         mItems.get(mSelected).setChecked(true);
 
-        //事件回调
-        for(OnTabItemSelectedListener listener:mListeners) {
-            listener.onSelected(mSelected,mOldSelected);
+        if (needListener) {
+            //事件回调
+            for (OnTabItemSelectedListener listener : mListeners) {
+                listener.onSelected(mSelected, mOldSelected);
+            }
         }
     }
 
     /**
      * 添加一个圆形波纹动画
+     *
      * @param color 颜色
-     * @param x X座标
-     * @param y y座标
+     * @param x     X座标
+     * @param y     y座标
      */
-    private void addOvalColor(int color,float x,float y)
-    {
-        final Oval oval = new Oval(color,2,x,y);
+    private void addOvalColor(int color, float x, float y) {
+        final Oval oval = new Oval(color, 2, x, y);
 
-        oval.maxR = getR(x,y);
+        oval.maxR = getR(x, y);
         mOvals.add(oval);
 
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(oval.r,oval.maxR);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(oval.r, oval.maxR);
         valueAnimator.setInterpolator(mInterpolator);
         valueAnimator.setDuration(ANIM_TIME);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -377,25 +384,24 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
     /**
      * 以矩形内一点为圆心画圆，覆盖矩形，求这个圆的最小半径
+     *
      * @param x 横坐标
      * @param y 纵坐标
-     * @return  最小半径
+     * @return 最小半径
      */
-    private float getR(float x,float y)
-    {
+    private float getR(float x, float y) {
         int width = getWidth();
         int height = getHeight();
 
-        double r1_square = x*x + y*y;
-        double r2_square = (width-x)*(width-x) + y*y;
-        double r3_square = (width-x)*(width-x) + (height-y)*(height-y);
-        double r4_square = x*x + (height-y)*(height-y);
+        double r1_square = x * x + y * y;
+        double r2_square = (width - x) * (width - x) + y * y;
+        double r3_square = (width - x) * (width - x) + (height - y) * (height - y);
+        double r4_square = x * x + (height - y) * (height - y);
 
-        return (float) Math.sqrt(Math.max(Math.max(r1_square,r2_square),Math.max(r3_square,r4_square)));
+        return (float) Math.sqrt(Math.max(Math.max(r1_square, r2_square), Math.max(r3_square, r4_square)));
     }
 
-    private class Oval
-    {
+    private class Oval {
         int color;
         float r;
         float x;

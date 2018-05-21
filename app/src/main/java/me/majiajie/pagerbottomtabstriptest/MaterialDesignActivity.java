@@ -26,19 +26,19 @@ public class MaterialDesignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_horizontal);
 
-        PageNavigationView pageBottomTabLayout = (PageNavigationView) findViewById(tab);
+        PageNavigationView pageBottomTabLayout = findViewById(tab);
 
         mNavigationController = pageBottomTabLayout.material()
-                .addItem(R.drawable.ic_ondemand_video_black_24dp,"Movies & TV",testColors[0])
-                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
-                .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
-                .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
+                .addItem(R.drawable.ic_ondemand_video_black_24dp, "Movies & TV", testColors[0])
+                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music", testColors[1])
+                .addItem(R.drawable.ic_book_black_24dp, "Books", testColors[2])
+                .addItem(R.drawable.ic_news_black_24dp, "Newsstand", testColors[3])
                 .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
                 .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),mNavigationController.getItemCount()));
+        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(), mNavigationController.getItemCount()));
 
         //自动适配ViewPager页面切换
         mNavigationController.setupWithViewPager(viewPager);
@@ -47,12 +47,12 @@ public class MaterialDesignActivity extends AppCompatActivity {
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
-                Log.i("asd","selected: " + index + " old: " + old);
+                Log.i("asd", "selected: " + index + " old: " + old);
             }
 
             @Override
             public void onRepeat(int index) {
-                Log.i("asd","onRepeat selected: " + index);
+                Log.i("asd", "onRepeat selected: " + index);
             }
         });
 

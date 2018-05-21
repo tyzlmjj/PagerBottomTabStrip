@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class NavigationController implements ItemController,BottomLayoutController{
+public class NavigationController implements ItemController, BottomLayoutController {
 
     private BottomLayoutController mBottomLayoutController;
     private ItemController mItemController;
@@ -21,13 +21,18 @@ public class NavigationController implements ItemController,BottomLayoutControll
     }
 
     @Override
+    public void setSelect(int index, boolean listener) {
+        mItemController.setSelect(index,listener);
+    }
+
+    @Override
     public void setMessageNumber(int index, int number) {
-        mItemController.setMessageNumber(index,number);
+        mItemController.setMessageNumber(index, number);
     }
 
     @Override
     public void setHasMessage(int index, boolean hasMessage) {
-        mItemController.setHasMessage(index,hasMessage);
+        mItemController.setHasMessage(index, hasMessage);
     }
 
     @Override

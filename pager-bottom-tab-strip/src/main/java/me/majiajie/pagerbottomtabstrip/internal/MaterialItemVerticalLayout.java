@@ -102,11 +102,17 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
 
     @Override
     public void setSelect(int index) {
+        setSelect(index,true);
+    }
 
+    @Override
+    public void setSelect(int index, boolean needListener) {
         //重复选择
         if(index == mSelected){
-            for(OnTabItemSelectedListener listener:mListeners) {
-                listener.onRepeat(mSelected);
+            if (needListener) {
+                for (OnTabItemSelectedListener listener : mListeners) {
+                    listener.onRepeat(mSelected);
+                }
             }
             return;
         }
@@ -122,9 +128,11 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
 
         mItems.get(mSelected).setChecked(true);
 
-        //事件回调
-        for(OnTabItemSelectedListener listener:mListeners) {
-            listener.onSelected(mSelected,oldSelected);
+        if (needListener) {
+            //事件回调
+            for (OnTabItemSelectedListener listener : mListeners) {
+                listener.onSelected(mSelected, oldSelected);
+            }
         }
     }
 

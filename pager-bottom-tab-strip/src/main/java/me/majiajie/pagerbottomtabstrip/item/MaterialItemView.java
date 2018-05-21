@@ -68,9 +68,9 @@ public class MaterialItemView extends BaseTabItem {
 
         LayoutInflater.from(context).inflate(R.layout.item_material, this, true);
 
-        mIcon = (ImageView) findViewById(R.id.icon);
-        mLabel = (TextView) findViewById(R.id.label);
-        mMessages = (RoundMessageView) findViewById(R.id.messages);
+        mIcon = findViewById(R.id.icon);
+        mLabel = findViewById(R.id.label);
+        mMessages = findViewById(R.id.messages);
     }
 
     public void initialization(String title,Drawable drawable,Drawable checkedDrawable,int color,int checkedColor){

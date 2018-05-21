@@ -32,7 +32,7 @@ public class OnlyIconItemView extends BaseTabItem {
 
         LayoutInflater.from(context).inflate(R.layout.item_only_icon, this, true);
 
-        mIcon = (ImageView) findViewById(R.id.icon);
+        mIcon = findViewById(R.id.icon);
     }
 
     public void initialize(@DrawableRes int drawableRes, @DrawableRes  int checkedDrawableRes)

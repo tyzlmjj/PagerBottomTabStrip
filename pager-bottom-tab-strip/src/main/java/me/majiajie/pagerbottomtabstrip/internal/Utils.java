@@ -10,6 +10,12 @@ import android.util.TypedValue;
 
 public class Utils {
 
+	/**
+	 * Drawable 染色
+	 * @param drawable	染色对象
+	 * @param color		颜色
+	 * @return 染色后的资源
+	 */
 	public static Drawable tint(Drawable drawable, int color) {
 		final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
 		wrappedDrawable.mutate();
