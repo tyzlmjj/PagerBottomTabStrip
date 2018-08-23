@@ -48,12 +48,14 @@ public class MaterialItemView extends BaseTabItem {
 
     private boolean mIsMeasured = false;
 
+    private boolean mTintIcon = true;
+
     public MaterialItemView(@NonNull Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public MaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public MaterialItemView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
@@ -73,13 +75,19 @@ public class MaterialItemView extends BaseTabItem {
         mMessages = findViewById(R.id.messages);
     }
 
-    public void initialization(String title,Drawable drawable,Drawable checkedDrawable,int color,int checkedColor){
+    public void initialization(String title, Drawable drawable, Drawable checkedDrawable, boolean tintIcon, int color, int checkedColor) {
+        mTintIcon = tintIcon;
 
         mDefaultColor = color;
         mCheckedColor = checkedColor;
 
-        mDefaultDrawable = Utils.tint(drawable,mDefaultColor);
-        mCheckedDrawable = Utils.tint(checkedDrawable,mCheckedColor);
+        if (mTintIcon) {
+            mDefaultDrawable = Utils.tinting(drawable, mDefaultColor);
+            mCheckedDrawable = Utils.tinting(checkedDrawable, mCheckedColor);
+        } else {
+            mDefaultDrawable = drawable;
+            mCheckedDrawable = checkedDrawable;
+        }
 
         mLabel.setText(title);
         mLabel.setTextColor(color);
@@ -93,7 +101,7 @@ public class MaterialItemView extends BaseTabItem {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mAnimatorValue = (float) animation.getAnimatedValue();
-                if (mHideTitle){
+                if (mHideTitle) {
                     mIcon.setTranslationY(-mTranslationHideTitle * mAnimatorValue);
                 } else {
                     mIcon.setTranslationY(-mTranslation * mAnimatorValue);
@@ -103,7 +111,6 @@ public class MaterialItemView extends BaseTabItem {
         });
     }
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -112,23 +119,25 @@ public class MaterialItemView extends BaseTabItem {
 
     @Override
     public void setChecked(boolean checked) {
-        if (mChecked == checked){return;}
+        if (mChecked == checked) {
+            return;
+        }
 
         mChecked = checked;
 
-        if (mHideTitle){
+        if (mHideTitle) {
             mLabel.setVisibility(mChecked ? View.VISIBLE : View.INVISIBLE);
         }
 
         if (mIsMeasured) {
             // 切换动画
-            if (mChecked){
+            if (mChecked) {
                 mAnimator.start();
             } else {
                 mAnimator.reverse();
             }
-        } else if (mChecked){ // 布局还未测量时选中，直接转换到选中的最终状态
-            if (mHideTitle){
+        } else if (mChecked) { // 布局还未测量时选中，直接转换到选中的最终状态
+            if (mHideTitle) {
                 mIcon.setTranslationY(-mTranslationHideTitle);
             } else {
                 mIcon.setTranslationY(-mTranslation);
@@ -140,7 +149,7 @@ public class MaterialItemView extends BaseTabItem {
         }
 
         // 切换颜色
-        if(mChecked) {
+        if (mChecked) {
             mIcon.setImageDrawable(mCheckedDrawable);
             mLabel.setTextColor(mCheckedColor);
         } else {
@@ -162,6 +171,37 @@ public class MaterialItemView extends BaseTabItem {
     }
 
     @Override
+    public void setTitle(String title) {
+        mLabel.setText(title);
+    }
+
+    @Override
+    public void setDefaultDrawable(Drawable drawable) {
+        if (mTintIcon) {
+            mDefaultDrawable = Utils.tinting(drawable, mDefaultColor);
+        } else {
+            mDefaultDrawable = drawable;
+        }
+
+        if (!mChecked) {
+            mIcon.setImageDrawable(mDefaultDrawable);
+        }
+    }
+
+    @Override
+    public void setSelectedDrawable(Drawable drawable) {
+        if (mTintIcon) {
+            mCheckedDrawable = Utils.tinting(drawable, mCheckedColor);
+        } else {
+            mCheckedDrawable = drawable;
+        }
+
+        if (mChecked) {
+            mIcon.setImageDrawable(mCheckedDrawable);
+        }
+    }
+
+    @Override
     public String getTitle() {
         return mLabel.getText().toString();
     }
@@ -169,7 +209,7 @@ public class MaterialItemView extends BaseTabItem {
     /**
      * 获取动画运行值[0,1]
      */
-    public float getAnimValue(){
+    public float getAnimValue() {
         return mAnimatorValue;
     }
 
@@ -181,7 +221,7 @@ public class MaterialItemView extends BaseTabItem {
 
         LayoutParams iconParams = (LayoutParams) mIcon.getLayoutParams();
 
-        if (mHideTitle){
+        if (mHideTitle) {
             iconParams.topMargin = mTopMarginHideTitle;
         } else {
             iconParams.topMargin = mTopMargin;
@@ -202,7 +242,7 @@ public class MaterialItemView extends BaseTabItem {
     /**
      * 设置消息数据的颜色
      */
-    public void setMessageNumberColor(@ColorInt int color){
+    public void setMessageNumberColor(@ColorInt int color) {
         mMessages.setMessageNumberColor(color);
     }
 }

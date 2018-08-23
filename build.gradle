@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
 
@@ -25,9 +25,9 @@ task clean(type: Delete) {
 
 ext{
     // 编译版本
-    compileSdkVersion = 27
+    compileSdkVersion = 28
     minSdkVersion = 14
-    targetSdkVersion = 27
+    targetSdkVersion = 28
 
     // 版本号
     versionCode = 13

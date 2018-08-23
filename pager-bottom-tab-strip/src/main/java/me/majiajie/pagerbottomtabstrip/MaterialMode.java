@@ -13,7 +13,7 @@ public final class MaterialMode {
     public static final int HIDE_TEXT = 0X1;
 
     /**
-     * 开启导航栏背景变换。点击不同项切换不同颜色
+     * 开启导航栏背景变换。点击不同项切换不同背景颜色
      */
     public static final int CHANGE_BACKGROUND_COLOR = 0X2;
 

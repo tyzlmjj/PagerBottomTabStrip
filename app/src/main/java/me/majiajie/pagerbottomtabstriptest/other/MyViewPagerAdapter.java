@@ -9,7 +9,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     private int size;
 
-    public MyViewPagerAdapter(FragmentManager fm,int size) {
+    public MyViewPagerAdapter(FragmentManager fm, int size) {
         super(fm);
         this.size = size;
     }

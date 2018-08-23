@@ -2,6 +2,7 @@ package me.majiajie.pagerbottomtabstrip;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -134,9 +136,11 @@ public class PageNavigationView extends ViewGroup {
      * 构建 自定义 的导航栏
      */
     public class CustomBuilder {
-        List<BaseTabItem> items;
 
-        boolean enableVerticalLayout;
+        private List<BaseTabItem> items;
+
+        private boolean enableVerticalLayout = false;
+        private boolean animateLayoutChanges = false;
 
         CustomBuilder() {
             items = new ArrayList<>();
@@ -146,6 +150,7 @@ public class PageNavigationView extends ViewGroup {
          * 完成构建
          *
          * @return {@link NavigationController},通过它进行后续操作
+         * @throws RuntimeException 没有添加导航项时会抛出
          */
         public NavigationController build() {
 
@@ -153,14 +158,14 @@ public class PageNavigationView extends ViewGroup {
 
             //未添加任何按钮
             if (items.size() == 0) {
-                return null;
+                throw new RuntimeException("must add a navigation item");
             }
 
             ItemController itemController;
 
             if (enableVerticalLayout) {//垂直布局
                 CustomItemVerticalLayout verticalItemLayout = new CustomItemVerticalLayout(getContext());
-                verticalItemLayout.initialize(items);
+                verticalItemLayout.initialize(items, animateLayoutChanges);
                 verticalItemLayout.setPadding(0, mTabPaddingTop, 0, mTabPaddingBottom);
 
                 PageNavigationView.this.removeAllViews();
@@ -168,7 +173,7 @@ public class PageNavigationView extends ViewGroup {
                 itemController = verticalItemLayout;
             } else {//水平布局
                 CustomItemLayout customItemLayout = new CustomItemLayout(getContext());
-                customItemLayout.initialize(items);
+                customItemLayout.initialize(items, animateLayoutChanges);
                 customItemLayout.setPadding(0, mTabPaddingTop, 0, mTabPaddingBottom);
 
                 PageNavigationView.this.removeAllViews();
@@ -195,9 +200,21 @@ public class PageNavigationView extends ViewGroup {
 
         /**
          * 使用垂直布局
+         *
+         * @return {@link CustomBuilder}
          */
         public CustomBuilder enableVerticalLayout() {
             enableVerticalLayout = true;
+            return CustomBuilder.this;
+        }
+
+        /**
+         * 通过{@link NavigationController}动态移除/添加导航项时,显示默认的布局动画
+         *
+         * @return {@link CustomBuilder}
+         */
+        public CustomBuilder enableAnimateLayoutChanges() {
+            animateLayoutChanges = true;
             return CustomBuilder.this;
         }
     }
@@ -206,12 +223,17 @@ public class PageNavigationView extends ViewGroup {
      * 构建 Material Desgin 风格的导航栏
      */
     public class MaterialBuilder {
-        List<ViewData> itemDatas;
-        int defaultColor;
-        int mode;
-        int messageBackgroundColor;
-        int messageNumberColor;
-        boolean enableVerticalLayout;
+
+        private final int DEFAULT_COLOR = 0x56000000;
+
+        private List<MaterialItemViewData> itemDatas;
+        private int defaultColor;
+        private int mode;
+        private int messageBackgroundColor;
+        private int messageNumberColor;
+        private boolean enableVerticalLayout = false;
+        private boolean doTintIcon = true;
+        private boolean animateLayoutChanges = false;
 
         MaterialBuilder() {
             itemDatas = new ArrayList<>();
@@ -221,18 +243,20 @@ public class PageNavigationView extends ViewGroup {
          * 完成构建
          *
          * @return {@link NavigationController},通过它进行后续操作
+         * @throws RuntimeException 没有添加导航项时会抛出
          */
+        @NonNull
         public NavigationController build() {
             mEnableVerticalLayout = enableVerticalLayout;
 
             // 未添加任何按钮
-            if (itemDatas.size() == 0) {
-                return null;
+            if (itemDatas.isEmpty()) {
+                throw new RuntimeException("must add a navigation item");
             }
 
             // 设置默认颜色
             if (defaultColor == 0) {
-                defaultColor = 0x56000000;
+                defaultColor = DEFAULT_COLOR;
             }
 
             ItemController itemController;
@@ -241,10 +265,10 @@ public class PageNavigationView extends ViewGroup {
 
                 List<BaseTabItem> items = new ArrayList<>();
 
-                for (ViewData data : itemDatas) {
+                for (MaterialItemViewData data : itemDatas) {
 
                     OnlyIconMaterialItemView materialItemView = new OnlyIconMaterialItemView(getContext());
-                    materialItemView.initialization(data.title, data.drawable, data.checkedDrawable, defaultColor, data.chekedColor);
+                    materialItemView.initialization(data.title, data.drawable, data.checkedDrawable, doTintIcon, defaultColor, data.chekedColor);
 
                     //检查是否设置了消息圆点的颜色
                     if (messageBackgroundColor != 0) {
@@ -260,7 +284,7 @@ public class PageNavigationView extends ViewGroup {
                 }
 
                 MaterialItemVerticalLayout materialItemVerticalLayout = new MaterialItemVerticalLayout(getContext());
-                materialItemVerticalLayout.initialize(items);
+                materialItemVerticalLayout.initialize(items, animateLayoutChanges, doTintIcon, defaultColor);
                 materialItemVerticalLayout.setPadding(0, mTabPaddingTop, 0, mTabPaddingBottom);
 
                 PageNavigationView.this.removeAllViews();
@@ -275,17 +299,13 @@ public class PageNavigationView extends ViewGroup {
                 List<MaterialItemView> items = new ArrayList<>();
                 List<Integer> checkedColors = new ArrayList<>();
 
-                for (ViewData data : itemDatas) {
+                for (MaterialItemViewData data : itemDatas) {
                     // 记录设置的选中颜色
                     checkedColors.add(data.chekedColor);
 
                     MaterialItemView materialItemView = new MaterialItemView(getContext());
-                    // 需要切换背景颜色就默认将选中颜色改成白色
-                    if (changeBackground) {
-                        materialItemView.initialization(data.title, data.drawable, data.checkedDrawable, defaultColor, Color.WHITE);
-                    } else {
-                        materialItemView.initialization(data.title, data.drawable, data.checkedDrawable, defaultColor, data.chekedColor);
-                    }
+                    // 初始化Item,需要切换背景颜色就将选中颜色改成白色
+                    materialItemView.initialization(data.title, data.drawable, data.checkedDrawable, doTintIcon, defaultColor, changeBackground ? Color.WHITE : data.chekedColor);
 
                     //检查是否设置了消息圆点的颜色
                     if (messageBackgroundColor != 0) {
@@ -301,7 +321,7 @@ public class PageNavigationView extends ViewGroup {
                 }
 
                 MaterialItemLayout materialItemLayout = new MaterialItemLayout(getContext());
-                materialItemLayout.initialize(items, checkedColors, mode);
+                materialItemLayout.initialize(items, checkedColors, mode, animateLayoutChanges, doTintIcon, defaultColor);
                 materialItemLayout.setPadding(0, mTabPaddingTop, 0, mTabPaddingBottom);
 
                 PageNavigationView.this.removeAllViews();
@@ -323,7 +343,7 @@ public class PageNavigationView extends ViewGroup {
          * @param title       显示文字内容.尽量简短
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawableRes, String title) {
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, @NonNull String title) {
             addItem(drawableRes, drawableRes, title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
@@ -336,7 +356,7 @@ public class PageNavigationView extends ViewGroup {
          * @param title              显示文字内容.尽量简短
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes, String title) {
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes, @NonNull String title) {
             addItem(drawableRes, checkedDrawableRes, title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
@@ -349,7 +369,7 @@ public class PageNavigationView extends ViewGroup {
          * @param chekedColor 选中的颜色
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(@DrawableRes int drawableRes, String title, @ColorInt int chekedColor) {
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, @NonNull String title, @ColorInt int chekedColor) {
             addItem(drawableRes, drawableRes, title, chekedColor);
             return MaterialBuilder.this;
         }
@@ -362,9 +382,18 @@ public class PageNavigationView extends ViewGroup {
          * @param title              显示文字内容.尽量简短
          * @param chekedColor        选中的颜色
          * @return {@link MaterialBuilder}
+         * @throws Resources.NotFoundException drawable 资源获取异常
          */
-        public MaterialBuilder addItem(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes, String title, @ColorInt int chekedColor) {
-            addItem(ContextCompat.getDrawable(getContext(), drawableRes), ContextCompat.getDrawable(getContext(), checkedDrawableRes), title, chekedColor);
+        public MaterialBuilder addItem(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes, @NonNull String title, @ColorInt int chekedColor) {
+            Drawable defaultDrawable = ContextCompat.getDrawable(getContext(), drawableRes);
+            Drawable checkDrawable = ContextCompat.getDrawable(getContext(), checkedDrawableRes);
+            if (defaultDrawable == null) {
+                throw new Resources.NotFoundException("Resource ID " + Integer.toHexString(drawableRes));
+            }
+            if (checkDrawable == null) {
+                throw new Resources.NotFoundException("Resource ID " + Integer.toHexString(checkedDrawableRes));
+            }
+            addItem(defaultDrawable, checkDrawable, title, chekedColor);
             return MaterialBuilder.this;
         }
 
@@ -375,8 +404,8 @@ public class PageNavigationView extends ViewGroup {
          * @param title    显示文字内容.尽量简短
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(Drawable drawable, String title) {
-            addItem(drawable, Utils.newDrawable(drawable), title, Utils.getColorPrimary(getContext()));
+        public MaterialBuilder addItem(@NonNull Drawable drawable, @NonNull String title) {
+            addItem(drawable, drawable, title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
 
@@ -388,7 +417,7 @@ public class PageNavigationView extends ViewGroup {
          * @param title           显示文字内容.尽量简短
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(Drawable drawable, Drawable checkedDrawable, String title) {
+        public MaterialBuilder addItem(@NonNull Drawable drawable, @NonNull Drawable checkedDrawable, @NonNull String title) {
             addItem(drawable, checkedDrawable, title, Utils.getColorPrimary(getContext()));
             return MaterialBuilder.this;
         }
@@ -401,8 +430,8 @@ public class PageNavigationView extends ViewGroup {
          * @param chekedColor 选中的颜色
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(Drawable drawable, String title, @ColorInt int chekedColor) {
-            addItem(drawable, Utils.newDrawable(drawable), title, chekedColor);
+        public MaterialBuilder addItem(@NonNull Drawable drawable, @NonNull String title, @ColorInt int chekedColor) {
+            addItem(drawable, drawable, title, chekedColor);
             return MaterialBuilder.this;
         }
 
@@ -415,10 +444,10 @@ public class PageNavigationView extends ViewGroup {
          * @param chekedColor     选中的颜色
          * @return {@link MaterialBuilder}
          */
-        public MaterialBuilder addItem(Drawable drawable, Drawable checkedDrawable, String title, @ColorInt int chekedColor) {
-            ViewData data = new ViewData();
-            data.drawable = drawable;
-            data.checkedDrawable = checkedDrawable;
+        public MaterialBuilder addItem(@NonNull Drawable drawable, @NonNull Drawable checkedDrawable, @NonNull String title, @ColorInt int chekedColor) {
+            MaterialItemViewData data = new MaterialItemViewData();
+            data.drawable = Utils.newDrawable(drawable);
+            data.checkedDrawable = Utils.newDrawable(checkedDrawable);
             data.title = title;
             data.chekedColor = chekedColor;
             itemDatas.add(data);
@@ -461,10 +490,8 @@ public class PageNavigationView extends ViewGroup {
         /**
          * 设置模式(在垂直布局中无效)。默认文字一直显示，且背景色不变。
          * 可以通过{@link MaterialMode}选择模式。
-         * <p>
          * <p>例如:</p>
          * {@code MaterialMode.HIDE_TEXT}
-         * <p>
          * <p>或者多选:</p>
          * {@code MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR}
          *
@@ -478,19 +505,45 @@ public class PageNavigationView extends ViewGroup {
 
         /**
          * 使用垂直布局
+         *
+         * @return {@link MaterialBuilder}
          */
         public MaterialBuilder enableVerticalLayout() {
             enableVerticalLayout = true;
             return MaterialBuilder.this;
         }
 
-        private class ViewData {
-            Drawable drawable;
-            Drawable checkedDrawable;
-            String title;
-            @ColorInt
-            int chekedColor;
+        /**
+         * 不对图标进行染色
+         *
+         * @return {@link MaterialBuilder}
+         */
+        public MaterialBuilder dontTintIcon() {
+            doTintIcon = false;
+            return MaterialBuilder.this;
         }
+
+        /**
+         * 通过{@link NavigationController}动态移除/添加导航项时,显示默认的布局动画
+         *
+         * @return {@link MaterialBuilder}
+         */
+        public MaterialBuilder enableAnimateLayoutChanges() {
+            animateLayoutChanges = true;
+            return MaterialBuilder.this;
+        }
+
+    }
+
+    /**
+     * 材料设计的单项视图信息
+     */
+    private static class MaterialItemViewData {
+        Drawable drawable;
+        Drawable checkedDrawable;
+        String title;
+        @ColorInt
+        int chekedColor;
     }
 
     /**
@@ -541,17 +594,14 @@ public class PageNavigationView extends ViewGroup {
         }
 
         private ObjectAnimator getAnimator() {
-
             if (animator == null) {
-
-                if (mEnableVerticalLayout) {//垂直布局向左隐藏
+                if (mEnableVerticalLayout) {// 垂直布局向左隐藏
                     animator = ObjectAnimator.ofFloat(
                             PageNavigationView.this, "translationX", 0, -PageNavigationView.this.getWidth());
-                } else {//水平布局向下隐藏
+                } else {// 水平布局向下隐藏
                     animator = ObjectAnimator.ofFloat(
                             PageNavigationView.this, "translationY", 0, PageNavigationView.this.getHeight());
                 }
-
                 animator.setDuration(300);
                 animator.setInterpolator(new AccelerateDecelerateInterpolator());
             }
@@ -563,7 +613,6 @@ public class PageNavigationView extends ViewGroup {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
 
         @Override
@@ -575,7 +624,6 @@ public class PageNavigationView extends ViewGroup {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     }
 

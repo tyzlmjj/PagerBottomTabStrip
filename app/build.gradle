@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-//    implementation project(':pager-bottom-tab-strip')
-    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
+    implementation project(':pager-bottom-tab-strip')
+//    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
     implementation "com.android.support:design:${supportLibraryVersion}"
 }

@@ -2,64 +2,67 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        >
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Material Design"
             android:onClick="toMaterialdesign"
-            />
+            android:text="Material Design" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Custom example"
-            android:onClick="toCustom"/>
+            android:onClick="toCustom"
+            android:text="Custom example" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Custom example 2"
-            android:onClick="toCustom2"/>
+            android:onClick="toCustom2"
+            android:text="Custom example 2" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="scrolling view behavior"
-            android:onClick="toBehavior"/>
+            android:onClick="toBehavior"
+            android:text="scrolling view behavior" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="scrolling view hide"
-            android:onClick="toHide"/>
+            android:onClick="toHide"
+            android:text="scrolling view hide" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="special"
-            android:onClick="toSpecial"/>
+            android:onClick="toSpecial"
+            android:text="special" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Vertical Layout"
-            android:onClick="toVertical"/>
+            android:onClick="toVertical"
+            android:text="Vertical Layout" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Custom Vertical Layout"
-            android:onClick="toCsutomVertical"/>
+            android:onClick="toCsutomVertical"
+            android:text="Custom Vertical Layout" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toTestController"
+            android:text="Test Controller" />
 
     </LinearLayout>
 

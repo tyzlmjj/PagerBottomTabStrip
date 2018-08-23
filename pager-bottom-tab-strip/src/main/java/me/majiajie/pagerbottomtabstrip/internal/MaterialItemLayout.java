@@ -3,13 +3,16 @@ package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
@@ -27,6 +30,7 @@ import java.util.List;
 import me.majiajie.pagerbottomtabstrip.ItemController;
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.R;
+import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.MaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
@@ -42,9 +46,11 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
     private final int MATERIAL_BOTTOM_NAVIGATION_ITEM_HEIGHT;
 
-    private List<MaterialItemView> mItems;
+    private final List<MaterialItemView> mItems = new ArrayList<>();
+    private final List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
 
-    private List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
+    private boolean mItemTintIcon;
+    private int mItemDefaultColor;
 
     private int[] mTempChildWidths;
     private int mItemTotalWidth;
@@ -58,7 +64,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     private final int ANIM_TIME = 300;
     private Interpolator mInterpolator;
     private boolean mChangeBackgroundMode;
-    private List<Integer> mColors;
+    private List<Integer> mBackgroundColors;
     private List<Oval> mOvals;
     private RectF mTempRectF;
     private Paint mPaint;
@@ -92,25 +98,37 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     /**
      * 初始化方法
      *
-     * @param items 按钮集合
-     * @param mode  {@link MaterialMode}
+     * @param items                按钮集合
+     * @param checkedColors        选中颜色的集合
+     * @param mode                 {@link MaterialMode}
+     * @param animateLayoutChanges 是否应用默认的布局动画
+     * @param doTintIcon           item是否需要对图标染色
+     * @param color                item的默认状态颜色
      */
-    public void initialize(List<MaterialItemView> items, List<Integer> checkedColors, int mode) {
-        mItems = items;
+    public void initialize(List<MaterialItemView> items, List<Integer> checkedColors, int mode, boolean animateLayoutChanges, boolean doTintIcon, int color) {
+
+        if (animateLayoutChanges) {
+            setLayoutTransition(new LayoutTransition());
+        }
+
+        mItems.clear();
+        mItems.addAll(items);
+
+        mItemTintIcon = doTintIcon;
+        mItemDefaultColor = color;
 
         //判断是否需要切换背景
         if ((mode & MaterialMode.CHANGE_BACKGROUND_COLOR) > 0) {
             //初始化一些成员变量
             mChangeBackgroundMode = true;
             mOvals = new ArrayList<>();
-            mColors = checkedColors;
+            mBackgroundColors = checkedColors;
             mInterpolator = new AccelerateDecelerateInterpolator();
             mTempRectF = new RectF();
             mPaint = new Paint();
 
             //设置默认的背景
-            setBackgroundColor(mColors.get(DEFAULT_SELECTED));
-
+            setBackgroundColor(mBackgroundColors.get(DEFAULT_SELECTED));
         } else {
             //设置按钮点击效果
             for (int i = 0; i < mItems.size(); i++) {
@@ -134,15 +152,17 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
         //添加按钮到布局，并注册点击事件
         int n = mItems.size();
         for (int i = 0; i < n; i++) {
-            MaterialItemView v = mItems.get(i);
-            v.setChecked(false);
-            this.addView(v);
+            final MaterialItemView tabItem = mItems.get(i);
+            tabItem.setChecked(false);
+            this.addView(tabItem);
 
-            final int finali = i;
-            v.setOnClickListener(new OnClickListener() {
+            tabItem.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelect(finali, mLastUpX, mLastUpY,true);
+                    int index = mItems.indexOf(tabItem);
+                    if (index >= 0) {
+                        setSelect(index, mLastUpX, mLastUpY, true);
+                    }
                 }
             });
         }
@@ -169,7 +189,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
             final int inactiveCount = count - 1;
             final int activeMaxAvailable = width - inactiveCount * MATERIAL_BOTTOM_NAVIGATION_ITEM_MIN_WIDTH;
             final int activeWidth = Math.min(activeMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ACTIVE_ITEM_MAX_WIDTH);
-            final int inactiveMaxAvailable = (width - activeWidth) / inactiveCount;
+            final int inactiveMaxAvailable = inactiveCount == 0 ? 0 : (width - activeWidth) / inactiveCount;
             final int inactiveWidth = Math.min(inactiveMaxAvailable, MATERIAL_BOTTOM_NAVIGATION_ITEM_MAX_WIDTH);
             for (int i = 0; i < count; i++) {
                 if (i == mSelected) {
@@ -300,6 +320,21 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     }
 
     @Override
+    public void setTitle(int index, String title) {
+        mItems.get(index).setTitle(title);
+    }
+
+    @Override
+    public void setDefaultDrawable(int index, Drawable drawable) {
+        mItems.get(index).setDefaultDrawable(drawable);
+    }
+
+    @Override
+    public void setSelectedDrawable(int index, Drawable drawable) {
+        mItems.get(index).setSelectedDrawable(drawable);
+    }
+
+    @Override
     public int getSelected() {
         return mSelected;
     }
@@ -312,6 +347,69 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
     @Override
     public String getItemTitle(int index) {
         return mItems.get(index).getTitle();
+    }
+
+    @Override
+    public boolean removeItem(int index) {
+        if (index == mSelected || index >= mItems.size() || index < 0) {
+            return false;
+        }
+
+        if (mSelected > index) {
+            mSelected--;
+        }
+
+        this.removeViewAt(index);
+        mItems.remove(index);
+        mBackgroundColors.remove(index);
+        return true;
+    }
+
+    @Override
+    public void addMaterialItem(int index, Drawable defaultDrawable, Drawable selectedDrawable, String title, int selectedColor) {
+
+        final MaterialItemView materialItemView = new MaterialItemView(getContext());
+        materialItemView.initialization(title, defaultDrawable, selectedDrawable, mItemTintIcon, mItemDefaultColor, mChangeBackgroundMode ? Color.WHITE : selectedColor);
+
+        materialItemView.setChecked(false);
+        materialItemView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int index = mItems.indexOf(materialItemView);
+                if (index >= 0) {
+                    setSelect(index);
+                }
+            }
+        });
+
+        if (mHideTitle) {
+            // 隐藏文字
+            materialItemView.setHideTitle(true);
+        }
+
+        if (mSelected >= index){
+            mSelected++;
+        }
+
+        if (index >= mItems.size()) {
+            if (mChangeBackgroundMode) {
+                mBackgroundColors.add(selectedColor);
+            }
+            mItems.add(materialItemView);
+            this.addView(materialItemView);
+
+        } else {
+            if (mChangeBackgroundMode) {
+                mBackgroundColors.add(index, selectedColor);
+            }
+            mItems.add(index, materialItemView);
+            this.addView(materialItemView, index);
+        }
+    }
+
+    @Override
+    public void addCustomItem(int index, BaseTabItem item) {
+        // nothing
     }
 
     private void setSelect(int index, float x, float y, boolean needListener) {
@@ -332,7 +430,7 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
         //切换背景颜色
         if (mChangeBackgroundMode) {
-            addOvalColor(mColors.get(mSelected), x, y);
+            addOvalColor(mBackgroundColors.get(mSelected), x, y);
         }
 
         //前一个选中项必须不小于0才有效

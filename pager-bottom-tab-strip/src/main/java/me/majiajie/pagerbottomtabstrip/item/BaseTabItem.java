@@ -2,6 +2,7 @@ package me.majiajie.pagerbottomtabstrip.item;
 
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,8 @@ import android.widget.FrameLayout;
 /**
  * 所有自定义Item都必须继承此类
  */
-public abstract class BaseTabItem extends FrameLayout
-{
+public abstract class BaseTabItem extends FrameLayout {
+
     public BaseTabItem(@NonNull Context context) {
         super(context);
     }
@@ -31,7 +32,7 @@ public abstract class BaseTabItem extends FrameLayout
     abstract public void setChecked(boolean checked);
 
     /**
-     * 设置消息数字。注意：数字需要大于0才会显示
+     * 设置消息数字。注意：一般数字需要大于0才会显示
      */
     abstract public void setMessageNumber(int number);
 
@@ -41,6 +42,21 @@ public abstract class BaseTabItem extends FrameLayout
     abstract public void setHasMessage(boolean hasMessage);
 
     /**
+     * 设置标题
+     */
+    abstract public void setTitle(String title);
+
+    /**
+     * 设置未选中状态下的图标
+     */
+    abstract public void setDefaultDrawable(Drawable drawable);
+
+    /**
+     * 设置选中状态下的图标
+     */
+    abstract public void setSelectedDrawable(Drawable drawable);
+
+    /**
      * 获取标题文字
      */
     abstract public String getTitle();
@@ -48,6 +64,7 @@ public abstract class BaseTabItem extends FrameLayout
     /**
      * 已选中的状态下再次点击时触发
      */
-    public void onRepeat(){}
+    public void onRepeat() {}
+
 
 }

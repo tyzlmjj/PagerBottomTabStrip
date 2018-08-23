@@ -46,4 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public void toCsutomVertical(View view) {
         startActivity(new Intent(this,VerticalCustomActivity.class));
     }
+
+    public void toTestController(View view) {
+        startActivity(new Intent(this,TestControllerActivity.class));
+    }
 }

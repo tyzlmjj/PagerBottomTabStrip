@@ -1,6 +1,7 @@
 package me.majiajie.pagerbottomtabstriptest.custom;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
@@ -10,11 +11,11 @@ import me.majiajie.pagerbottomtabstriptest.R;
 /**
  * Created by mjj on 2017/9/26
  */
-public class OnlyTextTab extends BaseTabItem{
+public class OnlyTextTab extends BaseTabItem {
 
     private final TextView mTitle;
 
-    public OnlyTextTab(Context context,String title) {
+    public OnlyTextTab(Context context, String title) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.item_only_text, this, true);
         mTitle = findViewById(R.id.title);
@@ -27,10 +28,27 @@ public class OnlyTextTab extends BaseTabItem{
     }
 
     @Override
-    public void setMessageNumber(int number) {}
+    public void setMessageNumber(int number) {
+    }
 
     @Override
-    public void setHasMessage(boolean hasMessage) {}
+    public void setHasMessage(boolean hasMessage) {
+    }
+
+    @Override
+    public void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
+    @Override
+    public void setDefaultDrawable(Drawable drawable) {
+
+    }
+
+    @Override
+    public void setSelectedDrawable(Drawable drawable) {
+
+    }
 
     @Override
     public String getTitle() {

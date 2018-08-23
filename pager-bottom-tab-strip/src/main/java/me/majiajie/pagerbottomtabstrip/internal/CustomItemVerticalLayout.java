@@ -2,6 +2,7 @@ package me.majiajie.pagerbottomtabstrip.internal;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,8 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
  */
 public class CustomItemVerticalLayout extends ViewGroup implements ItemController {
 
-    private List<BaseTabItem> mItems;
-    private List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
+    private final List<BaseTabItem> mItems = new ArrayList<>();
+    private final List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
 
     private int mSelected = -1;
 
@@ -36,21 +37,28 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
         setLayoutTransition(new LayoutTransition());
     }
 
-    public void initialize(List<BaseTabItem> items) {
-        mItems = items;
+    public void initialize(List<BaseTabItem> items, boolean animateLayoutChanges) {
+        mItems.clear();
+        mItems.addAll(items);
+
+        if (animateLayoutChanges) {
+            setLayoutTransition(new LayoutTransition());
+        }
 
         //添加按钮到布局，并注册点击事件
         int n = mItems.size();
         for (int i = 0; i < n; i++) {
-            BaseTabItem v = mItems.get(i);
-            v.setChecked(false);
-            this.addView(v);
+            final BaseTabItem tabItem = mItems.get(i);
+            tabItem.setChecked(false);
+            this.addView(tabItem);
 
-            final int finali = i;
-            v.setOnClickListener(new View.OnClickListener() {
+            tabItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelect(finali);
+                    int index = mItems.indexOf(tabItem);
+                    if (index >= 0) {
+                        setSelect(index);
+                    }
                 }
             });
         }
@@ -107,7 +115,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
     @Override
     public void setSelect(int index) {
-        setSelect(index,true);
+        setSelect(index, true);
     }
 
     @Override
@@ -159,6 +167,21 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
     }
 
     @Override
+    public void setTitle(int index, String title) {
+        mItems.get(index).setTitle(title);
+    }
+
+    @Override
+    public void setDefaultDrawable(int index, Drawable drawable) {
+        mItems.get(index).setDefaultDrawable(drawable);
+    }
+
+    @Override
+    public void setSelectedDrawable(int index, Drawable drawable) {
+        mItems.get(index).setSelectedDrawable(drawable);
+    }
+
+    @Override
     public int getSelected() {
         return mSelected;
     }
@@ -171,5 +194,46 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
     @Override
     public String getItemTitle(int index) {
         return mItems.get(index).getTitle();
+    }
+
+    @Override
+    public boolean removeItem(int index) {
+        if (index == mSelected || index >= mItems.size() || index < 0) {
+            return false;
+        }
+
+        if (mSelected > index) {
+            mSelected--;
+        }
+
+        this.removeViewAt(index);
+        mItems.remove(index);
+        return true;
+    }
+
+    @Override
+    public void addMaterialItem(int index, Drawable defaultDrawable, Drawable selectedDrawable, String title, int selectedColor) {
+        // nothing
+    }
+
+    @Override
+    public void addCustomItem(int index,final BaseTabItem item) {
+        item.setChecked(false);
+        item.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int index = mItems.indexOf(item);
+                if (index >= 0) {
+                    setSelect(index);
+                }
+            }
+        });
+        if (index >= mItems.size()) {
+            mItems.add(index, item);
+            this.addView(item);
+        } else {
+            mItems.add(index, item);
+            this.addView(item, index);
+        }
     }
 }

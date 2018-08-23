@@ -36,6 +36,8 @@ public class OnlyIconMaterialItemView extends BaseTabItem {
 
     private boolean mChecked;
 
+    private boolean mTintIcon = true;
+
     public OnlyIconMaterialItemView(@NonNull Context context) {
         this(context, null);
     }
@@ -53,15 +55,22 @@ public class OnlyIconMaterialItemView extends BaseTabItem {
         mMessages = findViewById(R.id.messages);
     }
 
-    public void initialization(String title, Drawable drawable, Drawable checkedDrawable, int color, int checkedColor) {
+    public void initialization(String title, Drawable drawable, Drawable checkedDrawable, boolean tintIcon, int color, int checkedColor) {
 
         mTitle = title;
 
         mDefaultColor = color;
         mCheckedColor = checkedColor;
 
-        mDefaultDrawable = Utils.tint(drawable, mDefaultColor);
-        mCheckedDrawable = Utils.tint(checkedDrawable, mCheckedColor);
+        mTintIcon = tintIcon;
+
+        if (mTintIcon) {
+            mDefaultDrawable = Utils.tinting(drawable, mDefaultColor);
+            mCheckedDrawable = Utils.tinting(checkedDrawable, mCheckedColor);
+        } else {
+            mDefaultDrawable = drawable;
+            mCheckedDrawable = checkedDrawable;
+        }
 
         mIcon.setImageDrawable(mDefaultDrawable);
 
@@ -98,6 +107,37 @@ public class OnlyIconMaterialItemView extends BaseTabItem {
     public void setHasMessage(boolean hasMessage) {
         mMessages.setVisibility(View.VISIBLE);
         mMessages.setHasMessage(hasMessage);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        // no title
+    }
+
+    @Override
+    public void setDefaultDrawable(Drawable drawable) {
+        if (mTintIcon) {
+            mDefaultDrawable = Utils.tinting(drawable, mDefaultColor);
+        } else {
+            mDefaultDrawable = drawable;
+        }
+
+        if (!mChecked) {
+            mIcon.setImageDrawable(mDefaultDrawable);
+        }
+    }
+
+    @Override
+    public void setSelectedDrawable(Drawable drawable) {
+        if (mTintIcon) {
+            mCheckedDrawable = Utils.tinting(drawable, mCheckedColor);
+        } else {
+            mCheckedDrawable = drawable;
+        }
+
+        if (mChecked) {
+            mIcon.setImageDrawable(mCheckedDrawable);
+        }
     }
 
     @Override

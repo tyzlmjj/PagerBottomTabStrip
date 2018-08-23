@@ -1,8 +1,12 @@
 package me.majiajie.pagerbottomtabstrip;
 
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 
+import me.majiajie.pagerbottomtabstrip.internal.Utils;
+import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class NavigationController implements ItemController, BottomLayoutController {
@@ -10,7 +14,7 @@ public class NavigationController implements ItemController, BottomLayoutControl
     private BottomLayoutController mBottomLayoutController;
     private ItemController mItemController;
 
-    public NavigationController(BottomLayoutController bottomLayoutController, ItemController itemController) {
+    protected NavigationController(BottomLayoutController bottomLayoutController, ItemController itemController) {
         mBottomLayoutController = bottomLayoutController;
         mItemController = itemController;
     }
@@ -22,7 +26,7 @@ public class NavigationController implements ItemController, BottomLayoutControl
 
     @Override
     public void setSelect(int index, boolean listener) {
-        mItemController.setSelect(index,listener);
+        mItemController.setSelect(index, listener);
     }
 
     @Override
@@ -36,8 +40,23 @@ public class NavigationController implements ItemController, BottomLayoutControl
     }
 
     @Override
-    public void addTabItemSelectedListener(OnTabItemSelectedListener listener) {
+    public void addTabItemSelectedListener(@NonNull OnTabItemSelectedListener listener) {
         mItemController.addTabItemSelectedListener(listener);
+    }
+
+    @Override
+    public void setTitle(int index,@NonNull String title) {
+        mItemController.setTitle(index, title);
+    }
+
+    @Override
+    public void setDefaultDrawable(int index,@NonNull Drawable drawable) {
+        mItemController.setDefaultDrawable(index, drawable);
+    }
+
+    @Override
+    public void setSelectedDrawable(int index,@NonNull Drawable drawable) {
+        mItemController.setSelectedDrawable(index, drawable);
     }
 
     @Override
@@ -56,7 +75,22 @@ public class NavigationController implements ItemController, BottomLayoutControl
     }
 
     @Override
-    public void setupWithViewPager(ViewPager viewPager) {
+    public boolean removeItem(int index) {
+        return mItemController.removeItem(index);
+    }
+
+    @Override
+    public void addMaterialItem(int index,@NonNull Drawable defaultDrawable,@NonNull Drawable selectedDrawable,@NonNull String title, int selectedColor) {
+        mItemController.addMaterialItem(index, Utils.newDrawable(defaultDrawable), Utils.newDrawable(selectedDrawable), title, selectedColor);
+    }
+
+    @Override
+    public void addCustomItem(int index,@NonNull BaseTabItem item) {
+        mItemController.addCustomItem(index, item);
+    }
+
+    @Override
+    public void setupWithViewPager(@NonNull ViewPager viewPager) {
         mBottomLayoutController.setupWithViewPager(viewPager);
     }
 

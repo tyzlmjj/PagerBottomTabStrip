@@ -1,9 +1,11 @@
 package me.majiajie.pagerbottomtabstriptest.custom;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,18 +25,20 @@ public class SpecialTab extends BaseTabItem {
     private final TextView mTitle;
     private final RoundMessageView mMessages;
 
-    private int mDefaultDrawable;
-    private int mCheckedDrawable;
+    private Drawable mDefaultDrawable;
+    private Drawable mCheckedDrawable;
 
     private int mDefaultTextColor = 0x56000000;
     private int mCheckedTextColor = 0x56000000;
 
+    private boolean mChecked;
+
     public SpecialTab(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public SpecialTab(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public SpecialTab(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -50,33 +54,34 @@ public class SpecialTab extends BaseTabItem {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         View view = getChildAt(0);
-        if (view != null){
+        if (view != null) {
             view.setOnClickListener(l);
         }
     }
 
     /**
      * 方便初始化的方法
-     * @param drawableRes           默认状态的图标
-     * @param checkedDrawableRes    选中状态的图标
-     * @param title                 标题
+     *
+     * @param drawableRes        默认状态的图标
+     * @param checkedDrawableRes 选中状态的图标
+     * @param title              标题
      */
-    public void initialize(@DrawableRes int drawableRes, @DrawableRes  int checkedDrawableRes, String title)
-    {
-        mDefaultDrawable = drawableRes;
-        mCheckedDrawable = checkedDrawableRes;
+    public void initialize(@DrawableRes int drawableRes, @DrawableRes int checkedDrawableRes, String title) {
+        mDefaultDrawable = ContextCompat.getDrawable(getContext(), drawableRes);
+        mCheckedDrawable = ContextCompat.getDrawable(getContext(), checkedDrawableRes);
         mTitle.setText(title);
     }
 
     @Override
     public void setChecked(boolean checked) {
-        if(checked){
-            mIcon.setImageResource(mCheckedDrawable);
+        if (checked) {
+            mIcon.setImageDrawable(mCheckedDrawable);
             mTitle.setTextColor(mCheckedTextColor);
         } else {
-            mIcon.setImageResource(mDefaultDrawable);
+            mIcon.setImageDrawable(mDefaultDrawable);
             mTitle.setTextColor(mDefaultTextColor);
         }
+        mChecked = checked;
     }
 
     @Override
@@ -90,15 +95,36 @@ public class SpecialTab extends BaseTabItem {
     }
 
     @Override
+    public void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
+    @Override
+    public void setDefaultDrawable(Drawable drawable) {
+        mDefaultDrawable = drawable;
+        if (!mChecked) {
+            mIcon.setImageDrawable(drawable);
+        }
+    }
+
+    @Override
+    public void setSelectedDrawable(Drawable drawable) {
+        mCheckedDrawable = drawable;
+        if (mChecked) {
+            mIcon.setImageDrawable(drawable);
+        }
+    }
+
+    @Override
     public String getTitle() {
         return mTitle.getText().toString();
     }
 
-    public void setTextDefaultColor(@ColorInt int color){
+    public void setTextDefaultColor(@ColorInt int color) {
         mDefaultTextColor = color;
     }
 
-    public void setTextCheckedColor(@ColorInt int color){
+    public void setTextCheckedColor(@ColorInt int color) {
         mCheckedTextColor = color;
     }
 }

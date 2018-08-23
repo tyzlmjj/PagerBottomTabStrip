@@ -29,13 +29,15 @@
 
         <activity
             android:name=".HideActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".SpecialActivity"/>
+        <activity android:name=".SpecialActivity" />
 
-        <activity android:name=".VerticalActivity"/>
+        <activity android:name=".VerticalActivity" />
 
-        <activity android:name=".VerticalCustomActivity"/>
+        <activity android:name=".VerticalCustomActivity" />
+
+        <activity android:name=".TestControllerActivity" />
 
     </application>
 

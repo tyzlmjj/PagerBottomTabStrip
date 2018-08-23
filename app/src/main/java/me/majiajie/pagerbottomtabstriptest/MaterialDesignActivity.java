@@ -27,6 +27,7 @@ public class MaterialDesignActivity extends AppCompatActivity {
         setContentView(R.layout.layout_horizontal);
 
         PageNavigationView pageBottomTabLayout = findViewById(tab);
+        ViewPager viewPager = findViewById(R.id.viewPager);
 
         mNavigationController = pageBottomTabLayout.material()
                 .addItem(R.drawable.ic_ondemand_video_black_24dp, "Movies & TV", testColors[0])
@@ -37,13 +38,12 @@ public class MaterialDesignActivity extends AppCompatActivity {
                 .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
                 .build();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(), mNavigationController.getItemCount()));
 
-        //自动适配ViewPager页面切换
+        // 自动适配ViewPager页面切换
         mNavigationController.setupWithViewPager(viewPager);
 
-        //也可以设置Item选中事件的监听
+        // 也可以设置Item选中事件的监听
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {

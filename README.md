@@ -36,8 +36,6 @@ implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
 
 **QQ**: 809402737
 
-木有微博、推特！
-
 ## 错误反馈
 
 这个库有BUG？请点这里 [Github Issues](https://github.com/tyzlmjj/PagerBottomTabStrip/issues)
