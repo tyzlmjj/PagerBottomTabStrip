@@ -5,7 +5,7 @@ android:
     - platform-tools
     - tools
 
-    - build-tools-28.0.2
+    - build-tools-27.0.3
     - android-28
 
     - extra-android-support
@@ -13,7 +13,8 @@ android:
     - sys-img-armeabi-v7a-android-22
 
   licenses:
-    - 'android-sdk-license.*'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 before_script:
   - chmod +x gradlew
