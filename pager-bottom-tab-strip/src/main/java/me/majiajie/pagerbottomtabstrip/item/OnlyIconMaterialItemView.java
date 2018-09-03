@@ -55,6 +55,11 @@ public class OnlyIconMaterialItemView extends BaseTabItem {
         mMessages = findViewById(R.id.messages);
     }
 
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        return OnlyIconMaterialItemView.class.getName();
+    }
+
     public void initialization(String title, Drawable drawable, Drawable checkedDrawable, boolean tintIcon, int color, int checkedColor) {
 
         mTitle = title;

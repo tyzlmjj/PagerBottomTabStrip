@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import me.majiajie.pagerbottomtabstrip.listener.SimpleTabItemSelectedListener;
 
 public interface ItemController {
 
@@ -45,6 +46,13 @@ public interface ItemController {
      * @param listener {@link OnTabItemSelectedListener}
      */
     void addTabItemSelectedListener(OnTabItemSelectedListener listener);
+
+    /**
+     * 导航栏按钮点击监听(只有选中事件)
+     *
+     * @param listener {@link SimpleTabItemSelectedListener}
+     */
+    void addSimpleTabItemSelectedListener(SimpleTabItemSelectedListener listener);
 
     /**
      * 设置标题

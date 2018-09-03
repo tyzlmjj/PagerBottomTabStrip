@@ -118,6 +118,11 @@ public class PageNavigationView extends ViewGroup {
         }
     }
 
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        return PageNavigationView.class.getName();
+    }
+
     /**
      * 构建 Material Desgin 风格的导航栏
      */

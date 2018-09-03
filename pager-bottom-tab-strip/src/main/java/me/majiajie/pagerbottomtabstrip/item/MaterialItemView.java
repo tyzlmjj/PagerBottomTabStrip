@@ -75,6 +75,11 @@ public class MaterialItemView extends BaseTabItem {
         mMessages = findViewById(R.id.messages);
     }
 
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        return MaterialItemView.class.getName();
+    }
+
     public void initialization(String title, Drawable drawable, Drawable checkedDrawable, boolean tintIcon, int color, int checkedColor) {
         mTintIcon = tintIcon;
 

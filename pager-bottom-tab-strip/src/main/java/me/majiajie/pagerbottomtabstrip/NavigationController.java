@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import me.majiajie.pagerbottomtabstrip.listener.SimpleTabItemSelectedListener;
 
 public class NavigationController implements ItemController, BottomLayoutController {
 
@@ -42,6 +43,11 @@ public class NavigationController implements ItemController, BottomLayoutControl
     @Override
     public void addTabItemSelectedListener(@NonNull OnTabItemSelectedListener listener) {
         mItemController.addTabItemSelectedListener(listener);
+    }
+
+    @Override
+    public void addSimpleTabItemSelectedListener(SimpleTabItemSelectedListener listener) {
+        mItemController.addSimpleTabItemSelectedListener(listener);
     }
 
     @Override

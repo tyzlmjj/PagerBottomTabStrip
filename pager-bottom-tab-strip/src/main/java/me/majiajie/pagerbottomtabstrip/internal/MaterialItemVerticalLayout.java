@@ -15,6 +15,7 @@ import me.majiajie.pagerbottomtabstrip.R;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.OnlyIconMaterialItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import me.majiajie.pagerbottomtabstrip.listener.SimpleTabItemSelectedListener;
 
 /**
  * 存放 Material Design 风格按钮的垂直布局
@@ -25,6 +26,7 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
 
     private final List<BaseTabItem> mItems = new ArrayList<>();
     private final List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
+    private final List<SimpleTabItemSelectedListener> mSimpleListeners = new ArrayList<>();
 
     private int mSelected = -1;
 
@@ -118,6 +120,11 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
     }
 
     @Override
+    public CharSequence getAccessibilityClassName() {
+        return MaterialItemVerticalLayout.class.getName();
+    }
+
+    @Override
     public void setSelect(int index) {
         setSelect(index, true);
     }
@@ -150,6 +157,9 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
             for (OnTabItemSelectedListener listener : mListeners) {
                 listener.onSelected(mSelected, oldSelected);
             }
+            for (SimpleTabItemSelectedListener listener : mSimpleListeners) {
+                listener.onSelected(mSelected, oldSelected);
+            }
         }
     }
 
@@ -166,6 +176,11 @@ public class MaterialItemVerticalLayout extends ViewGroup implements ItemControl
     @Override
     public void addTabItemSelectedListener(OnTabItemSelectedListener listener) {
         mListeners.add(listener);
+    }
+
+    @Override
+    public void addSimpleTabItemSelectedListener(SimpleTabItemSelectedListener listener) {
+        mSimpleListeners.add(listener);
     }
 
     @Override

@@ -30,8 +30,8 @@ ext{
     targetSdkVersion = 28
 
     // 版本号
-    versionCode = 13
-    versionName = "2.3.0-alpha1"
+    versionCode = 14
+    versionName = "2.3.0-alpha2"
 
     // 依赖库版本
     supportLibraryVersion = '27.1.1'

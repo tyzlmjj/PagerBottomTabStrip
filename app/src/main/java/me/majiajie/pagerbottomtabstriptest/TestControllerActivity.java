@@ -39,8 +39,6 @@ public class TestControllerActivity extends AppCompatActivity {
 
     private final List<Integer> mMessageNumberList = new ArrayList<>();
 
-    private MyViewPagerAdapter mPagerAdapter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +68,16 @@ public class TestControllerActivity extends AppCompatActivity {
                 .addItem(R.drawable.ic_audiotrack_black_24dp, "Music", COLORS[1])
                 .addItem(R.drawable.ic_book_black_24dp, "Books", COLORS[2])
                 .addItem(R.drawable.ic_news_black_24dp, "Newsstand", COLORS[3])
-                .setMode(MaterialMode.HIDE_TEXT | MaterialMode.CHANGE_BACKGROUND_COLOR)
                 .enableAnimateLayoutChanges()
                 .build();
 
-        mViewPager.setAdapter(mPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), mNavigationController.getItemCount()));
+        MyViewPagerAdapter pagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), Math.max(5, mNavigationController.getItemCount()));
+        mViewPager.setAdapter(pagerAdapter);
 
         mNavigationController.setupWithViewPager(mViewPager);
 
         // 初始化消息数字为0
-        for (int i = 0; i < mNavigationController.getItemCount(); i++) {
+        for (int i = 0; i < pagerAdapter.getCount(); i++) {
             mMessageNumberList.add(0);
         }
     }
@@ -91,7 +89,7 @@ public class TestControllerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = mEdtIndex.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(TestControllerActivity.this, "input index", Toast.LENGTH_SHORT).show();
+                    showToast("input index");
                     return;
                 }
                 int index = Integer.parseInt(text);
@@ -108,7 +106,7 @@ public class TestControllerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = mEdtIndex.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(TestControllerActivity.this, "input index", Toast.LENGTH_SHORT).show();
+                    showToast("input index");
                     return;
                 }
                 int index = Integer.parseInt(text);
@@ -125,14 +123,14 @@ public class TestControllerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = mEdtIndex.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(TestControllerActivity.this, "input index", Toast.LENGTH_SHORT).show();
+                    showToast("input index");
                     return;
                 }
                 int index = Integer.parseInt(text);
                 if (mNavigationController.removeItem(index)) {
                     mMessageNumberList.remove(index);
                 } else {
-                    Toast.makeText(TestControllerActivity.this, "移除失败(指定项不存在或者已被选中)", Toast.LENGTH_SHORT).show();
+                    showToast("移除失败(指定项不存在或者已被选中)");
                 }
             }
         });
@@ -143,15 +141,25 @@ public class TestControllerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = mEdtIndex.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(TestControllerActivity.this, "input index", Toast.LENGTH_SHORT).show();
+                    showToast("input index");
                     return;
                 }
-                int index = Integer.parseInt(text);
 
-                Drawable drawable = ContextCompat.getDrawable(TestControllerActivity.this,R.drawable.ic_favorite_gray_24dp);
-                mNavigationController.addMaterialItem(index,drawable,drawable,"NEW",0xFF880000);
+                if (mNavigationController.getItemCount() < 5) {
+                    int index = Integer.parseInt(text);
+                    mMessageNumberList.add(index, 0);
+                    Drawable drawable = ContextCompat.getDrawable(TestControllerActivity.this, R.drawable.ic_favorite_gray_24dp);
+                    mNavigationController.addMaterialItem(index, drawable, drawable, "NEW", 0xFF880000);
+                } else {
+                    showToast("材料设计模式下，导航栏数量不要超过5个");
+                }
             }
         });
+
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(TestControllerActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
 }

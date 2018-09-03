@@ -3,7 +3,7 @@ package me.majiajie.pagerbottomtabstrip.listener;
 /**
  * 导航栏按钮选中事件
  */
-public interface OnTabItemSelectedListener {
+public interface SimpleTabItemSelectedListener {
 
     /**
      * 选中导航栏的某一项
@@ -13,10 +13,4 @@ public interface OnTabItemSelectedListener {
      */
     void onSelected(int index, int old);
 
-    /**
-     * 重复选中
-     *
-     * @param index 索引导航按钮，按添加顺序排序
-     */
-    void onRepeat(int index);
 }

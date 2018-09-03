@@ -46,6 +46,11 @@ public class NormalItemView extends BaseTabItem {
         mMessages = findViewById(R.id.messages);
     }
 
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        return NormalItemView.class.getName();
+    }
+
     /**
      * 方便初始化的方法
      *

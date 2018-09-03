@@ -13,6 +13,7 @@ import java.util.List;
 import me.majiajie.pagerbottomtabstrip.ItemController;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import me.majiajie.pagerbottomtabstrip.listener.SimpleTabItemSelectedListener;
 
 /**
  * Created by mjj on 2017/9/27
@@ -21,6 +22,7 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
 
     private final List<BaseTabItem> mItems = new ArrayList<>();
     private final List<OnTabItemSelectedListener> mListeners = new ArrayList<>();
+    private final List<SimpleTabItemSelectedListener> mSimpleListeners = new ArrayList<>();
 
     private int mSelected = -1;
 
@@ -114,6 +116,11 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
     }
 
     @Override
+    public CharSequence getAccessibilityClassName() {
+        return CustomItemVerticalLayout.class.getName();
+    }
+
+    @Override
     public void setSelect(int index) {
         setSelect(index, true);
     }
@@ -148,6 +155,9 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
             for (OnTabItemSelectedListener listener : mListeners) {
                 listener.onSelected(mSelected, oldSelected);
             }
+            for (SimpleTabItemSelectedListener listener : mSimpleListeners) {
+                listener.onSelected(mSelected, oldSelected);
+            }
         }
     }
 
@@ -164,6 +174,11 @@ public class CustomItemVerticalLayout extends ViewGroup implements ItemControlle
     @Override
     public void addTabItemSelectedListener(OnTabItemSelectedListener listener) {
         mListeners.add(listener);
+    }
+
+    @Override
+    public void addSimpleTabItemSelectedListener(SimpleTabItemSelectedListener listener) {
+        mSimpleListeners.add(listener);
     }
 
     @Override
