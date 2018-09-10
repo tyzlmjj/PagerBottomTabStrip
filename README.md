@@ -4,11 +4,12 @@ Android 页面底部和侧边的导航栏。
 
 - 支持[Material Design规范](https://www.google.com/design/spec/components/bottom-navigation.html)的样式
 - 可以自定义Item进行扩展
-- 方便适配常用的ViewPager
 - 自带消息圆点
 - 可在构建完成之后动态增加/删除导航按钮、修改图标和文字
+- 方便适配常用的ViewPager
+- 支持与[Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation/)配合使用
 
-[[使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) ]  [[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.2.5/Demo.apk)]
+[[使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) ]  [[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.3.0/Demo.apk)]
 
 ## 实现效果图
 
@@ -29,9 +30,8 @@ Android 页面底部和侧边的导航栏。
 
 ## 引入库
 
-for Gradle:
 ```
-implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0-alpha2'
+implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0'
 ```
 
 ## 联系我

@@ -373,7 +373,9 @@ public class MaterialItemLayout extends ViewGroup implements ItemController {
 
         this.removeViewAt(index);
         mItems.remove(index);
-        mBackgroundColors.remove(index);
+        if (mChangeBackgroundMode) {
+            mBackgroundColors.remove(index);
+        }
         return true;
     }
 
