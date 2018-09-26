@@ -25,8 +25,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation project(':pager-bottom-tab-strip')
 //    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
-    implementation "com.android.support:design:${supportLibraryVersion}"
+
+    // V7
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    // design
+    implementation "com.android.support:design:$supportLibraryVersion"
+    // navigation
+    implementation "android.arch.navigation:navigation-fragment:$nav_version"
+    implementation "android.arch.navigation:navigation-ui:$nav_version"
 }

@@ -64,6 +64,12 @@
             android:onClick="toTestController"
             android:text="Test Controller" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="navigationArchitectureComponent"
+            android:text="Navigation Architecture Component" />
+
     </LinearLayout>
 
 </ScrollView>

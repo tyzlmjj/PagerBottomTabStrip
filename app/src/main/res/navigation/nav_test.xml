@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/navigationComponentPageAFragment">
+    <fragment
+        android:id="@+id/navigationComponentPageAFragment"
+        android:name="me.majiajie.pagerbottomtabstriptest.NavigationComponentPageAFragment"
+        android:label="NavigationComponentPageAFragment" />
+    <fragment
+        android:id="@+id/navigationComponentPageBFragment"
+        android:name="me.majiajie.pagerbottomtabstriptest.NavigationComponentPageBFragment"
+        android:label="NavigationComponentPageBFragment" />
+    <fragment
+        android:id="@+id/navigationComponentPageCFragment"
+        android:name="me.majiajie.pagerbottomtabstriptest.NavigationComponentPageCFragment"
+        android:label="NavigationComponentPageCFragment" />
+</navigation>

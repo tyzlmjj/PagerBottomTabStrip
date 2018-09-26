@@ -16,38 +16,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toMaterialdesign(View view) {
-        startActivity(new Intent(this,MaterialDesignActivity.class));
+        startActivity(new Intent(this, MaterialDesignActivity.class));
     }
 
     public void toCustom(View view) {
-        startActivity(new Intent(this,CustomActivity.class));
+        startActivity(new Intent(this, CustomActivity.class));
     }
 
     public void toCustom2(View view) {
-        startActivity(new Intent(this,Custom2Activity.class));
+        startActivity(new Intent(this, Custom2Activity.class));
     }
 
     public void toBehavior(View view) {
-        startActivity(new Intent(this,BehaviorActivity.class));
+        startActivity(new Intent(this, BehaviorActivity.class));
     }
 
     public void toHide(View view) {
-        startActivity(new Intent(this,HideActivity.class));
+        startActivity(new Intent(this, HideActivity.class));
     }
 
     public void toSpecial(View view) {
-        startActivity(new Intent(this,SpecialActivity.class));
+        startActivity(new Intent(this, SpecialActivity.class));
     }
 
     public void toVertical(View view) {
-        startActivity(new Intent(this,VerticalActivity.class));
+        startActivity(new Intent(this, VerticalActivity.class));
     }
 
     public void toCsutomVertical(View view) {
-        startActivity(new Intent(this,VerticalCustomActivity.class));
+        startActivity(new Intent(this, VerticalCustomActivity.class));
     }
 
     public void toTestController(View view) {
-        startActivity(new Intent(this,TestControllerActivity.class));
+        startActivity(new Intent(this, TestControllerActivity.class));
+    }
+
+    public void navigationArchitectureComponent(View view) {
+        startActivity(new Intent(this, NavigationComponentActivity.class));
     }
 }

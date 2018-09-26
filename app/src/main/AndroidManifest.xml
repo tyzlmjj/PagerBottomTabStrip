@@ -39,6 +39,8 @@
 
         <activity android:name=".TestControllerActivity" />
 
+        <activity android:name=".NavigationComponentActivity" />
+
     </application>
 
 </manifest>
