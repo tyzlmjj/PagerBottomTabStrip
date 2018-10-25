@@ -1,7 +1,8 @@
 package me.majiajie.pagerbottomtabstriptest;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by mjj on 2018/9/26

@@ -30,9 +30,9 @@ dependencies {
 //    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
 
     // V7
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:$supportLibraryVersion"
     // design
-    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.google.android.material:material:$supportLibraryVersion"
     // navigation
     implementation "android.arch.navigation:navigation-fragment:$nav_version"
     implementation "android.arch.navigation:navigation-ui:$nav_version"

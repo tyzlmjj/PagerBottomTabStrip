@@ -1,14 +1,15 @@
 package me.majiajie.pagerbottomtabstriptest.other;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * 使ViewPager不能滑动
  */
-public class NoTouchViewPager extends ViewPager{
+public class NoTouchViewPager extends ViewPager {
 
     public NoTouchViewPager(Context context) {
         super(context);

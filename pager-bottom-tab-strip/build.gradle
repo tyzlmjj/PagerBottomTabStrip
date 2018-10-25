@@ -1,6 +1,6 @@
 // plugins {
-//     id "com.jfrog.bintray" version "1.7.3"
-//     id "com.github.dcendents.android-maven" version "1.5"
+//     id "com.jfrog.bintray" version "1.8.4"
+//     id "com.github.dcendents.android-maven" version "2.1"
 // }
 
 apply plugin: 'com.android.library'
@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-v4:${supportLibraryVersion}"
+    implementation "androidx.legacy:legacy-support-v4:${supportLibraryVersion}"
 }
 
 

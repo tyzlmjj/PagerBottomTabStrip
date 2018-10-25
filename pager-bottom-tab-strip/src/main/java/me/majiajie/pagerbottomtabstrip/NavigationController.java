@@ -2,9 +2,9 @@ package me.majiajie.pagerbottomtabstrip;
 
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
@@ -46,7 +46,7 @@ public class NavigationController implements ItemController, BottomLayoutControl
     }
 
     @Override
-    public void addSimpleTabItemSelectedListener(SimpleTabItemSelectedListener listener) {
+    public void addSimpleTabItemSelectedListener(@NonNull SimpleTabItemSelectedListener listener) {
         mItemController.addSimpleTabItemSelectedListener(listener);
     }
 

@@ -15,7 +15,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import androidx.core.view.ViewCompat;
 import me.majiajie.pagerbottomtabstrip.ItemController;
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.R;

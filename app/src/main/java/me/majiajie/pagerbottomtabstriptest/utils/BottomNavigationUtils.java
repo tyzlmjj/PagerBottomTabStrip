@@ -1,7 +1,7 @@
 package me.majiajie.pagerbottomtabstriptest.utils;
 
-import android.support.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.NavOptions;

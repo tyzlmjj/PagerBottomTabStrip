@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text="index:" />
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_index"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"

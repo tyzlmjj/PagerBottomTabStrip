@@ -8,8 +8,9 @@ Android 页面底部和侧边的导航栏。
 - 可在构建完成之后动态增加/删除导航按钮、修改图标和文字
 - 方便适配常用的ViewPager
 - 支持与[Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation/)配合使用
+- 支持[AndroidX](https://developer.android.com/jetpack/androidx/)
 
-[[使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) ]  [[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.3.0/Demo.apk)]
+[[使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) ]  [[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.3.0X/Demo.apk)]
 
 ## 实现效果图
 
@@ -30,6 +31,12 @@ Android 页面底部和侧边的导航栏。
 
 ## 引入库
 
+for [AndroidX](https://developer.android.com/jetpack/androidx/)
+```
+implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0X'
+```
+
+for original Android [Support Library](https://developer.android.com/topic/libraries/support-library/)
 ```
 implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0'
 ```
