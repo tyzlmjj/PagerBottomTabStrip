@@ -1,4 +1,4 @@
-# PagerBottomTabStrip	[![Build Status](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip.svg?branch=master)](https://travis-ci.org/tyzlmjj/PagerBottomTabStrip)	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
+# PagerBottomTabStrip	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
 
 Android 页面底部和侧边的导航栏。
 
