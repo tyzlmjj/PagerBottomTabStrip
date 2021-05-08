@@ -1,9 +1,9 @@
 package me.majiajie.pagerbottomtabstriptest.utils;
 
 
+
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.NavOptions;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
@@ -28,18 +28,14 @@ public class BottomNavigationUtils {
             public void onRepeat(int index) {}
         });
 
-        navController.addOnNavigatedListener(new NavController.OnNavigatedListener() {
-            @Override
-            public void onNavigated(@NonNull NavController controller,
-                                    @NonNull NavDestination destination) {
-                int destinationId = destination.getId();
-                for (int i = 0; i < pageIds.length; i++) {
-                    if (destinationId == pageIds[i]){
-                        if (navigationController.getSelected() != i){
-                            navigationController.setSelect(i,false);
-                        }
-                        break;
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int destinationId = destination.getId();
+            for (int i = 0; i < pageIds.length; i++) {
+                if (destinationId == pageIds[i]){
+                    if (navigationController.getSelected() != i){
+                        navigationController.setSelect(i,false);
                     }
+                    break;
                 }
             }
         });

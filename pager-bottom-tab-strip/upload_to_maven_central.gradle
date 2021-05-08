@@ -1,15 +1,13 @@
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'pager-bottom-tab-strip'
 
-    publishedGroupId = 'me.majiajie'
     libraryName = 'PagerBottomTabStrip'
-    artifact = 'pager-bottom-tab-strip'
-
     libraryDescription = 'An navigation bar for Android'
 
+    publishedGroupId = 'me.majiajie'
+    artifact = 'pager-bottom-tab-strip'
+
     siteUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip'
-    gitUrl = 'https://github.com/tyzlmjj/PagerBottomTabStrip.git'
+    scmUrl = 'github.com/tyzlmjj/PagerBottomTabStrip.git'
 
     libraryVersion = rootProject.ext.versionName
 
@@ -19,11 +17,6 @@ ext {
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
 }
 
-apply from: 'https://raw.githubusercontent.com/tyzlmjj/Gradle/master/JCenter/maven_install.gradle'
-apply from: 'https://raw.githubusercontent.com/tyzlmjj/Gradle/master/JCenter/bintray.gradle'
-
-
-
+apply from: 'https://raw.githubusercontent.com/tyzlmjj/Gradle/master/MavenCentral/publish_module.gradle'

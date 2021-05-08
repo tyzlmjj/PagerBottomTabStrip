@@ -26,14 +26,17 @@ android {
 
 dependencies {
 
-    implementation project(':pager-bottom-tab-strip')
-//    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
+    def nav_version = "2.3.5"
+
+//    implementation project(':pager-bottom-tab-strip')
+    implementation "me.majiajie:pager-bottom-tab-strip:${versionName}"
 
     // V7
-    implementation "androidx.appcompat:appcompat:$supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:1.2.0"
     // design
-    implementation "com.google.android.material:material:$supportLibraryVersion"
+    implementation "com.google.android.material:material:1.2.1"
+
     // navigation
-    implementation "android.arch.navigation:navigation-fragment:$nav_version"
-    implementation "android.arch.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 }

@@ -1,4 +1,8 @@
-# PagerBottomTabStrip	[ ![Download](https://api.bintray.com/packages/tyzlmjj/maven/pager-bottom-tab-strip/images/download.svg) ](https://bintray.com/tyzlmjj/maven/pager-bottom-tab-strip/view)
+PagerBottomTabStrip
+=====
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.majiajie/pager-bottom-tab-strip/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.majiajie/pager-bottom-tab-strip)
+|[使用指南][1]|[DEMO.apk][2]
 
 Android 页面底部和侧边的导航栏。
 
@@ -10,7 +14,6 @@ Android 页面底部和侧边的导航栏。
 - 支持与[Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation/)配合使用
 - 支持[AndroidX](https://developer.android.com/jetpack/androidx/)
 
-[[使用指南](https://github.com/tyzlmjj/PagerBottomTabStrip/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) ]  [[DEMO.apk](https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.3.0X/Demo.apk)]
 
 ## 实现效果图
 
@@ -31,14 +34,14 @@ Android 页面底部和侧边的导航栏。
 
 ## 引入库
 
-for [AndroidX](https://developer.android.com/jetpack/androidx/)
-```
-implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0X'
-```
+```gradle
+repositories {
+  mavenCentral()
+}
 
-for original Android [Support Library](https://developer.android.com/topic/libraries/support-library/)
-```
-implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0'
+dependencies {
+  implementation 'me.majiajie:pager-bottom-tab-strip:2.4.0'
+}
 ```
 
 ## 联系我
@@ -49,21 +52,5 @@ implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0'
 
 这个库有BUG？请点这里 [Github Issues](https://github.com/tyzlmjj/PagerBottomTabStrip/issues)
 
-## LICENSE
-
-PagerBottomTabStrip is released under the [Apache 2.0 license](/LICENSE).
-```
-Copyright 2016 MJJ
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+[1]: https://github.com/tyzlmjj/PagerBottomTabStrip/wiki
+[2]: https://github.com/tyzlmjj/PagerBottomTabStrip/releases/download/2.4.0/Demo.apk

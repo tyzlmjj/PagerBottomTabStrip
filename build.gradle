@@ -1,16 +1,19 @@
 buildscript {
     repositories {
-        jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.0'
     }
+}
+
+plugins {
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
 
@@ -25,17 +28,14 @@ task clean(type: Delete) {
 
 ext{
     // 编译版本
-    compileSdkVersion = 28
+    compileSdkVersion = 30
     minSdkVersion = 14
-    targetSdkVersion = 28
+    targetSdkVersion = 30
 
     // 版本号
-    versionCode = 16
-    versionName = "2.3.0X"
+    versionCode = 17
+    versionName = "2.4.0"
 
-    // 依赖库版本
-    supportLibraryVersion = '1.0.0'
-
-    // Navigation
-    nav_version = "1.0.0-alpha06"
 }
+
+apply from: 'https://raw.githubusercontent.com/tyzlmjj/Gradle/master/MavenCentral/publish-root.gradle'
